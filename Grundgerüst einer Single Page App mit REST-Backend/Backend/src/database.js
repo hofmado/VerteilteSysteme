@@ -25,6 +25,15 @@ class DatabaseFactory {
         await this._createDemoData();
     }
 
+
+    async createNewSteuerjahr(email) {
+        let newSteuerJahr = {
+            steuerjahr:     email.steuerjahr     || "",
+            werbungskosten: email.werbungskosten || "",
+            fahrtkosten:    email.fahrtkosten    || "",
+            absetzbarerbetrag: email.absetzbarerBetrag || "",
+        };
+    }
     /**
      * Hilfsmethode zum Anlegen von Demodaten. Würde man so in einer
      * Produktivanwendung natürlich nicht machen, aber so sehen wir
@@ -38,20 +47,25 @@ class DatabaseFactory {
         if (await examples.estimatedDocumentCount() === 0) {
             examples.insertMany([
                 {
-                    title: "Cloud Native Architecture and Design",
-                    author: "Shivakumar R Goniwada",
-                    publisher: "Apress",
-                    year: 2022,
+                    email: "MaxMüller",
+                    passwort: "123456789",
+                    jahr: "2020",
+                    werbungskosten: "1500",
+                    fahrtkosten: "250",
+                    absetzbarerBetrag: "1750",
                 },
                 {
-                    title: "Machine Learning Kompakt",
-                    author: "Andriy Burkov",
-                    publisher: "mitp",
-                    year: 2019,
+                    email: "DominikHoffmann",
+                    passwort: "0123456789",
+                    jahr: "2020",
+                    werbungskosten: "1600",
+                    fahrtkosten: "350",
+                    absetzbarerBetrag: "1950",
                 },
             ]);
         }
     }
+
 }
 
 export default new DatabaseFactory();

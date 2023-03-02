@@ -2,7 +2,7 @@
   "name": "login",
   "version": "1.0.0",
   "description": "Login Daten",
-  "author": "Max Müller",
+  "author": "Dominik Hoffmann",
   "license": "CC-BY-4.0",
   "main": "src/index.js",
   "type": "module",
