@@ -18,14 +18,16 @@ echo
 
 # URLs der einzelnen Services ermitteln, um sie dem Anwender anzeigen zu können
 API_URL="http://localhost:3000"
-WEB_URL="http://localhost:8080"
+WEB_URL="http://localhost:4000"
  DB_URL="http://localhost:8081"
+ GW_URL="http://localhost:8080/app"
 
-if [ $GITPOD_WORKSPACE_URL != "" ]; then
+if [ "$GITPOD_WORKSPACE_URL" != "" ]; then
     # Unter gitpod.io laufen die Services in der Cloud
     export API_URL=${GITPOD_WORKSPACE_URL//"https://"/"https://3000-"}
-    export WEB_URL=${GITPOD_WORKSPACE_URL//"https://"/"https://8080-"}
+    export WEB_URL=${GITPOD_WORKSPACE_URL//"https://"/"https://4000-"}
     export  DB_URL=${GITPOD_WORKSPACE_URL//"https://"/"https://8081-"}
+    export  GW_URL=${GITPOD_WORKSPACE_URL//"https://"/"https://8080-"}
 
     echo -ne "$RED"
     echo "======================================================================================================="
@@ -33,7 +35,7 @@ if [ $GITPOD_WORKSPACE_URL != "" ]; then
     echo
     echo -ne "$BOLD"
     echo "ACHTUNG! ACHTUNG! ACHTUNG!"
-    echo "Bitte daran denken, in Gitpod den Port 3000 auf Public zu setzen!"
+    echo "Bitte daran denken, in Gitpod die Ports 3000, 4000, 8080 und 8081 auf Public zu setzen!"
     echo "Ansonsten kann das Frontend den Backend-Webserivce nicht aufrufen, da GitPod die Zugriffe blockiert!"
     echo -ne "$RESET$RED"
     echo "======================================================================================================="
@@ -47,6 +49,7 @@ echo
 echo -e " » ${BOLD}Backend:${RESET}  $API_URL"
 echo -e " » ${BOLD}Frontend:${RESET} $WEB_URL"
 echo -e " » ${BOLD}DB-Admin:${RESET} $DB_URL"
+echo -e " » ${BOLD}Gateway:${RESET}  $GW_URL/app/   ← Produktivsetup der App"
 confirm
 
 # Container starten
@@ -57,7 +60,13 @@ echo -e "${BOLD}Bei Fehlern in der Anwendung bitte hier die Log-Ausgaben prüfen
 confirm
 echo
 
-docker-compose -f docker-compose.dev.yml up --attach backend
+if [ "$GITPOD_WORKSPACE_URL" != "" ]; then
+    # GitPod.io 02.03.2023: --attach benötigt einen Servicenamen!
+    docker-compose -f docker-compose.dev.yml up --attach backend
+else
+    # Lokal unter Linux 02.03.2023: "--attach backend" startet nur den Backend-Service! :-(
+    docker-compose -f docker-compose.dev.yml up --attach
+fi
 
 #echo
 #echo "Zum Stoppen der Container folgenden Befehl eingeben:"
