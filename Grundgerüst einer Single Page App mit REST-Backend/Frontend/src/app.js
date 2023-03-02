@@ -27,6 +27,10 @@ class App {
                 url: "^/$",
                 show: () => this._gotoList()
             },
+            {
+                url: "^/login",
+                show: () => this._gotoList()
+            },
             //// TODO: Eigene Routing-Regeln hier in der Mitte einfügen ////
             {
                 url: ".*",
