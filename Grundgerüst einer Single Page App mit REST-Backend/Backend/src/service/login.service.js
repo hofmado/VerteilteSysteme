@@ -11,8 +11,8 @@ export default class login_service{
         if (query.search) {
             queryDoc = {
                 $and: [
-                    {Username:       {$regex: query.search, $options: "i"}},
-                    {Password:       {$regex: query.search}},
+                    {username:       {$regex: query.search, $options: "i"}},
+                    {password:       {$regex: query.search}},
                 ]
             };
         } else {
@@ -20,7 +20,7 @@ export default class login_service{
         }
 
 
-        let cursor = this._songs.find(queryDoc, {
+        let cursor = this.username.find(queryDoc, {
             sort: {
                 name: 1,
                 artist: 1,
@@ -28,5 +28,19 @@ export default class login_service{
         });
 
         return cursor.toArray();
+    }
+    async create(user){
+       username = user || {};
+
+       let newUser= {
+        username: username ||"",
+        passowrd: username.password ||"",
+
+       };
+       // Get input values
+       
+       let username = parse
+
+
     }
 };
