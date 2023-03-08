@@ -20,27 +20,24 @@ export default class login_service{
         }
 
 
-        let cursor = this.username.find(queryDoc, {
+        let cursor = this.users.find(queryDoc, {
             sort: {
-                name: 1,
-                artist: 1,
+                username: 1,
             }
         });
 
         return cursor.toArray();
     }
     async create(user){
-       username = user || {};
+       user = user || {};
 
        let newUser= {
         username: username ||"",
-        passowrd: username.password ||"",
+        password: username.password ||"",
 
        };
-       // Get input values
-       
-       let username = parse
-
+       let result = await this.users.insertOne(newUser);
+       return await this.users.findOne({_id: new ObjectId(id)});
 
     }
 };
