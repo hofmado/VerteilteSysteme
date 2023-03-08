@@ -24,7 +24,7 @@ class App {
         //// TODO: Routing-Regeln anpassen und ggf. neue Methoden anlegen ////
         this.router = new Router([
             {
-                url: "^/$",
+                url: "^/data",
                 show: () => this._gotoList()
             },
             {

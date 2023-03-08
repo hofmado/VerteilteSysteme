@@ -33,6 +33,10 @@ export default class PageList extends Page {
         await super.init();
         this._title = "Übersicht";
 
+        
+        const content = await this._app.backend.fetch('/src/api/content');
+        this.innerHTML = `<div>${content}</div>`;
+         
         //// TODO: Anzuzeigende Inhalte laden mit this._app.backend.fetch() ////
         //// TODO: Inhalte in die HTML-Struktur einarbeiten ////
         //// TODO: Neue Methoden für Event Handler anlegen und hier registrieren ////
