@@ -22,8 +22,7 @@ export default class kalk_service {
       if (query.search) {
           queryDoc = {
               $and: [
-                  {email:       {$regex: query.search, $options: "i"}},
-                  {password:         {$regex: query.search, $options: "i"}},
+                  {username:       {$regex: query.search, $options: "i"}},
                   {steuerjahr: {$regex: query.search, $options: "i"}},
               ]
           };
@@ -47,10 +46,10 @@ export default class kalk_service {
       steuerjahr = steuerjahr || {};
 
       let newSteuerJahr = {
-        steuerjahr:     email.steuerjahr     || "",
-        werbungskosten: email.werbungskosten || "",
-        fahrtkosten:    eail.fahrtkosten    || "",
-        absetzbarerbetrag: email.absetzbarerBetrag || "",
+        steuerjahr:         username.steuerjahr     || "",
+        werbungskosten:     username.steuerjahr.werbungskosten || "",
+        fahrtkosten:        username.steuerjahr.fahrtkosten    || "",
+        absetzbarerbetrag:  username.steuerjahr.absetzbarerBetrag || "",
     };
       // Get input values
       let werbungskosten = parseInt(document.getElementById("werbungskosten").value);
@@ -62,8 +61,8 @@ export default class kalk_service {
   
     // Display tax savings
     document.getElementById("absetztbarerbetrag").innerHTML = absetzbarerbetrag.toFixed(2) + " €";
-      let result = await this._songs.insertOne(newSong);
-      return await this._songs.findOne({_id: result.insertedId});
+      let result = await this._steuerjahr.insertOne(newSteuerJahr);
+      return await this._steuerjahr.findOne({_id: result.insertedId});
   }
 
   /**

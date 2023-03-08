@@ -31,7 +31,7 @@ class DatabaseFactory {
             steuerjahr:     email.steuerjahr     || "",
             werbungskosten: email.werbungskosten || "",
             fahrtkosten:    email.fahrtkosten    || "",
-            absetzbarerbetrag: email.absetzbarerBetrag || "",
+            absetzbarerBetrag: email.absetzbarerBetrag || "",
         };
     }
     /**

@@ -1,6 +1,6 @@
 "use strict"
 
-import SongService from "../service/song.service.js";
+import kalk_service from "../service/ms_kalk";
 import {wrapHandler} from "../utils.js";
 import RestifyError from "restify-errors";
 
@@ -17,14 +17,14 @@ export default class KalkController {
      * @param {String} prefix Gemeinsamer Prefix aller URLs
      */
     constructor(server, prefix) {
-        this._service = new SongService();
+        this._service = new KalkService();
         this._prefix = prefix;
 
         // Collection: Adressen
         server.get(prefix, wrapHandler(this, this.search));
         server.post(prefix, wrapHandler(this, this.create));
 
-        // Entity: Adresse
+        // Entity: Adresse todo
         server.get(prefix + "/:id", wrapHandler(this, this.read));
         server.put(prefix + "/:id", wrapHandler(this, this.update));
         server.patch(prefix + "/:id", wrapHandler(this, this.update));
@@ -62,7 +62,7 @@ export default class KalkController {
     }
 
     /**
-     * POST /song
+     * POST /user/steuerjahr/:id
      * Neuen Song anlegen
      */
     async create(req, res, next) {
@@ -77,7 +77,7 @@ export default class KalkController {
     }
 
     /**
-     * GET /song/:id
+     * GET /user/steuerjahr/:id
      * Song auslesen
      */
     async read(req, res, next) {
@@ -87,15 +87,14 @@ export default class KalkController {
         if (result) {
             res.sendResult(result);
         } else {
-            throw new RestifyError.NotFoundError("Song nicht gefunden");
+            throw new RestifyError.NotFoundError("Keine Daten gefunden");
         }
 
         return next();
     }
 
     /**
-     * PUT /song/:id
-     * PATCH /song/:id
+     * PUT user/steuerjahr/:id
      * Song ändern
      */
     async update(req, res, next) {
@@ -108,17 +107,6 @@ export default class KalkController {
             throw new RestifyError.NotFoundError("Song nicht gefunden");
         }
 
-        return next();
-    }
-
-    /**
-     * DELETE /song/:id
-     * Song löschen
-     */
-    async delete(req, res, next) {
-        await this._service.delete(req.params.id)
-        res.status(204);
-        res.sendResult({});
         return next();
     }
 }
