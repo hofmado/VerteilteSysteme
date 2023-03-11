@@ -1,5 +1,6 @@
 import DatabaseFactory from "../database.js";
 import {ObjectId} from "mongodb";
+import LoginPage from "/Frontend/src/page-list/login.js";
 
 export default class login_service{
     constructor(){
@@ -40,4 +41,5 @@ export default class login_service{
        return await this.users.findOne({_id: new ObjectId(id)});
 
     }
+    
 };
