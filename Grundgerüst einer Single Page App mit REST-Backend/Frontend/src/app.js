@@ -31,7 +31,6 @@ class App {
                 url: "^/login",
                 show: () => this._gotoList()
             },
-            //// TODO: Eigene Routing-Regeln hier in der Mitte einfügen ////
             {
                 url: ".*",
                 show: () => this._gotoList()
@@ -73,6 +72,18 @@ class App {
             let page = new PageList(this);
             await page.init();
             this._showPage(page, "list");
+        } catch (ex) {
+            this.showException(ex);
+        }
+    }
+    async _gotoLogin() {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageLogin} = await import("./page-list/login.js");
+
+            let page = new PageList(this);
+            await page.init();
+            this._showPage(page, "Login");
         } catch (ex) {
             this.showException(ex);
         }

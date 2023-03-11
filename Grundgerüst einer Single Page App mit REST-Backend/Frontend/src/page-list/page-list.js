@@ -40,5 +40,60 @@ export default class PageList extends Page {
         //// TODO: Anzuzeigende Inhalte laden mit this._app.backend.fetch() ////
         //// TODO: Inhalte in die HTML-Struktur einarbeiten ////
         //// TODO: Neue Methoden für Event Handler anlegen und hier registrieren ////
+        // Platzhalter anzeigen, wenn noch keine Daten vorhanden sind
+        let data = await this._app.database.recepie.findAll();
+        this._emptyMessageElement = this._mainElement.querySelector(".empty-placeholder");
+
+        if (data.length) {
+        this._emptyMessageElement.classList.add("hidden");
+        }
+
+        // Je Datensatz einen Listeneintrag generieren
+        let olElement = this._mainElement.querySelector("ol");
+
+        let templateElement = this._mainElement.querySelector(".list-entry");
+        let templateHtml = templateElement.outerHTML;
+        templateElement.remove();
+
+        for (let index in data) {
+        // Platzhalter ersetzen
+        let dataset = data[index];
+        let html = templateHtml;
+
+        html = html.replace("$ID$", dataset.id);
+        html = html.replace("$DAUER$", dataset.dauer);
+        html = html.replace("$REZEPT_NAME$", dataset.rezeptName);
+        html = html.replace("$ZUTATEN$", dataset.zutaten);
+        html = html.replace("$BESCHREIBUNG$", dataset.beschreibung);
+
+        // Element in die Liste einfügen
+        let dummyElement = document.createElement("div");
+        dummyElement.innerHTML = html;
+        let liElement = dummyElement.firstElementChild;
+        liElement.remove();
+        olElement.appendChild(liElement);
+
+        // Event Handler registrieren
+        liElement.querySelector(".action.edit").addEventListener("click", () => location.hash = `#/edit/${dataset.id}`);
+        liElement.querySelector(".action.delete").addEventListener("click", () => this._askDelete(dataset.id));
+        }
     }
-};
+    
+    async _askDelete(id) {
+    // Sicherheitsfrage zeigen
+    let answer = confirm("Soll die ausgewählte Rezept wirklich gelöscht werden?");
+    if (!answer) return;
+    
+    // Datensatz löschen
+    this._app.database.recepie.delete(id);
+    
+    // HTML-Element entfernen
+    this._mainElement.querySelector(`[data-id="${id}"]`)?.remove();
+    
+    if (this._mainElement.querySelector("[data-id]")) {
+    this._emptyMessageElement.classList.add("hidden");
+    } else {
+    this._emptyMessageElement.classList.remove("hidden");
+    }
+    }
+}
