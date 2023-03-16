@@ -20,7 +20,7 @@ class DatabaseFactory {
         // Datenbankverbindung herstellen
         this.client = new MongoClient(connectionUrl);
         await this.client.connect();
-        this.database = this.client.db("adressbook");
+        this.database = this.client.db("Steuerjahr");
 
         await this._createDemoData();
     }
@@ -31,39 +31,24 @@ class DatabaseFactory {
      * wenigstens gleich ein paar Daten.
      */
     async _createDemoData() {
-        let addresses = this.database.collection("addresses");
+        let user = this.database.collection("user");
+        let steuerjahr = this.database.collection("steuerjahr");
 
-        if (await addresses.estimatedDocumentCount() === 0) {
-            addresses.insertMany([
+        if (await user.estimatedDocumentCount() === 0) {
+            user.insertMany([
                 {
-                    first_name: "Willy",
-                    last_name: "Tanner",
-                    phone: "+49 711 564412",
-                    email: "willy.tanner@alf.com",
-                },
-                {
-                    first_name: "Michael",
-                    last_name: "Knight",
-                    phone: "+49 721 554194",
-                    email: "michael@knight-rider.com",
-                },
-                {
-                    first_name: "Fox",
-                    last_name: "Mulder",
-                    phone: "+49 721 553181",
-                    email: "mulder@xfiles.com",
-                },
-                {
-                    first_name: "Dana",
-                    last_name: "Scully",
-                    phone: "+49 721 572287",
-                    email: "scully@xfiles.com",
-                },
-                {
-                    first_name: "Elwood",
-                    last_name: "Blues",
-                    phone: "+49 721 957338",
-                    email: "elwood@blues-brothers.com",
+                    user_name: "Max",
+                    password: "1",
+                    gesamt_steuer: "6000",
+                    semester_anzahl: "4",
+                    steuerjahr: {
+                        jahr: "2022",
+                        steuerablassungen: "2500",
+                    },
+                    steuerjahr: {
+                        jahr: "2021",
+                        steuerablassungen: "3500",
+                    },
                 },
             ]);
         }
