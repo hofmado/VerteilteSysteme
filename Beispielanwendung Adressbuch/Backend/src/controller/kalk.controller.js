@@ -1,6 +1,6 @@
 "use strict"
 
-import kalk_service from "../service/ms_kalk";
+import kalk_service from "../service/ms_kalk.js";
 import {wrapHandler} from "../utils.js";
 import RestifyError from "restify-errors";
 
@@ -17,18 +17,12 @@ export default class KalkController {
      * @param {String} prefix Gemeinsamer Prefix aller URLs
      */
     constructor(server, prefix) {
-        this._service = new KalkService();
+        this._service = new kalk_service();
         this._prefix = prefix;
 
-        // Collection: Adressen
+        // Collection: Steuerjahr
         server.get(prefix, wrapHandler(this, this.search));
-        server.post(prefix, wrapHandler(this, this.create));
-
-        // Entity: Adresse todo
-        server.get(prefix + "/:id", wrapHandler(this, this.read));
-        server.put(prefix + "/:id", wrapHandler(this, this.update));
-        server.patch(prefix + "/:id", wrapHandler(this, this.update));
-        server.del(prefix + "/:id", wrapHandler(this, this.delete));
+        server.put(prefix, wrapHandler(this, this.create));
     }
 
     /**
@@ -45,27 +39,30 @@ export default class KalkController {
         entity._links = {
             read:   {url: url, method: "GET"},
             update: {url: url, method: "PUT"},
-            patch:  {url: url, method: "PATCH"},
-            delete: {url: url, method: "DELETE"},
         }
     }
 
     /**
-     * GET /song
-     * Songs suchen
+     * GET /steuerjahr
      */
-    async search(req, res, next) {
-        let result = await this._service.search(req.query);
-        result.forEach(entity => this._insertHateoasLinks(entity));
-        res.sendResult(result);
+    async read(req, res, next) {
+        let result = await this._service.read(req.params.username, req.params.jahr);
+
+        if (result) {
+            this._insertHateoasLinks(result);
+            res.sendResult(result);
+        } else {
+            throw new RestifyError.NotFoundError("Kein Steuerjahr gefunden");
+        }
+
         return next();
     }
 
     /**
      * POST /user/steuerjahr/:id
-     * Neuen Song anlegen
-     */
-    async create(req, res, next) {
+     * Neuen Song anlegen 
+     */ 
+    async create(req, res, next) { 
         let result = await this._service.create(req.body);
         this._insertHateoasLinks(result);
 

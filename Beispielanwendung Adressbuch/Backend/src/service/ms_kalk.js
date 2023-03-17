@@ -4,36 +4,21 @@ import {ObjectId} from "mongodb";
 export default class kalk_service {
 
   constructor() {
-    this._kalk = DatabaseFactory.database.collection("kalk");
+    this._kalk = DatabaseFactory.database.collection("steuerjahr");
   }
 
 
-    /**
-     * Songs suchen. Über den Query-Parameter `search` können alle Felder der
-     * Songs mit einem RegEx durchsucht werden. Alternativ können einzelne Felder
-     * mitgegeben werden, die auf exakte Übereinstimmung geprüft werden.
-     *
-     * @param {Object} query Optionale Suchparameter
-     * @return {Promise} Liste der gefundenen Adressen
-     */
-    async search(query) {
-      let queryDoc = {};
-
-      if (query.search) {
-          queryDoc = {
-              $and: [
-                  {username:       {$regex: query.search, $options: "i"}},
-                  {steuerjahr: {$regex: query.search, $options: "i"}},
-              ]
-          };
-      }
-      let cursor = this.email.find(queryDoc, {
-          sort: {
-              email: 1,
-              password: 1,
-          }
-      });
-      return cursor.toArray();
+  /**
+   * Songs suchen. Über den Query-Parameter `search` können alle Felder der
+   * Songs mit einem RegEx durchsucht werden. Alternativ können einzelne Felder
+   * mitgegeben werden, die auf exakte Übereinstimmung geprüft werden.
+   *
+   * @param {Object} query Optionale Suchparameter
+   * @return {Promise} Liste der gefundenen Adressen
+   */
+  async read(username, jahr) {
+    let steuerjahrDoc = await steuerjahr.findOne({username: username, jahr: jahr});
+    return steuerjahrDoc;
   }
 
   /**
@@ -43,14 +28,15 @@ export default class kalk_service {
    * @return {Promise} Gespeichertes Song
    */
   async create(steuerjahr) {
-      steuerjahr = steuerjahr || {};
+      if(steuerjahr == null) return;
 
       let newSteuerJahr = {
         steuerjahr:         username.steuerjahr     || "",
         werbungskosten:     username.steuerjahr.werbungskosten || "",
         fahrtkosten:        username.steuerjahr.fahrtkosten    || "",
         absetzbarerbetrag:  username.steuerjahr.absetzbarerBetrag || "",
-    };
+      };
+
       // Get input values
       let werbungskosten = parseInt(document.getElementById("werbungskosten").value);
       let fahrtweg = parseInt(document.getElementById("fahrtweg").value);
