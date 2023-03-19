@@ -83,10 +83,9 @@ class App {
      */
     async _gotoNew() {
         try {
-            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
-            let {default: PageEdit} = await import("./page-edit/page-edit.js");
+            let {default: PageLogin} = await import("./page-login/page-login.js");
 
-            let page = new PageEdit(this);
+            let page = new PageLogin(this);
             await page.init();
             this._showPage(page, "new");
         } catch (ex) {
