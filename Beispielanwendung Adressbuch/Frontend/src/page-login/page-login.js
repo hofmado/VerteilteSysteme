@@ -16,10 +16,15 @@ export default class PageLogin extends Page {
 
         this.username = null;
         this.password = null;
-        
+        this.submitbutton = document.getElementById("submit");
             // Event Handler registrieren
-            liElement.querySelector(".action.edit").addEventListener("click", () => location.hash = `#/edit/${dataset._id}`);
-            liElement.querySelector(".action.delete").addEventListener("click", () => this._askDelete(dataset._id));
+            this.submitbutton.addEventListener("click", () => this._askLogin(dataset._id));
+        }
+        async _askLogin(id) {
+            fetch('/login',{
+                method: 'POST',
+                headers
+            })
         }
     }
 
