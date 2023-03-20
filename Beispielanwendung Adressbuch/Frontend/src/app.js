@@ -32,6 +32,9 @@ class App {
                 url: "^/edit/(.*)$",
                 show: matches => this._gotoEdit(matches[1]),
             },{
+                url: "^/login/$",
+                show: () => this._gotoLogin(),
+            },{
                 url: ".*",
                 show: () => this._gotoList()
             },
@@ -83,11 +86,24 @@ class App {
      */
     async _gotoNew() {
         try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageEdit} = await import("./page-edit/page-edit.js");
+
+            let page = new PageEdit(this);
+            await page.init();
+            this._showPage(page, "new");
+        } catch (ex) {
+            this.showException(ex);
+        }
+    }
+    async _gotoLogin() {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
             let {default: PageLogin} = await import("./page-login/page-login.js");
 
             let page = new PageLogin(this);
             await page.init();
-            this._showPage(page, "new");
+            this._showPage(page, "login");
         } catch (ex) {
             this.showException(ex);
         }
