@@ -8,12 +8,15 @@ import HtmlTemplate from "./page-login.html";
  * zur Verfügung.
  */
 export default class PageLogin extends Page {
-
+    constructor(app, editId) {
+        super(app, HtmlTemplate);
+        
+    }
     async init() {
         // HTML-Inhalt nachladen
         await super.init();
         this._title = "Login";
-
+        
         this.username = null;
         this.password = null;
         this.submitbutton = document.getElementById("submit");
