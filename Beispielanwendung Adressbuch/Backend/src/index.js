@@ -98,7 +98,7 @@ new AdressController(server, "/address");
 server.listen(config.port, config.host, function() {
     console.log();
     console.log("=================");
-    console.log("Stuer-Server");
+    console.log("Adressbuch-Server");
     console.log("=================");
     console.log();
     console.log("Ausführung mit folgender Konfiguration:");
