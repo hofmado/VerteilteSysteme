@@ -313,8 +313,3 @@ components:
                     "Einkommen": 5000,
                     "Jahr": 2000,
                 }
-tags:
-    -
-        name: Index
-    -
-        name: Adresse
