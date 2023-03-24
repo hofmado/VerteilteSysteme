@@ -15,6 +15,7 @@ export default class PageLogin extends Page {
     async init() {
         // HTML-Inhalt nachladen
         await super.init();
+        this._url = '/login'
         this._title = "Login";
         
         this.username = null;
