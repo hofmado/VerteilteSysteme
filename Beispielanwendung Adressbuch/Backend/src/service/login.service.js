@@ -17,11 +17,6 @@ export default class LoginService {
     }
 
     /**
-     * Adressen suchen. Unterstützt wird lediglich eine ganz einfache Suche,
-     * bei der einzelne Felder auf exakte Übereinstimmung geprüft werden.
-     * Zwar unterstützt MongoDB prinzipiell beliebig komplexe Suchanfragen.
-     * Um das Beispiel klein zu halten, wird dies hier aber nicht unterstützt.
-     *
      * @param {Object} query Optionale Suchparameter
      * @return {Promise} Liste der gefundenen Adressen
      */
@@ -29,7 +24,6 @@ export default class LoginService {
         let cursor = this._users.find(query, {
             sort: {
                 username: 1,
-                password: 1,
             }
         });
 
@@ -53,25 +47,4 @@ export default class LoginService {
         let result = await this._users.insertOne(newUser);
         return await this._users.findOne({_id: result.insertedId});
     }
-
-    /**
-     * Auslesen einer vorhandenen Adresse anhand ihrer ID.
-     *
-     * @param {String} id ID der gesuchten Adresse
-     * @return {Promise} Gefundene Adressdaten
-     */
-    async read(id) {
-        let result = await this._users.findOne({_id: new ObjectId(id)});
-        return result;
-    }
-
-    /**
-     * Aktualisierung einer Adresse, durch Überschreiben einzelner Felder
-     * oder des gesamten Adressobjekts (ohne die ID).
-     *
-     * @param {String} id ID der gesuchten Adresse
-     * @param {[type]} address Zu speichernde Adressdaten
-     * @return {Promise} Gespeicherte Adressdaten oder undefined
-     */
-    
 }

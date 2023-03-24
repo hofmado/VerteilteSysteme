@@ -1,6 +1,6 @@
 "use strict"
 
-import LoginService from "../service/address.service.js";
+import LoginService from "../service/login.service.js";
 import {wrapHandler} from "../utils.js";
 import RestifyError from "restify-errors";
 
@@ -78,7 +78,7 @@ export default class LoginController {
 
     /**
      * GET /address/:id
-     * Adresse auslesen
+     * USER auslesen
      */
     async read(req, res, next) {
         let result = await this._service.read(req.params.id);
@@ -87,7 +87,7 @@ export default class LoginController {
             this._insertHateoasLinks(result);
             res.sendResult(result);
         } else {
-            throw new RestifyError.NotFoundError("Adresse nicht gefunden");
+            throw new RestifyError.NotFoundError("Username nicht gefunden");
         }
 
         return next();

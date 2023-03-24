@@ -32,7 +32,7 @@ class DatabaseFactory {
      */
     async _createDemoData() {
         let addresses = this.database.collection("addresses");
-
+        let users     = this.database.collection("users");
         if (await addresses.estimatedDocumentCount() === 0) {
             addresses.insertMany([
                 {
@@ -66,6 +66,19 @@ class DatabaseFactory {
                     email: "elwood@blues-brothers.com",
                 },
             ]);
+        }
+        if (await users.estimatedDocumentCount() === 0) {
+            users.insertMany([
+                {
+                    username: "Willy",
+                    password: "1",
+                    
+                },
+                {
+                    username: "Michael",
+                    password: "000",
+                }
+            ])
         }
     }
 }
