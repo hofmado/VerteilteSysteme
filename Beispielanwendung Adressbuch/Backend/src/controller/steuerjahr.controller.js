@@ -5,11 +5,11 @@ import {wrapHandler} from "../utils.js";
 import RestifyError from "restify-errors";
 
 /**
- * HTTP-Controller-Klasse für Songs. Diese Klasse registriert alle notwendigen
+ * HTTP-Controller-Klasse für Steuerjahr. Diese Klasse registriert alle notwendigen
  * URL-Handler beim Webserver für einen einfachen REST-Webservice zum Lesen und
- * Schreiben von Songs.
+ * Schreiben von Steuerjahren.
  */
-export default class KalkController {
+export default class SteuerjahrController {
     /**
      * Konstruktor. Hier werden die URL-Handler registrert.
      *
@@ -45,31 +45,32 @@ export default class KalkController {
     /**
      * GET /steuerjahr
      */
-    async readSteuerjahr(req, res, next) {
-        let result = await this._service.read(req.params.jahr, res.params.werbungskosten);
-
+    async read(req, res, next) {
+        let result = await this._service.read(req.params.jahr);
+      
         if (result) {
-            this._insertHateoasLinks(result);
-            res.sendResult(result);
+          this._insertHateoasLinks(result);
+          res.sendResult(result);
         } else {
-            throw new RestifyError.NotFoundError("Kein Steuerjahr gefunden");
+          throw new RestifyError.NotFoundError("Kein Steuerjahr gefunden");
         }
-
+      
         return next();
     }
-
     /**
      * POST /user/steuerjahr/:id
-     * Neuen Song anlegen 
      */ 
-    async createSteuerjahr(req, res, next) { 
-        let result = await this._service.create(req.body);
+    async create(req, res, next) { 
+        let result = await this._service.create(req.params.user);
         this._insertHateoasLinks(result);
 
         res.status(201);
         res.header("Location", `${this._prefix}/${result._id}`);
-        res.sendResult(result);
-
+        if (result){
+            res.sendResult(result);
+        } else {
+            throw new RestifyError.NotFoundError("Kein Steuerjahr gefunden");
+        }
         return next();
     }
 }

@@ -1,15 +1,12 @@
 openapi: 3.1.0
 info:
-    title: Adressbuch
+    title: Steuersimulator
     version: '1.0'
     description: >-
-        Die Adressbuch-App nutzt einen simplen REST-Webservices zur Kommunikation mit dem Backend. Dieser
-        ermöglicht die üblichen CRUD-Operationen zur Suche, Anzeige, Bearbeitung und Löschung von Adressen,
-        wobei jede Adresse aus einem Vornamen, Nachnamen, Telefonnummer und eine E-Mailadresse besteht.
+        Diese API simuliert die möglichen ersparnisse im Studium
     contact:
-        name: Dennis Schulmeister-Zimolong
-        url: 'https://www.wpvs.de'
-        email: dhbw@windows3.de
+        name: Dominik Hoffmann und CO.
+        url: '-'
     license:
         name: CC-BY-4.0
         url: 'https://creativecommons.org/licenses/by/4.0/deed.de'

@@ -1,7 +1,7 @@
 import Page from "../page.js";
 import HtmlTemplate from "./SteuerjahrPage.html";
 
-export default class KalkPage extends Page {
+export default class SteuerjahrPage extends Page {
     /**
      * Konstruktor.
      * @param {App} app Instanz der App-Klasse
