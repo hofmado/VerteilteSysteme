@@ -14,35 +14,43 @@ export default class KalkPage extends Page {
         await super.init();
         this._title = "Kalkpage";
         
-        
+        const feldUsername = this.mainElement.querySelector('#name');
         const getDataButton = this._mainElement.querySelector('#get-data');
         const saveDataButton = this._mainElement.querySelector('#save-data');
-        const feldJahr = this._mainElement.querySelector('#feldJahr');
-        const feldWerbungskosten = this._mainElement.querySelector('#FeldWerbungskosten');
-        const feldFahrtweg = this._mainElement.querySelector('#feldFahrtweg');
-        const feldSteuerablassung = this._mainElement.querySelector('#feldSteuerablassung');
+        const feldJahr = this._mainElement.querySelector('#jahr');
+        const feldKosten = this._mainElement.querySelector('#kosten');
+        const feldFahrtweg = this._mainElement.querySelector('#fahrtweg');
+        const feldWerbungskosten = this._mainElement.querySelector('#output-werbungskosten');
+        const feldOutputjahr = this.mainElement.querySelector('#output-jahr');
 
         const form = document.querySelector("form");
 
         //Buttonmethode für die GET-Anfrage
         getDataButton.addEventListener('click', () => {
-        fetch('/steuerjahr/')
-            .then(response => response.json())
-            .then(data => {
-                feldSteuerablassung.value = data.steuerablassung;
-            });
+            const data = { jahr: feldJahr.jahr };
+            fetch('/kalk/', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    feldWerbungskosten.value = data.werbungskosten;
+                });
         });
         
-        //Buttonmethode für die PUT-Anfrage
+        //Buttonmethode für die POST-Anfrage
         saveDataButton.addEventListener('click', () => {
             const data = {
                 jahr: feldJahr.jahr,
-                werbungskosten: feldWerbungskosten.value,
+                kosten: feldKosten.value,
                 fahrtweg: feldFahrtweg.value,
             };
 
-            fetch('/save-data-url', {
-                method: 'PUT',
+            fetch('/kalk/', {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -50,7 +58,7 @@ export default class KalkPage extends Page {
             })
             .then(response => response.json())
             .then(data => {
-                steuerablassung.innerText = data.steuerablassung;
+                werbungskosten.innerText = data.werbungskosten;
             });
         });
           

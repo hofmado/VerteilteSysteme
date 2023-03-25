@@ -16,8 +16,8 @@ export default class kalk_service {
    * @param {Object} query Optionale Suchparameter
    * @return {Promise} Liste der gefundenen Adressen
    */
-  async read(username, jahr) {
-    let steuerjahrDoc = await steuerjahr.findOne({username: username, jahr: jahr});
+  async read(name, jahr) {
+    let steuerjahrDoc = await steuerjahr.findOne({name: name, jahr: jahr});
     return steuerjahrDoc;
   }
 
@@ -27,28 +27,28 @@ export default class kalk_service {
    * @param {Object} steuerjahr Zu speichernder Song
    * @return {Promise} Gespeichertes Song
    */
-  async create(steuerjahr) {
+  async createSteuerjahr(steuerjahr) {
       if(steuerjahr == null) return;
 
       let newSteuerJahr = {
-        steuerjahr:         username.steuerjahr     || "",
-        werbungskosten:     username.steuerjahr.werbungskosten || "",
-        fahrtkosten:        username.steuerjahr.fahrtkosten    || "",
-        absetzbarerbetrag:  username.steuerjahr.absetzbarerBetrag || "",
+        jahr:               jahr           || "",
+        werbungskosten:     werbungskosten || "",
       };
 
       // Get input values
-      let werbungskosten = parseInt(document.getElementById("werbungskosten").value);
+      let kosten = parseInt(document.getElementById("kosten").value);
       let fahrtweg = parseInt(document.getElementById("fahrtweg").value);
-  
+      let jahr = parseInt(document.getElementById("jahr").vakue);
+
       // Calculate tax savings
       let fahrtkosten = fahrtweg * 0.3;
-      let absetzbarerbetrag = fahrtkosten + werbungskosten ;
+      let werbungskosten = fahrtkosten + kosten ;
   
     // Display tax savings
-    document.getElementById("absetztbarerbetrag").innerHTML = absetzbarerbetrag.toFixed(2) + " €";
-      let result = await this._steuerjahr.insertOne(newSteuerJahr);
-      return await this._steuerjahr.findOne({_id: result.insertedId});
+      document.getElementById("output-werbungskosten").innerHTML = absetzbarerbetrag.toFixed(2);
+      document.getElementById("output-jahr").innerHTML = jahr.toFixed(0);
+        let result = await this._steuerjahr.insertOne(newSteuerJahr);
+        return await this._steuerjahr.findOne({_id: result.insertedId});
   }
 
   /**
@@ -60,30 +60,5 @@ export default class kalk_service {
    */
   async read(steuerjahr) {
       //TO-DO: anzeige Parameter erstellen
-  }
-
-  /**
-   * Aktualisierung eines Songs, durch Überschreiben einzelner Felder
-   * oder des gesamten Songobjekts (ohne die ID).
-   *
-   * @param {String} id ID des gesuchten Songs
-   * @param {[type]} song Zu speichernde Songdaten
-   * @return {Promise} Gespeicherte Songdaten oder undefined
-   */
-  async update(email, steuerjahr) {
-      let oldSteuerjahr = await this._email.findOne({_id: new ObjectId(id)});
-      if (!oldSteuerjahr) return;
-
-      let updateDoc = {
-          $set: {},
-      }
-
-      if (email.steuerjahr)         updateDoc.$set.steuerjahr        = email.steuerjahr;
-      if (email.werbungskosten)     updateDoc.$set.werbungskosten    = email.werbungskosten;
-      if (email.fahrtkosten)        updateDoc.$set.fahrtkosten       = email.fahrtkosten;
-      if (email.absetzbarerBetrag)  updateDoc.$set.absetzbarerBetrag = email.absetzbarerBetrag;
-
-      await this._email.updateOne({_id: new ObjectId(id)}, updateDoc);
-      return this._email.findOne({_id: new ObjectId(id)});
   }
 }

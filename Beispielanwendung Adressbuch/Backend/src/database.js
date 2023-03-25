@@ -36,11 +36,19 @@ class DatabaseFactory {
         if (await user.estimatedDocumentCount() === 0) {
             user.insertMany([
                 {
-                    username: "Max",
-                    password: "1",
-                    gesamt_steuer: "6000",
-                    semester: "4",
-                },
+                    "Gesamt-Werbungskosten": 5000,
+                    "Gesamt-Einkommen": 25000,
+                    "username": "MaxMustermann",
+                    "passwort": "geheimesPasswort",
+                    "Steuerjahr": {
+                      "Jahr": 2000,
+                      "Werbungskosten": 5000
+                    },
+                    "Verdienst": {
+                      "Einkommen": 5000,
+                      "Jahr": 2000
+                    }
+                }
             ]);
         }
         if (await steuerjahr.estimatedDocumentCount() === 0) {

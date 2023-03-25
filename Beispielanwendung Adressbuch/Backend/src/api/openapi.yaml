@@ -69,7 +69,13 @@ paths:
         parameters:
             -
                 name: jahr
-                description: ''
+                description: 'Jahr an dem die Werbungskosten zustande gekommen sind'
+                schema:
+                    type: number
+                in: query
+            -
+                name: werbungskosten
+                description: 'Werbungskosten pro Jahr'
                 schema:
                     type: number
                 in: query
@@ -252,11 +258,11 @@ components:
                     "Gesamt-Werbungskosten": 5000,
                     "Gesamt-Einkommen": 25000,
                     "username": "MaxMustermann",
-                    "passwort": "geheimesPasswort"
+                    "passwort": "geheimesPasswort",
                       "Steuerjahr": {
                         "Werbungskosten": 5000,
                         "Jahr": 2000,
-                      }
+                      },
                       "Verdienst": {
                         "Einkommen": 5000,
                         "Jahr": 2000,

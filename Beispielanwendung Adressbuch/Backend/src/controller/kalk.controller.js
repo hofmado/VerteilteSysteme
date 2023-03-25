@@ -38,7 +38,7 @@ export default class KalkController {
 
         entity._links = {
             read:   {url: url, method: "GET"},
-            update: {url: url, method: "PUT"},
+            update: {url: url, method: "POST"},
         }
     }
 
@@ -62,47 +62,13 @@ export default class KalkController {
      * POST /user/steuerjahr/:id
      * Neuen Song anlegen 
      */ 
-    async create(req, res, next) { 
+    async createSteuerjahr(req, res, next) { 
         let result = await this._service.create(req.body);
         this._insertHateoasLinks(result);
 
         res.status(201);
         res.header("Location", `${this._prefix}/${result._id}`);
         res.sendResult(result);
-
-        return next();
-    }
-
-    /**
-     * GET /user/steuerjahr/:id
-     * Song auslesen
-     */
-    async read(req, res, next) {
-        let result = await this._service.read(req.params.id);
-        this._insertHateoasLinks(result);
-
-        if (result) {
-            res.sendResult(result);
-        } else {
-            throw new RestifyError.NotFoundError("Keine Daten gefunden");
-        }
-
-        return next();
-    }
-
-    /**
-     * PUT user/steuerjahr/:id
-     * Song ändern
-     */
-    async update(req, res, next) {
-        let result = await this._service.update(req.params.id, req.body);
-        this._insertHateoasLinks(result);
-
-        if (result) {
-            res.sendResult(result);
-        } else {
-            throw new RestifyError.NotFoundError("Song nicht gefunden");
-        }
 
         return next();
     }
