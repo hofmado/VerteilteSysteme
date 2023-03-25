@@ -1,6 +1,6 @@
 "use strict"
 
-import kalk_service from "../service/ms_kalk.js";
+import steuerjahr_service from "../service/Steuerjahr.servie.js";
 import {wrapHandler} from "../utils.js";
 import RestifyError from "restify-errors";
 
@@ -17,12 +17,12 @@ export default class KalkController {
      * @param {String} prefix Gemeinsamer Prefix aller URLs
      */
     constructor(server, prefix) {
-        this._service = new kalk_service();
+        this._service = new steuerjahr_service();
         this._prefix = prefix;
 
         // Collection: Steuerjahr
-        server.get(prefix, wrapHandler(this, this.search));
-        server.put(prefix, wrapHandler(this, this.create));
+        server.get(prefix, wrapHandler(this, this.read));
+        server.post(prefix, wrapHandler(this, this.create));
     }
 
     /**
@@ -38,15 +38,15 @@ export default class KalkController {
 
         entity._links = {
             read:   {url: url, method: "GET"},
-            update: {url: url, method: "POST"},
+            create: {url: url, method: "POST"},
         }
     }
 
     /**
      * GET /steuerjahr
      */
-    async read(req, res, next) {
-        let result = await this._service.read(req.params.username, req.params.jahr);
+    async readSteuerjahr(req, res, next) {
+        let result = await this._service.read(req.params.jahr, res.params.werbungskosten);
 
         if (result) {
             this._insertHateoasLinks(result);

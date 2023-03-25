@@ -1,5 +1,5 @@
 import Page from "../page.js";
-import HtmlTemplate from "./KalkPage.html";
+import HtmlTemplate from "./SteuerjahrPage.html";
 
 export default class KalkPage extends Page {
     /**
@@ -12,23 +12,19 @@ export default class KalkPage extends Page {
 
     async init() {
         await super.init();
-        this._title = "Kalkpage";
+        this._title = "SteuerjahrPage";
         
-        const feldUsername = this.mainElement.querySelector('#name');
         const getDataButton = this._mainElement.querySelector('#get-data');
         const saveDataButton = this._mainElement.querySelector('#save-data');
         const feldJahr = this._mainElement.querySelector('#jahr');
         const feldKosten = this._mainElement.querySelector('#kosten');
         const feldFahrtweg = this._mainElement.querySelector('#fahrtweg');
-        const feldWerbungskosten = this._mainElement.querySelector('#output-werbungskosten');
-        const feldOutputjahr = this.mainElement.querySelector('#output-jahr');
-
-        const form = document.querySelector("form");
+        const feldWerbungskosten = this._mainElement.querySelector('#werbungskosten');
 
         //Buttonmethode für die GET-Anfrage
         getDataButton.addEventListener('click', () => {
-            const data = { jahr: feldJahr.jahr };
-            fetch('/kalk/', {
+            const data = { jahr: feldJahr.value };
+            fetch('/steuerjahr/', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -44,12 +40,12 @@ export default class KalkPage extends Page {
         //Buttonmethode für die POST-Anfrage
         saveDataButton.addEventListener('click', () => {
             const data = {
-                jahr: feldJahr.jahr,
+                jahr: feldJahr.value,
                 kosten: feldKosten.value,
                 fahrtweg: feldFahrtweg.value,
             };
 
-            fetch('/kalk/', {
+            fetch('/steuerjahr/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

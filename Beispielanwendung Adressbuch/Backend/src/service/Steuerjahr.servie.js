@@ -1,33 +1,29 @@
 import DatabaseFactory from "../database.js";
 import {ObjectId} from "mongodb";
 
-export default class kalk_service {
+export default class steuerjahr_service {
 
   constructor() {
     this._kalk = DatabaseFactory.database.collection("steuerjahr");
   }
-
-
-  /**
-   * Songs suchen. Über den Query-Parameter `search` können alle Felder der
-   * Songs mit einem RegEx durchsucht werden. Alternativ können einzelne Felder
-   * mitgegeben werden, die auf exakte Übereinstimmung geprüft werden.
+/**
+   * Speichern eines neuen Steuerjahrs.
    *
-   * @param {Object} query Optionale Suchparameter
-   * @return {Promise} Liste der gefundenen Adressen
+   * @param {Object} jahr Zu gespeichertem Steuerjahr
+   * @return {Promise} zu gespeichertes Steuerjahr
    */
-  async read(name, jahr) {
-    let steuerjahrDoc = await steuerjahr.findOne({name: name, jahr: jahr});
+  async read(jahr) {
+    let steuerjahrDoc = await steuerjahr.findOne({jahr: jahr, werbungskosten: werbungskosten});
     return steuerjahrDoc;
   }
 
   /**
-   * Speichern einen neuen Songs.
+   * Speichern eines neuen Steuerjahrs.
    *
    * @param {Object} steuerjahr Zu speichernder Song
    * @return {Promise} Gespeichertes Song
    */
-  async createSteuerjahr(steuerjahr) {
+  async create(steuerjahr) {
       if(steuerjahr == null) return;
 
       let newSteuerJahr = {
@@ -46,19 +42,8 @@ export default class kalk_service {
   
     // Display tax savings
       document.getElementById("output-werbungskosten").innerHTML = absetzbarerbetrag.toFixed(2);
-      document.getElementById("output-jahr").innerHTML = jahr.toFixed(0);
+      document.getElementById("jahr").innerHTML = jahr.toFixed(0);
         let result = await this._steuerjahr.insertOne(newSteuerJahr);
         return await this._steuerjahr.findOne({_id: result.insertedId});
-  }
-
-  /**
-   * Auslesen eines vorhandenen Songs anhand seiner ID.
-   *
-   * @param {String} email ID des gesuchten Songs
-   * @param {String} steuerjahr 
-   * @return {Promise} Gefundener Song
-   */
-  async read(steuerjahr) {
-      //TO-DO: anzeige Parameter erstellen
   }
 }

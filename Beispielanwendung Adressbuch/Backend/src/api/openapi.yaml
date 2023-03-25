@@ -44,13 +44,31 @@ paths:
                 '200':
                     content:
                         application/json:
-                            schema:
-                                type: array
-                                items:
+                            schema: {
+                                "type": "object",
+                                    "properties": {
+                                        "Jahr": {
+                                        "type": "integer",
+                                        "minimum": 2000,
+                                        "maximum": 2100
+                                        },
+                                        "Werbungskosten": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "exclusiveMinimum": true
+                                        }
+                                    },
+                                    "required": [
+                                        "Jahr",
+                                        "Werbungskosten"
+                                    ],
+                                    items: steuerjahr,
                                     $ref: '#/components/schemas/Steuerjahr'
+                                    }
+                                
                     description: Successful response - returns an array of `Steuerjahr` entities.
-            operationId: getsteuerjahrs
-            summary: List All steuerjahrs
+            operationId: getsteuerjahr
+            summary: List All steuerjahr
             description: Gets a list of all `Steuerjahr` entities.
         post:
             requestBody:
@@ -58,8 +76,27 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/Steuerjahr'
-                required: true
+                            schema: {
+                                "type": "object",
+                                    "properties": {
+                                        "Jahr": {
+                                        "type": "integer",
+                                        "minimum": 2000,
+                                        "maximum": 2100
+                                        },
+                                        "Werbungskosten": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "exclusiveMinimum": true
+                                        }
+                                    },
+                                    "required": [
+                                        "Jahr",
+                                        "Werbungskosten"
+                                    ],
+                                    items: steuerjahr,
+                                    $ref: '#/components/schemas/Steuerjahr'
+                                    }
             responses:
                 '201':
                     description: Successful response.
