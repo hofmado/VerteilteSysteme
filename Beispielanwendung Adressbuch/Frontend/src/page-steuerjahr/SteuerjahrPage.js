@@ -24,7 +24,7 @@ export default class SteuerjahrPage extends Page {
         //Buttonmethode für die GET-Anfrage
         getDataButton.addEventListener('click', () => {
             const data = { jahr: feldJahr.value };
-            fetch('/steuerjahr/', {
+            fetch('/user/steuerjahr/', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -45,7 +45,7 @@ export default class SteuerjahrPage extends Page {
                 fahrtweg: feldFahrtweg.value,
             };
 
-            fetch('/steuerjahr/', {
+            fetch('/user/steuerjahr/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

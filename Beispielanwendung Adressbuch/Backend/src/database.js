@@ -44,6 +44,14 @@ class DatabaseFactory {
                       "Jahr": 2000,
                       "Werbungskosten": 5000
                     },
+                    "Steuerjahr": {
+                        "Jahr": 2002,
+                        "Werbungskosten": 5000
+                      },
+                      "Steuerjahr": {
+                        "Jahr": 2001,
+                        "Werbungskosten": 5000
+                      },
                     "Verdienst": {
                       "Einkommen": 5000,
                       "Jahr": 2000

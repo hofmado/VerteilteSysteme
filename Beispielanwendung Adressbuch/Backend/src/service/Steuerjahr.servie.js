@@ -1,10 +1,10 @@
 import DatabaseFactory from "../database.js";
-import {ObjectId} from "mongodb";
+import {CURSOR_FLAGS, ObjectId} from "mongodb";
 
 export default class steuerjahr_service {
 
   constructor() {
-    this._steuerjahr = DatabaseFactory.database.collection("steuerjahr");
+    this._steuerjahr = DatabaseFactory.database.collection("Steuerjahr");
   }
 /**
    * Speichern eines neuen Steuerjahrs.
@@ -12,9 +12,13 @@ export default class steuerjahr_service {
    * @param {Object} jahr Zu gespeichertem Steuerjahr
    * @return {Promise} zu gespeichertes Steuerjahr
    */
-  async read(jahr) {
-    let steuerjahrDoc = await steuerjahr.findOne({jahr: jahr, werbungskosten: werbungskosten});
-    return steuerjahrDoc;
+  async read(query) {
+    let cursor = await this._steuerjahr.findOne(query, {
+      sort: {
+        jahr:1,
+      }
+    });
+    return cursor.toArray();
   }
 
   /**
@@ -26,20 +30,19 @@ export default class steuerjahr_service {
   async create(user) {
       if(user == null) return;
 
-      let newSteuerJahr = {
-        jahr:               jahr           || "",
-        werbungskosten:     werbungskosten || "",
-      };
-
       // Get input values
       const kosten = parseInt(document.getElementById("kosten").value);
       const fahrtweg = parseInt(document.getElementById("fahrtweg").value);
-      jahr = parseInt(document.getElementById("jahr").value);
 
       // Calculate tax savings
       const fahrtkosten = fahrtweg * 0.3;
-      werbungskosten = fahrtkosten + kosten ;
-  
+      const newWerbungskosten = fahrtkosten + kosten ;
+    
+      let newSteuerJahr = {
+        jahr:               user.steuerjahr.jahr           || parseInt(document.getElementById("jahr").value),
+        werbungskosten:     user.steuerjahr.werbungskosten || newWerbungskosten,
+      };
+
     // Display tax savings
       document.getElementById("werbungskosten").innerHTML = absetzbarerbetrag.toFixed(2);
       document.getElementById("jahr").innerHTML = jahr.toFixed(0);

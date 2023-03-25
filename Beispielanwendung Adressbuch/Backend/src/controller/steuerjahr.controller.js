@@ -46,7 +46,7 @@ export default class SteuerjahrController {
      * GET /steuerjahr
      */
     async read(req, res, next) {
-        let result = await this._service.read(req.params.jahr);
+        let result = await this._service.read(req.params.parseInt(document.getElementById("jahr").value));
       
         if (result) {
           this._insertHateoasLinks(result);
