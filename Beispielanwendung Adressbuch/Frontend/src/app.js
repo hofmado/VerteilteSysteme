@@ -26,6 +26,9 @@ class App {
                 url: "^/$",
                 show: () => this._gotoList()
             },{
+                url: "^/kalk/$",
+                show: () => this._gotoKalk()
+            },{
                 url: ".*",
                 show: () => this._gotoList()
             },
@@ -50,6 +53,38 @@ class App {
         try {
             await this.backend.init();
             this.router.start();
+        } catch (ex) {
+            this.showException(ex);
+        }
+    }
+
+    /**
+     * Übersichtsseite anzeigen. Wird vom Single Page Router aufgerufen.
+     */
+    async _gotoList() {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageList} = await import("./page-list/page-list.js");
+
+            let page = new PageList(this);
+            await page.init();
+            this._showPage(page, "list");
+        } catch (ex) {
+            this.showException(ex);
+        }
+    }
+
+    /**
+     * Kalkulationsseite anzeigen. Wird vom Single Page Router aufgerufen.
+     */
+    async _gotoKalk() {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageKalk} = await import("./page-kalk/KalkPage.js");
+
+            let page = new PageKalk(this);
+            await page.init();
+            this._showPage(page, "kalk");
         } catch (ex) {
             this.showException(ex);
         }
