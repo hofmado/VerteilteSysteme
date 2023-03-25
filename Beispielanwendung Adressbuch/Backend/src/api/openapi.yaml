@@ -1,282 +1,315 @@
 openapi: 3.0.0
 info:
-  title: Adressbuch
-  description: "Die Adressbuch-App nutzt einen simplen REST-Webservices zur Kommunikation\
-    \ mit dem Backend. Dieser ermöglicht die üblichen CRUD-Operationen zur Suche,\
-    \ Anzeige, Bearbeitung und Löschung von Adressen, wobei jede Adresse aus einem\
-    \ Vornamen, Nachnamen, Telefonnummer und eine E-Mailadresse besteht."
-  contact:
-    name: Dennis Schulmeister-Zimolong
-    url: https://www.wpvs.de
-    email: dhbw@windows3.de
-  license:
-    name: CC-BY-4.0
-    url: https://creativecommons.org/licenses/by/4.0/deed.de
-  version: "1.0"
+    title: Adressbuch
+    version: '1.0'
+    description: >-
+        Die Adressbuch-App nutzt einen simplen REST-Webservices zur Kommunikation mit dem Backend. Dieser
+        ermöglicht die üblichen CRUD-Operationen zur Suche, Anzeige, Bearbeitung und Löschung von Adressen,
+        wobei jede Adresse aus einem Vornamen, Nachnamen, Telefonnummer und eine E-Mailadresse besteht.
+    contact:
+        name: Dennis Schulmeister-Zimolong
+        url: 'https://www.wpvs.de'
+        email: dhbw@windows3.de
+    license:
+        name: CC-BY-4.0
+        url: 'https://creativecommons.org/licenses/by/4.0/deed.de'
 servers:
-- url: http://localhost:3000
-tags:
-- name: Index
-- name: Adresse
+    -
+        url: 'http://localhost:3000'
 paths:
-  /:
-    get:
-      tags:
-      - Index
-      summary: Wurzeladresse des Webservices
-      description: Liefert eine HATEOAS-Übersicht aller collections
-      operationId: index
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/HATEOAS_Collection'
-                x-content-type: application/json
-
-  /address:
-    get:
-      tags:
-      - Adresse
-      summary: Adressen suchen
-      description: Suche nach Adressen. Gibt eine Liste aller Adressen passend zu
-        den übergebenen Suchkriterien zurück.
-      operationId: search-address
-      parameters:
-      - name: first_name
-        in: query
-        description: Gesuchter Vorname
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: last_name
-        in: query
-        description: Gesuchter Nachname
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: phone
-        in: query
-        description: Gesuchte Telefonnummer
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: email
-        in: query
-        description: Gesuchte E-Mailadresse
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Address'
-                x-content-type: application/json
-    post:
-      tags:
-      - Adresse
-      summary: Adresse anlegen
-      description: "Neue Adresse anlegen. Speichert die übergebene Adresse in der\
-        \ Datenbank. Der Wert des Feldes \"_id\" wird dabei ignoriert, da in jedem Fall\
-        \ eine neue Adresse mit neuer ID angelegt wird."
-      operationId: create-address
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Address'
-      responses:
-        "201":
-          description: Created
-          headers:
-            Location:
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Address'
-
-  /address/{id}:
-    get:
-      tags:
-      - Adresse
-      summary: Adresse lesen
-      description: Liest eine einzelne Adresse vom Server.
-      operationId: get-address
-      parameters:
-      - name: id
-        in: path
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Address'
-        "404":
-          description: Not Found
-    put:
-      tags:
-      - Adresse überschreiben
-      summary: ""
-      description: "Überschreibt eine vorhandene Adresse auf dem Server. Bis auf die\
-        \ ID können alle Felder geändert werden. Der Versuch, die ID zu ändern, wird\
-        \ vom Server stillschweigend ignoriert."
-      operationId: update-address
-      parameters:
-      - name: id
-        in: path
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Address'
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Address'
-        "404":
-          description: Not Found
-    patch:
-      tags:
-      - Einzelne Felder ändern
-      summary: Einzelne Adressfelder ändern
-      description: "Ändert einzelne Felder einer vorhandenen Adresse. Zulässig sind\
-        \ alle Felder bis auf die ID, da diese nachträglich nicht mehr verändert werden\
-        \ darf."
-      operationId: patch-address
-      parameters:
-      - name: id
-        in: path
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Address'
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Address'
-        "404":
-          description: Not Found
-    delete:
-      tags:
-      - Adresse
-      summary: Adresse löschen
-      description: Löscht eine Adresse auf dem Server.
-      operationId: delete-address
-      parameters:
-      - name: id
-        in: path
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      responses:
-        "204":
-          description: No Content
-        "404":
-          description: Not Found
-
+    /:
+        get:
+            tags:
+                - Index
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/HATEOAS_Collection'
+                                x-content-type: application/json
+                    description: OK
+            operationId: index
+            summary: Wurzeladresse des Webservices
+            description: Liefert eine HATEOAS-Übersicht aller collections
+    /steuerjahr:
+        summary: Path used to manage the list of steuerjahrs.
+        description: >-
+            The REST endpoint/path used to list and create zero or more `Steuerjahr` entities.  This path
+            contains a `GET` and `POST` operation to perform the list and create tasks, respectively.
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Steuerjahr'
+                    description: Successful response - returns an array of `Steuerjahr` entities.
+            operationId: getsteuerjahrs
+            summary: List All steuerjahrs
+            description: Gets a list of all `Steuerjahr` entities.
+        post:
+            requestBody:
+                description: A new `Steuerjahr` to be created.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Steuerjahr'
+                required: true
+            responses:
+                '201':
+                    description: Successful response.
+            operationId: createSteuerjahr
+            summary: Create a Steuerjahr
+            description: Creates a new instance of a `Steuerjahr`.
+        parameters:
+            -
+                name: jahr
+                description: ''
+                schema:
+                    type: number
+                in: query
+    /verdienst:
+        summary: Path used to manage the list of verdiensts.
+        description: >-
+            The REST endpoint/path used to list and create zero or more `Verdienst` entities.  This path
+            contains a `GET` and `POST` operation to perform the list and create tasks, respectively.
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Verdienst'
+                    description: Successful response - returns an array of `Verdienst` entities.
+            operationId: getverdiensts
+            summary: List All verdiensts
+            description: Gets a list of all `Verdienst` entities.
+        post:
+            requestBody:
+                description: A new `Verdienst` to be created.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Verdienst'
+                required: true
+            responses:
+                '201':
+                    description: Successful response.
+            operationId: createVerdienst
+            summary: Create a Verdienst
+            description: Creates a new instance of a `Verdienst`.
+        parameters:
+            -
+                name: jahr
+                description: ''
+                schema:
+                    type: number
+                in: query
+    /user:
+        summary: Path used to manage the list of users.
+        description: >-
+            The REST endpoint/path used to list and create zero or more `User` entities.  This path contains a
+            `GET` and `POST` operation to perform the list and create tasks, respectively.
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/User'
+                    description: Successful response - returns an array of `User` entities.
+            operationId: getusers
+            summary: List All users
+            description: Gets a list of all `User` entities.
+        put:
+            requestBody:
+                description: Updated `User` information.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/User'
+                required: true
+            responses:
+                '202':
+                    description: Successful response.
+            operationId: updateUser
+            summary: Update a User
+            description: Updates an existing `User`.
+        post:
+            requestBody:
+                description: A new `User` to be created.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/User'
+                required: true
+            responses:
+                '201':
+                    description: Successful response.
+            operationId: createUser
+            summary: Create a User
+            description: Creates a new instance of a `User`.
+        parameters:
+            -
+                name: Gesamt-Werbungskosten
+                description: ''
+                schema:
+                    format: double
+                    type: number
+                in: query
+            -
+                name: Gesamt-Einkommen
+                description: ''
+                schema:
+                    format: double
+                    type: number
+                in: query
+            -
+                name: passwort
+                description: ''
+                schema:
+                    type: string
+                in: query
+            -
+                name: username
+                description: ''
+                schema:
+                    type: string
+                in: query
 components:
-  schemas:
-    HATEOAS_Collection:
-      title: HATEOAS-Links einer Collection
-      type: object
-      properties:
-        _name:
-          type: string
-        query:
-          $ref: '#/components/schemas/HATEOAS_Link'
-        create:
-          $ref: '#/components/schemas/HATEOAS_Link'
+    schemas:
+        HATEOAS_Collection:
+            title: HATEOAS-Links einer Collection
+            type: object
+            properties:
+                _name:
+                    type: string
+                query:
+                    $ref: '#/components/schemas/HATEOAS_Link'
+                create:
+                    $ref: '#/components/schemas/HATEOAS_Link'
+        HATEOAS_Link:
+            title: HATEOAS-Link
+            type: object
+            properties:
+                url:
+                    type: string
+                method:
+                    type: string
+                query_params:
+                    type: array
+                    items:
+                        type: string
+        User:
+            description: |-
+                Ein User hat einen Username und ein passwort mit dem er sich anmelden kann
+                    Jeder user besitzt eine zusammenfassende Statistik die alle Steuerjahre und 
+                    alle Verdienste zusammenfassen kann.
 
-    HATEOAS_Resource:
-      title: HATEOAS-Links einer Resource
-      type: object
-      properties:
-        read:
-          $ref: '#/components/schemas/HATEOAS_Link'
-        update:
-          $ref: '#/components/schemas/HATEOAS_Link'
-        patch:
-          $ref: '#/components/schemas/HATEOAS_Link'
-        delete:
-          $ref: '#/components/schemas/HATEOAS_Link'
+                    Ein User besitzt beliebig viele Steuerjahre in denen für das entsprechende Jahr
+                    die Werbungskosten eingetragen werden können.
 
-    HATEOAS_Link:
-      title: HATEOAS-Link
-      type: object
-      properties:
-        url:
-          type: string
-        method:
-          type: string
-        query_params:
-          type: array
-          items:
-            type: string
-
-    Address:
-      title: Adresse
-      type: object
-      properties:
-        _links:
-          $ref: '#/components/schemas/HATEOAS_Resource'
-        _id:
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-        phone:
-          type: string
-        email:
-          type: string
-          pattern: "(.*@.*\\..*)?"
-      example:
-        _id: "621ff9a936997df5baba746e"
-        first_name: "Fox"
-        last_name: "Mulder"
-        email: "mulder@xfiles.com"
-        phone: "+49 721 553181"
-  securitySchemes: {}
+                    Ein User besitzt beliebig viele Verdienste die er zusammenfassend für jedes Jahr
+                    eintragen kann.
+            type: object
+            allOf:
+                -
+                    type: object
+                    properties:
+                        username:
+                            description: name der vom User zur anmeldung angelegt wurde
+                            type: string
+                        passwort:
+                            description: passwort um sich mit dem username anmelden zu können
+                            type: string
+                        Gesamt-Einkommen:
+                            description: gesamt einkommen über alle Jahre
+                            type: number
+                        Geamt-Werbungskosten:
+                            description: 'Alle Werbungskosten '
+                            type: number
+                        Steuerjahr:
+                            $ref: '#/components/schemas/Steuerjahr'
+                            description: ''
+                        Verdienst:
+                            $ref: '#/components/schemas/Verdienst'
+                            description: ''
+                -
+                    $ref: '#/components/schemas/Steuerjahr'
+                -
+                    $ref: '#/components/schemas/Verdienst'
+            example: |-
+                {
+                    "Gesamt-Werbungskosten": 5000,
+                    "Gesamt-Einkommen": 25000,
+                    "username": "MaxMustermann",
+                    "passwort": "geheimesPasswort"
+                      "Steuerjahr": {
+                        "Werbungskosten": 5000,
+                        "Jahr": 2000,
+                      }
+                      "Verdienst": {
+                        "Einkommen": 5000,
+                        "Jahr": 2000,
+                      }
+                }
+        HATEOAS_Resource:
+            title: HATEOAS-Links einer Resource
+            type: object
+            properties:
+                read:
+                    $ref: '#/components/schemas/HATEOAS_Link'
+                update:
+                    $ref: '#/components/schemas/HATEOAS_Link'
+                patch:
+                    $ref: '#/components/schemas/HATEOAS_Link'
+        Steuerjahr:
+            oneOf:
+                -
+                    required: []
+                    type: object
+                    properties:
+                        Jahr:
+                            description: Jahr an dem die Werbungskosten angefallen sind.
+                            type: integer
+                        Werbungskosten:
+                            description: Werbungskosten für ein Steuerjahr
+                            type: number
+                        _links:
+                            $ref: '#/components/schemas/HATEOAS_Link'
+                            description: ''
+            description: ein Jahr mit angefallen Werbungskosten
+            type: object
+            example: |-
+                {
+                  "Werbungskosten": 5000,
+                  "Jahr": 2000,
+                }
+        Verdienst:
+            oneOf:
+                -
+                    required: []
+                    type: object
+                    properties:
+                        jahr:
+                            description: ....
+                            type: integer
+                        Einkommen:
+                            description: einkommen das in dem Jahr angefallen ist.
+                            type: number
+            description: Veridenste die jährlich während dem Studium dazu gekommen sind.
+            type: object
+            example: |-
+                {
+                    "Einkommen": 5000,
+                    "Jahr": 2000,
+                }
