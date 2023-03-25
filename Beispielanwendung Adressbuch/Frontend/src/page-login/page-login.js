@@ -4,7 +4,7 @@ import Page from "../page.js";
 import HtmlTemplate from "./page-login.html";
 
 /**
- * Klasse PageLogin: Stellt die Seite zum Anlegen oder Bearbeiten einer Adresse
+ * Klasse PageLogin: Stellt die Seite zum Anlegen oder Login eines Users
  * zur Verfügung.
  */
 export default class PageLogin extends Page {
@@ -45,8 +45,22 @@ export default class PageLogin extends Page {
                 alert("Geben Sie erst einen Passwort ein.");
                 return;
             }
-              
-        }
+            try {
+                // Make a GET request to the backend to get the dataset with the input username
+                this._dataset = await this._app.backend.fetch("GET", `/address?username=${this._dataset.username}`);
+        
+                // Check if the returned dataset has a valid username and password
+                if (this._dataset && this._dataset.password === this._dataset.password) {
+                    alert("Login successful!");
+                } else {
+                    alert("Invalid username or password!");
+                }
+            } catch (ex) {
+                this._app.showException(ex);
+                return;
+            }
+            //Datasheet weiterleitung
+            window.location.hash = '#/{this._dataset._id}';
     }
     async _register() {
         // Eingegebene Werte prüfen
@@ -76,7 +90,5 @@ export default class PageLogin extends Page {
         // weiterleitung zum Datasheet
         location.hash = "#/";
     }
-};
-
-
+}
     
