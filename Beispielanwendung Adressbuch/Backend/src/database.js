@@ -32,61 +32,7 @@ class DatabaseFactory {
      * wenigstens gleich ein paar Daten.
      */
     async _createDemoData() {
-        let user = this.database.collection("user", {
-            validator: {
-              $jsonSchema: {
-                bsonType: "object",
-                required: ["username", "password", "semester", "steuern"],
-                properties: {
-                  username: {
-                    bsonType: "string",
-                    description: "must be a string and is required"
-                  },
-                  password: {
-                    bsonType: "string",
-                    description: "must be a string and is required"
-                  },
-                  semester: {
-                    bsonType: "int",
-                    minimum: 1,
-                    description: "must be an int greater than 1"
-                  },
-                  steuern: {
-                    bsonType: "int",
-                    minimum: 0,
-                    description: "must be an int greater or equal to 0"
-                  },
-                }
-              }
-              
-            }
-            
-        });
-        let steuerjahr = this.database.collection("steuerjahr", {
-            validator: {
-              $jsonSchema: {
-                bsonType: "object",
-                required: ["username", "jahr", "steuerablassung"],
-                properties: {
-                  username: {
-                    bsonType: "string",
-                    description: "must be a string and is required"
-                  },
-                  jahr: {
-                    bsonType: "int",
-                    minimum: 1900,
-                    description: "must be an int greater than 1900"
-                  },
-                  steuerablassung: {
-                    bsonType: "int",
-                    minimum: 1900,
-                    description: "must be an int greater tahn 1900"
-                  },
-                }
-              }
-            }
-        });
-
+      
         if (await user.estimatedDocumentCount() === 0) {
             user.insertMany([
                 {
