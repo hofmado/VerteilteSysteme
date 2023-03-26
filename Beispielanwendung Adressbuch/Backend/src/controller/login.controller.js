@@ -26,9 +26,8 @@ export default class LoginController {
 
         // Entity: Adresse
         server.get(prefix + "/:id", wrapHandler(this, this.read));
-        server.put(prefix + "/:id", wrapHandler(this, this.update));
-        server.patch(prefix + "/:id", wrapHandler(this, this.update));
-        server.del(prefix + "/:id", wrapHandler(this, this.delete));
+        server.post(prefix + "/:id", wrapHandler(this, this.create));
+        
     }
 
     /**
@@ -44,9 +43,7 @@ export default class LoginController {
 
         entity._links = {
             read:   {url: url, method: "GET"},
-            update: {url: url, method: "PUT"},
-            patch:  {url: url, method: "PATCH"},
-            delete: {url: url, method: "DELETE"},
+            create: {url: url, method: "POST"},
         }
     }
 
@@ -92,24 +89,5 @@ export default class LoginController {
 
         return next();
     }
-
-    /**
-     * PUT /address/:id
-     * PATCH /address/:id
-     * Adresse ändern
-     */
-    async update(req, res, next) {
-        let result = await this._service.update(req.params.id, req.body);
-
-        if (result) {
-            this._insertHateoasLinks(result);
-            res.sendResult(result);
-        } else {
-            throw new RestifyError.NotFoundError("Adresse nicht gefunden");
-        }
-
-        return next();
-    }
-
-    
+  
 }
