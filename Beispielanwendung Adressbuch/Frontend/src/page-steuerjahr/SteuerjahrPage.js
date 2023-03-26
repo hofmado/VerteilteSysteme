@@ -33,7 +33,7 @@ export default class SteuerjahrPage extends Page {
             })
                 .then(response => response.json())
                 .then(data => {
-                    feldWerbungskosten.value = data.werbungskosten;
+                    feldWerbungskosten.innerHTML = data.werbungskosten;
                 });
         });
         
@@ -43,6 +43,7 @@ export default class SteuerjahrPage extends Page {
                 jahr: feldJahr.value,
                 kosten: feldKosten.value,
                 fahrtweg: feldFahrtweg.value,
+                werbungskosten: "",
             };
 
             fetch('/user/steuerjahr/', {
@@ -54,7 +55,7 @@ export default class SteuerjahrPage extends Page {
             })
             .then(response => response.json())
             .then(data => {
-                werbungskosten.innerText = data.werbungskosten;
+                feldWerbungskosten.innerHTML = data.werbungskosten;
             });
         });
           
