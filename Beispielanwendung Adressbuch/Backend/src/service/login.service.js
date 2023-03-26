@@ -21,9 +21,10 @@ export default class LoginService {
      * @return {Promise} Liste der gefundenen Adressen
      */
     async search(query) {
-        let cursor = this._users.find(query, {
+        let cursor = this._users.findOne(query, {
             sort: {
                 username: 1,
+                password:0,
             }
         });
 

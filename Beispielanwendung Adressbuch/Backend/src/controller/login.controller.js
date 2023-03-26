@@ -74,7 +74,7 @@ export default class LoginController {
     }
 
     /**
-     * GET /address/:id
+     * 
      * USER auslesen
      */
     async read(req, res, next) {

@@ -8,7 +8,7 @@ import HtmlTemplate from "./page-login.html";
  * zur Verfügung.
  */
 export default class PageLogin extends Page {
-    constructor(app, editId) {
+    constructor(app) {
         super(app, HtmlTemplate);
 
         this.username = null;
@@ -18,56 +18,60 @@ export default class PageLogin extends Page {
     async init() {
         // HTML-Inhalt nachladen
         await super.init();
-        this._url = '/login'
+        this._url = '/login';
         this._title = "Login";
         // Logindaten laden 
         this._url = `/address/${this._editId}`;
         this._dataset = await this._app.backend.fetch("GET", this._url);
 
-        
-        let loginbutton = document.getElementById("login");
-        let submitbutton = document.getElementById("submit");
+        //Buttons
+        const loginbutton = document.getElementById("login");
+        const submitbutton = document.getElementById("submit");
             // Event Handler registrieren
         loginbutton.addEventListener("click", () => this._askLogin());
         submitbutton.addEventListener("click", () => this._register());
-        }
-        async _askLogin() {
-            this._dataset._id        = this._editId;
-            this._dataset.username = this._firstNameInput.value.trim();
-            this._dataset.password  = this._lastNameInput.value.trim();
-    
-            if (!this._dataset.username) {
-                alert("Geben Sie erst einen Usernamen ein.");
-                return;
-            }
-    
-            if (!this._dataset.password) {
-                alert("Geben Sie erst einen Passwort ein.");
-                return;
-            }
-            try {
-                // Make a GET request to the backend to get the dataset with the input username
-                this._dataset = await this._app.backend.fetch("GET", `/address?username=${this._dataset.username}`);
-        
-                // Check if the returned dataset has a valid username and password
-                if (this._dataset && this._dataset.password === this._dataset.password) {
-                    alert("Login successful!");
-                } else {
-                    alert("Invalid username or password!");
-                }
-            } catch (ex) {
-                this._app.showException(ex);
-                return;
-            }
-            //Datasheet weiterleitung
-            window.location.hash = '#/{this._dataset._id}';
     }
+    async _askLogin() {
+        try { // add try-catch block for error handling
+            const usernamefeld = document.getElementById("username");
+            const passwordfeld = document.getElementById("password");
+            
+            const user = { username: usernamefeld.value }; // fix syntax error here
+            
+            const response = await fetch(`/user/${user.username}`, { // modify endpoint to include username
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (!response.ok) { // check if response status is not ok
+                throw new Error('Failed to retrieve user data');
+            }
+            
+            const userData = await response.json();
+            const password2 = userData.password; // fix syntax error here
+            
+            if (password2 === passwordfeld.value) {
+                alert("Login successful!");
+                location.hash = `/#/address/${userData._id}`; // modify destination URL to match dataset ID
+            } else {
+                alert("Invalid username or password!");
+                usernamefeld.value = null;
+                passwordfeld.value = null;
+            }
+        } catch (ex) {
+            console.error(ex);
+            this._app.showException(ex);
+        }
+    }
+
     async _register() {
         // Eingegebene Werte prüfen
-        this._dataset._id        = this._editId;
-        this._dataset.username = this._firstNameInput.value.trim();
-        this._dataset.password  = this._lastNameInput.value.trim();
-
+        const data = {
+            username: usernamefeld.value,
+            kosten: passwordfeld.value,
+        };
         if (!this._dataset.username) {
             alert("Geben Sie erst einen Usernamen ein.");
             return;
@@ -77,10 +81,16 @@ export default class PageLogin extends Page {
             alert("Geben Sie erst einen Passwort ein.");
             return;
         }
-
         // Datensatz speichern
         try {
-                await this._app.backend.fetch("POST", this._url, {body: this._dataset});
+            fetch('/user/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json());
 
         } catch (ex) {
             this._app.showException(ex);
