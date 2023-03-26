@@ -32,7 +32,11 @@ class DatabaseFactory {
      * wenigstens gleich ein paar Daten.
      */
     async _createDemoData() {
-      
+
+        let steuerjahr = this.database.collection("steuerjahr");
+
+
+        let user = this.database.collection("/user");
         if (await user.estimatedDocumentCount() === 0) {
             user.insertMany([
                 {
@@ -52,22 +56,18 @@ class DatabaseFactory {
                         "Jahr": 2001,
                         "Werbungskosten": 5000
                       },
-                    "Verdienst": {
-                      "Einkommen": 5000,
-                      "Jahr": 2000
-                    }
                 }
             ]);
         }
-        if (await steuerjahr.estimatedDocumentCount() === 0) {
+    
+        if (await steuerjahr.estimatedDocumentCount() === 0) { 
+
             steuerjahr.insertMany([
                 {
-                    username: "Max",
                     jahr: "2022",
                     steuerablassung: "2500",
                 },
                 {
-                    username: "Max",
                     jahr: "2021",
                     steuerablassung: "3500",
                 },

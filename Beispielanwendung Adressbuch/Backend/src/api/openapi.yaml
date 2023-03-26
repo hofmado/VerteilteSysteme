@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.1.0
 info:
     title: Adressbuch
     version: '1.0'
@@ -20,9 +20,13 @@ paths:
     /:
         get:
             tags:
-                - Index
+            - Index
+            summary: Wurzeladresse des Webservices
+            description: Liefert eine HATEOAS-Übersicht aller collections
+            operationId: index
             responses:
                 '200':
+                    description: OK
                     content:
                         application/json:
                             schema:
@@ -30,10 +34,6 @@ paths:
                                 items:
                                     $ref: '#/components/schemas/HATEOAS_Collection'
                                 x-content-type: application/json
-                    description: OK
-            operationId: index
-            summary: Wurzeladresse des Webservices
-            description: Liefert eine HATEOAS-Übersicht aller collections
     /steuerjahr:
         summary: Path used to manage the list of steuerjahrs.
         description: >-
@@ -219,54 +219,60 @@ components:
               type: array
               items:
                 type: string
-            User:
-                description: |-
-                    Ein User hat einen Username und ein passwort mit dem er sich anmelden kann
-                        Jeder user besitzt eine zusammenfassende Statistik die alle Steuerjahre und 
-                        alle Verdienste zusammenfassen kann.
-                        Ein User besitzt beliebig viele Steuerjahre in denen für das entsprechende Jahr
-                        die Werbungskosten eingetragen werden können.
-                        Ein User besitzt beliebig viele Verdienste die er zusammenfassend für jedes Jahr
-                        eintragen kann.
-                type: object
-                allOf:
-                    -
-                        type: object
-                        properties:
-                            username:
-                                description: name der vom User zur anmeldung angelegt wurde
-                                type: string
-                            passwort:
-                                description: passwort um sich mit dem username anmelden zu können
-                                type: string
-                            Gesamt-Einkommen:
-                                description: gesamt einkommen über alle Jahre
-                                type: number
-                            Geamt-Werbungskosten:
-                                description: 'Alle Werbungskosten '
-                                type: number
-                            Steuerjahr:
-                                $ref: '#/components/schemas/Steuerjahr'
-                            Verdienst:
-                                $ref: '#/components/schemas/Verdienst'
-                    -
-                        $ref: '#/components/schemas/Steuerjahr'
-                    -
-                        $ref: '#/components/schemas/Verdienst'
-                example: |-
-                    {
-                        "Gesamt-Werbungskosten": 5000,
-                        "Gesamt-Einkommen": 25000,
-                        "username": "MaxMustermann",
-                        "passwort": "geheimesPasswort"
-                          "Steuerjahr": {
-                            "Werbungskosten": 5000,
-                            "Jahr": 2000,
-                          }
-                          "Verdienst": {
-                            "Einkommen": 5000,
-                            "Jahr": 2000,
-                          }
+        User:
+            description: |-
+                Ein User hat einen Username und ein passwort mit dem er sich anmelden kann
+                Jeder user besitzt eine zusammenfassende Statistik die alle Steuerjahre und 
+                alle Verdienste zusammenfassen kann.
+                Ein User besitzt beliebig viele Steuerjahre in denen für das entsprechende Jahr
+                die Werbungskosten eingetragen werden können.
+                Ein User besitzt beliebig viele Verdienste die er zusammenfassend für jedes Jahr
+                eintragen kann.
+            type: object
+            allOf:
+                -
+                    required: 
+                        - username
+                        - passwort
+
+                    type: object
+                    properties:
+                        username:
+                            description: name der vom User zur anmeldung angelegt wurde
+                            type: string
+                        passwort:
+                            description: passwort um sich mit dem username anmelden zu können
+                            type: string
+                        Gesamt-Einkommen:
+                            description: gesamt einkommen über alle Jahre
+                            type: number
+                        Geamt-Werbungskosten:
+                            description: 'Alle Werbungskosten '
+                            type: number
+                        Steuerjahr:
+                            $ref: '#/components/schemas/Steuerjahr'
+                        Verdienst:
+                            $ref: '#/components/schemas/Verdienst'
+                        _links:
+                            $ref: '#/components/schemas/HATEOAS_Link'
+                -
+                    $ref: '#/components/schemas/Steuerjahr'
+                -
+                    $ref: '#/components/schemas/Verdienst'
+            example: |-
+                {
+                    "Gesamt-Werbungskosten": 5000,
+                    "Gesamt-Einkommen": 25000,
+                    "username": "MaxMustermann",
+                    "passwort": "geheimesPasswort"
+                      "Steuerjahr": {
+                        "Werbungskosten": 5000,
+                        "Jahr": 2000,
+                      }
+                      "Verdienst": {
+                        "Einkommen": 5000,
+                        "Jahr": 2000,
+                      }
                     }
         Steuerjahr:
             oneOf:
