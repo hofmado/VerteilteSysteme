@@ -20,7 +20,7 @@ class DatabaseFactory {
         // Datenbankverbindung herstellen
         this.client = new MongoClient(connectionUrl);
         await this.client.connect();
-        this.database = this.client.db("Steuerjahr");
+        this.database = this.client.db("Steuer");
         
 
         await this._createDemoData();
@@ -32,69 +32,31 @@ class DatabaseFactory {
      * wenigstens gleich ein paar Daten.
      */
     async _createDemoData() {
-        let user = this.database.collection("user", {
-            validator: {
-              $jsonSchema: {
-                bsonType: "object",
-                required: ["username", "password", "semester", "steuern"],
-                properties: {
-                  username: {
-                    bsonType: "string",
-                    description: "must be a string and is required"
-                  },
-                  password: {
-                    bsonType: "string",
-                    description: "must be a string and is required"
-                  },
-                  semester: {
-                    bsonType: "int",
-                    minimum: 1,
-                    description: "must be an int greater than 1"
-                  },
-                  steuern: {
-                    bsonType: "int",
-                    minimum: 0,
-                    description: "must be an int greater or equal to 0"
-                  },
-                }
-              }
-              
-            }
-            
-        });
-        let steuerjahr = this.database.collection("steuerjahr", {
-            validator: {
-              $jsonSchema: {
-                bsonType: "object",
-                required: ["username", "jahr", "steuerablassung"],
-                properties: {
-                  username: {
-                    bsonType: "string",
-                    description: "must be a string and is required"
-                  },
-                  jahr: {
-                    bsonType: "int",
-                    minimum: 1900,
-                    description: "must be an int greater than 1900"
-                  },
-                  steuerablassung: {
-                    bsonType: "int",
-                    minimum: 1900,
-                    description: "must be an int greater tahn 1900"
-                  },
-                }
-              }
-            }
-        });
-
+      
         if (await user.estimatedDocumentCount() === 0) {
             user.insertMany([
                 {
-                    username: "Max",
-                    password: "1",
-                    gesamt_steuer: "6000",
-                    semester: "4",
-                },
+                    "Gesamt-Werbungskosten": 5000,
+                    "Gesamt-Einkommen": 25000,
+                    "username": "MaxMustermann",
+                    "passwort": "geheimesPasswort",
+                    "Steuerjahr": {
+                      "Jahr": 2000,
+                      "Werbungskosten": 5000
+                    },
+                    "Steuerjahr": {
+                        "Jahr": 2002,
+                        "Werbungskosten": 5000
+                      },
+                      "Steuerjahr": {
+                        "Jahr": 2001,
+                        "Werbungskosten": 5000
+                      },
+                    "Verdienst": {
+                      "Einkommen": 5000,
+                      "Jahr": 2000
+                    }
+                }
             ]);
         }
         if (await steuerjahr.estimatedDocumentCount() === 0) {

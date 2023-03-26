@@ -6,7 +6,8 @@ import OpenApiEnforcerMiddleware from "@dschulmeis/restify-openapi-enforcer-midd
 
 import DatabaseFactory from "./database.js";
 import RootController from "./controller/root.controller.js";
-import AdressController from "./controller/address.controller.js";
+import AdressController from "./controller/steuerjahr.controller.js";
+
 //TO-DO: eigene Controller Datei hinzufügen!!
 
 // Verzeichnisnamen der Quellcodedatei ermitteln
@@ -98,7 +99,7 @@ new AdressController(server, "/address");
 server.listen(config.port, config.host, function() {
     console.log();
     console.log("=================");
-    console.log("Stuer-Server");
+    console.log("Steur-Server");
     console.log("=================");
     console.log();
     console.log("Ausführung mit folgender Konfiguration:");
