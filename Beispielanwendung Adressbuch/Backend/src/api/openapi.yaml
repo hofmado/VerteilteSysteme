@@ -62,17 +62,15 @@ paths:
                 required: true
             responses:
                 '201':
-                    description: Successful response.
+                    description: Created
+                    headers:
+                        Location:
+                            schema:
+                            type: plane
             operationId: createSteuerjahr
             summary: Create a Steuerjahr
             description: Creates a new instance of a `Steuerjahr`.
-        parameters:
-            -
-                name: jahr
-                description: ''
-                schema:
-                    type: number
-                in: query
+        
     /verdienst:
         summary: Path used to manage the list of verdiensts.
         description: >-

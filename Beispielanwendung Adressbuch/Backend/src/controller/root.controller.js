@@ -27,6 +27,19 @@ export default class RootController {
      * GET /openapi.yaml:
      * Abruf der OpenAPI-Spezifikation
      */
+
+    async index(req, res, next) {
+        res.sendResult([
+            {
+                _name: "steuerjahr",
+                query: {url: "/steuerjahr", method: "GET", query_params: ["search", "jahr"]},
+                create: {url: "/steuerjahr", method: "POST"},
+            }
+        ]);
+
+        next();
+    }
+
     async openApi(req, res, next) {
         if (req.query.openapi !== undefined) {
             let filecontent = await readFile(this._openApiFile);
