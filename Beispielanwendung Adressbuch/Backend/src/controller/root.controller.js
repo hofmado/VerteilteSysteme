@@ -5,9 +5,9 @@ import path from "path";
 import { readFile } from "fs/promises";
 
 /**
- * Controller für die Wurzeladresse des Webservices. Ermöglicht in dieser
- * Fassung den Abruf der OpenAPI-Spezifikation unter `/?openapi` sowie den
- * Abruf einer HATEOAS-Übersucht unter `/`.
+* Controller für die Wurzeladresse des Webservices. Ermöglicht in dieser
+* Fassung den Abruf der OpenAPI-Spezifikation unter `/?openapi` sowie den
+* Abruf einer HATEOAS-Übersucht unter `/`.
  */
 export default class RootController {
     /**
@@ -23,6 +23,25 @@ export default class RootController {
         server.get(prefix, wrapHandler(this, this.index));
         server.get(prefix + "/openapi.yaml", wrapHandler(this, this.openApi));
     }
+
+    /**
+     * GET /:
+     * Übersicht über die vorhandenen Collections liefern (HATEOAS-Prinzip,
+     * so dass Clients die URL-Struktur des Webservices entdecken können).
+     */
+    async index(req, res, next) {
+        //// TODO: Example-Collection hier durch eigene Collections ersetzen ////
+        res.sendResult([
+            // {
+            //     _name: "example",
+            //     query: {url: "/example", method: "GET", queryParams: ["search"]},
+            //     create: {url: "/example", method: "POST"},
+            // }
+        ]);
+
+        next();
+    }
+
     /**
      * GET /openapi.yaml:
      * Abruf der OpenAPI-Spezifikation

@@ -30,6 +30,10 @@ class App {
             },
             
             //Eigene Regeln????
+            {
+                url: "/page-berechnungen/$",
+                show: () => this._gotoBerechnungen()
+            },
 
             {
                 url: ".*",
@@ -61,6 +65,31 @@ class App {
         }
     }
 
+    async _gotoList() {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageList} = await import("./page-list/page-list.js");
+
+            let page = new PageList(this);
+            await page.init();
+            this._showPage(page, "list");
+        } catch (ex) {
+            this.showException(ex);
+        }
+    }
+
+    async _gotoBerechnungen() {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageBerechnungen} = await import("./page-berechnungen/page-berechnungen.js");
+
+            let page = new PageBerechnungen(this);
+            await page.init();
+            this._showPage(page, "berechnungen");
+        } catch (ex) {
+            this.showException(ex);
+        }
+    }
     /**
      * Interne Methode zum Umschalten der sichtbaren Seite.
      *

@@ -31,7 +31,7 @@ export default class PageList extends Page {
     async init() {
         // HTML-Inhalt nachladen
         await super.init();
-        this._title = "Übersicht";
+        this._title = "berechnungen";
 
         //// TODO: Anzuzeigende Inhalte laden mit this._app.backend.fetch() ////
         this._app.backend.fetch()
