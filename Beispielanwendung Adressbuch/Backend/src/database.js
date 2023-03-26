@@ -31,8 +31,10 @@ class DatabaseFactory {
      * wenigstens gleich ein paar Daten.
      */
     async _createDemoData() {
-        let user = this.database.collection("user");
-        let steuerjahr = this.database.collection("steuerjahr");
+        //// TODO: Methode anpassen, um zur eigenen App passende Demodaten anzulegen ////
+        //// oder die Methode ggf. einfach löschen und ihren Aufruf oben entfernen.  ////
+        /*let user = this.database.collection("user");
+        let steuerjahr = this.database.collection("steuerjahr");*/
 
         if (await user.estimatedDocumentCount() === 0) {
             user.insertMany([
@@ -51,8 +53,46 @@ class DatabaseFactory {
                     },
                 },
             ]);
+        }     
+    }
+
+    //Methode um Steuerjahre bzw. Semester zusammenzuzählen und zu übergeben
+    async _getSteuerjahre() {
+        let user = this.database.collection("user");
+        let steuerjahr = this.database.collection("steuerjahr");
+        let gesamtersparnis = 0;
+
+        if (await user.semester_anzahl === 0) {
+            //Tu nichts, da keine Semester eingetragen wurden
+            ;         
+        }
+        
+        else {
+            //Daten holen
+            user.forEach(user.steuerjahr() {
+               gesamtersparnis += steuerjahr.steuerablassungen; //Was ist hier falsch?
+            });
+
+            //Gesamtersparnis in DB festhalten
+            user.insert() //Hier Gesamtersparnis füllen
+            return gesamtersparnis;
+
         }
     }
+
+    //Methode um zu prüfen ob Nebenjob stattgefunden hat
+    async _getNebenjob() {
+        if (await user.nebenjob === false) {
+            //Tu nichts, da kein Nebenjob eingetragen wurden
+            ;         
+        }
+        
+        else {
+            //Daten holen
+            return user._getNebenjob();
+        }
+    }
+
 }
 
 export default new DatabaseFactory();
