@@ -2,7 +2,8 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Adressbuch</title>
+        <!-- TODO: Titel ändern -->
+        <title>Gesamtersparnis</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!-- Mit esbuild erzeugte Bundles aus allen JS/CSS-Dateien -->
@@ -18,7 +19,22 @@
     <body>
         <!-- Kopfbereich mit Tabreitern -->
         <nav id="app-menu">
+            <!-- TODO: Menü anpassen -->
             <ul>
+                <li data-page-name="list">
+                    <a href="#/">Übersicht</a>
+                </li>
+                <li data-page-name="new">
+                    <a href="#/new/">Beispiel hinzufügen</a>
+                </li>
+                <li data-page-name="edit" class="non-interactive">
+                    <a>Beispiel bearbeiten</a>
+                </li>
+
+                <!--Eigene Seite hinzugefügt-->
+                <li data-page-name="Berechnungen" class="non-interactive"> <!--non-interactive?-->
+                    <a href="page-berechnungen.html">Gesamtersparnis</a>
+                </li>
             </ul>
         </nav>
 
@@ -28,3 +44,4 @@
         -->
     </body>
 </html>
+

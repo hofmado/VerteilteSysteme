@@ -21,11 +21,17 @@ class App {
         this.backend = new Backend();
 
         // Single Page Router zur Steuerung der sichtbaren Inhalte
+
+        // To-Do: Routing-Regeln anpassen und ggf. neue Methoden anlegen
         this.router = new Router([
             {
                 url: "^/$",
                 show: () => this._gotoList()
-            },{
+            },
+            
+            //Eigene Regeln????
+
+            {
                 url: ".*",
                 show: () => this._gotoList()
             },
