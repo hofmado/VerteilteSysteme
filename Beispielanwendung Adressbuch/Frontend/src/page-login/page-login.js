@@ -21,7 +21,6 @@ export default class PageLogin extends Page {
         this._url = '/login';
         this._title = "Login";
         // Logindaten laden 
-        this._url = `/address/${this._editId}`;
         this._dataset = await this._app.backend.fetch("GET", this._url);
 
         //Buttons
@@ -32,29 +31,30 @@ export default class PageLogin extends Page {
         submitbutton.addEventListener("click", () => this._register());
     }
     async _askLogin() {
-        try { // add try-catch block for error handling
+        try {
             const usernamefeld = document.getElementById("username");
             const passwordfeld = document.getElementById("password");
-            
-            const user = { username: usernamefeld.value }; // fix syntax error here
-            
-            const response = await fetch(`/user/${user.username}`, { // modify endpoint to include username
+            // Set username and password properties
+            this.username = usernamefeld.value;
+            this.password = passwordfeld.value;
+
+            const response = await fetch(`/user/${this.username}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
-            
-            if (!response.ok) { // check if response status is not ok
+
+            if (!response.ok) {
                 throw new Error('Failed to retrieve user data');
             }
-            
+
             const userData = await response.json();
-            const password2 = userData.password; // fix syntax error here
-            
-            if (password2 === passwordfeld.value) {
+            const password2 = userData.password;
+
+            if (password2 === this.password) {
                 alert("Login successful!");
-                location.hash = `/#/address/${userData._id}`; // modify destination URL to match dataset ID
+                location.hash = `/#/user/${userData._id}`;
             } else {
                 alert("Invalid username or password!");
                 usernamefeld.value = null;
@@ -68,37 +68,45 @@ export default class PageLogin extends Page {
 
     async _register() {
         // Eingegebene Werte prüfen
+        const usernamefeld = document.getElementById("username");
+        const passwordfeld = document.getElementById("password");
+    
         const data = {
             username: usernamefeld.value,
-            kosten: passwordfeld.value,
+            password: passwordfeld.value,
         };
-        if (!this._dataset.username) {
+    
+        if (!data.username) {
             alert("Geben Sie erst einen Usernamen ein.");
             return;
         }
-
-        if (!this._dataset.password) {
+    
+        if (!data.password) {
             alert("Geben Sie erst einen Passwort ein.");
             return;
         }
+    
         // Datensatz speichern
         try {
-            fetch('/user/', {
+            const response = await fetch('/user/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
-            })
-            .then(response => response.json());
-
+            });
+    
+            if (!response.ok) {
+                throw new Error('Failed to save user data');
+            }
+    
+            const responseData = await response.json();
+            alert("Registration successful!");
+            location.hash = `/#/user/${responseData._id}`;
         } catch (ex) {
             this._app.showException(ex);
             return;
         }
-
-        // weiterleitung zum Datasheet
-        location.hash = "#/";
     }
 }
     
