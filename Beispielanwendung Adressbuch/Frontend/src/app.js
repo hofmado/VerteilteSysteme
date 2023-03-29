@@ -32,7 +32,7 @@ class App {
                 url: "^/edit/(.*)$",
                 show: matches => this._gotoEdit(matches[1]),
             },{
-                url: "^/login/$",
+                url: "^/user/$",
                 show: () => this._gotoLogin(),
             },{
                 url: ".*",

@@ -93,7 +93,7 @@ server.use(OpenApiEnforcerMiddleware(openApiEnforcer));
 // HTTP-Controller registrieren
 new RootController(server, "/", openApiFile);
 new AdressController(server, "/address");
-new LoginController(server,"/login");
+new LoginController(server,"/user");
 // Server tatsächlich starten
 server.listen(config.port, config.host, function() {
     console.log();

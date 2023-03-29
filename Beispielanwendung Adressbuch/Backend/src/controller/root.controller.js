@@ -38,8 +38,8 @@ export default class RootController {
             },
             {
                 _name: "login",
-                query: {url: "/login", method: "GET", query_params: ["search", "username", "password"]},
-                create: {url: "/login", method: "POST"},
+                query: {url: "/user", method: "GET", query_params: ["search", "username", "password"]},
+                create: {url: "/user", method: "POST"},
             }
         ]);
 
