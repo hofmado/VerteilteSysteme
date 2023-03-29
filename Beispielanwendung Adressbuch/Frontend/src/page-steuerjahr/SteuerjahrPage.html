@@ -1,0 +1,78 @@
+<style>
+
+    /*FORMULARFELDER */
+    main {
+        background-color: white;
+        padding: 1em;
+    }
+
+    main .form > * {
+        display: block;
+        width: 100%;
+
+        border: 0px solid lightgrey;
+        border-bottom-width: 1px;
+
+        padding: 0.5em 0 0.5em 0;
+        margin-bottom: 1em;
+    }
+
+    /* AKTIONSBUTTONS */
+    main .actions {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    main .actions > div {
+        padding: 0.5em;
+        margin: 0.5em;
+
+        background-color: #e0e0e0;
+        transition: background-color 0.5s;
+
+        flex: 1;
+        text-align: center;
+    }
+
+    main .actions > div:first-child {
+        margin-left: 0;
+    }
+
+    main .actions > div:last-child {
+        margin-right: 0;
+    }
+
+    main .actions > div:hover {
+        background-color: #f0f0f0;
+        cursor: pointer;
+    }
+</style>
+
+<main>
+    
+    <br> username 
+    <br/>
+    <input type="text" id="name"/>
+    
+    <br> Jahr 
+    <br/>
+    <input type="text" id="jahr"/>
+
+    <br> Fahrtweg
+    <br/>
+    <input type="text" id="fahrtweg"/>
+
+    <br> Werbungskosten
+    <br/>
+    <input type="text" id="kosten"/>
+
+    <br> Absetzbarerbetrag
+    <br/>
+    <input type="text" id="werbungskosten" />
+    <br/>
+
+    <button id="get-data">Get Data</button>
+    <button id="save-data">Save Data</button>
+
+
+</main>
