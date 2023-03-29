@@ -50,13 +50,14 @@ export default class LoginController {
     /**
      * GET /address
      * Adressen suchen
-     */
+     
     async search(req, res, next) {
         let result = await this._service.search(req.query);
         result.forEach(entity => this._insertHateoasLinks(entity));
         res.sendResult(result);
         return next();
     }
+    **/
 
     /**
      * POST /address

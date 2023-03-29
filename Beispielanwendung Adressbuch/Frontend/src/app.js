@@ -103,7 +103,7 @@ class App {
 
             let page = new PageLogin(this);
             await page.init();
-            this._showPage(page, "User");
+            this._showPage(page, "user");
         } catch (ex) {
             this.showException(ex);
         }
