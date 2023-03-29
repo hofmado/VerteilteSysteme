@@ -20,16 +20,14 @@ export default class LoginService {
      * @param {Object} query Optionale Suchparameter
      * @return {Promise} Liste der gefundenen Adressen
      */
-    async search(query) {
-        let cursor = this._users.findOne(query, {
-            sort: {
-                username: 1,
-                password:0,
-            }
-        });
-
-        return cursor.toArray();
-    }
+    async findUserByName(username) {
+        try {
+          return await this._collection.findOne({ username });
+        } catch (error) {
+          return null
+        }
+      }
+    
 
     /**
      * Speichern einer neuen Adresse.
