@@ -30,7 +30,7 @@ export default class LoginService {
     
 
     /**
-     * Speichern einer neuen Adresse.
+     * Speichern eines Users.
      *
      * @param {Object} user Zu speichernde Adressdaten
      * @return {Promise} Gespeicherte Adressdaten
