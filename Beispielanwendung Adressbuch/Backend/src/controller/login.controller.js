@@ -21,7 +21,7 @@ export default class LoginController {
         this._prefix = prefix;
 
         // Collection: Adressen
-        server.get(prefix, wrapHandler(this, this.search));
+        server.get(prefix, wrapHandler(this, this.read));
         server.post(prefix, wrapHandler(this, this.create));
 
         // Entity: Adresse

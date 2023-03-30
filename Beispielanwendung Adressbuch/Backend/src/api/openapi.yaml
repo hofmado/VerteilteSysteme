@@ -246,16 +246,16 @@ components:
                 -
                     $ref: '#/components/schemas/Verdienst'
             example:
-                    Gesamt-Werbungskosten: "5000"
-                    Gesamt-Einkommen: "25000"
+                    Gesamt-Werbungskosten: 5000
+                    Gesamt-Einkommen: 25000
                     username: "MaxMustermann"
                     passwort: "geheimesPasswort"
-                    Steuerjahr: 
-                        Jahr: "2000"
-                        Werbungskosten: "5000"
+                    Steuerjahr:
+                        Jahr: 2000
+                        Werbungskosten: 5000
                     Verdienst: 
-                        Einkommen: "5000"
-                        Jahr: "2000"
+                        Einkommen: 5000
+                        Jahr: 2000
                       
         HATEOAS_Resource:
             title: HATEOAS-Links einer Resource
@@ -303,7 +303,7 @@ components:
             description: Veridenste die jährlich während dem Studium dazu gekommen sind.
             type: object
             example: 
-                    Einkommen: "5000"
-                    Jahr: "2000"
+                    Einkommen: 5000
+                    Jahr: 2000
     securitySchemes: {}
       

@@ -8,22 +8,19 @@ import HtmlTemplate from "./page-login.html";
 export default class PageLogin extends Page {
     constructor(app) {
         super(app, HtmlTemplate);
-
-        this.username = null;
-        this.password = null;
         
     }
     async init() {
         // HTML-Inhalt nachladen
         await super.init();
-        this._url = '/user';
-        this._title = "User";
+        //this._url = '/user';
+        this._title = "user";
         // Logindaten laden 
-        this._dataset = await this._app.backend.fetch("GET", this._url);
+        //this._dataset = await this._app.backend.fetch("GET", this._url);
 
         //Buttons
-        const loginbutton = document.getElementById("login");
-        const submitbutton = document.getElementById("submit");
+        const loginbutton = this._mainElement.querySelector('#login')
+        const submitbutton = this._mainElement.querySelector('#submit');
             // Event Handler registrieren
         loginbutton.addEventListener("click", () => this._askLogin());
         submitbutton.addEventListener("click", () => this._register());
