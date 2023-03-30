@@ -1,5 +1,3 @@
-"use strict";
-
 import Page from "../page.js";
 import HtmlTemplate from "./page-login.html";
 
@@ -19,7 +17,7 @@ export default class PageLogin extends Page {
         // HTML-Inhalt nachladen
         await super.init();
         this._url = '/user';
-        this._title = "Login";
+        this._title = "User";
         // Logindaten laden 
         this._dataset = await this._app.backend.fetch("GET", this._url);
 
