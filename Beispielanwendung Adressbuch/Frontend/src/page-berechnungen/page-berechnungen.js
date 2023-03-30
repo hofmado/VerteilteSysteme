@@ -6,7 +6,7 @@ import HtmlTemplate from "./page-berechnungen.html"; /* hier page-berechnungen s
 /**
  * Klasse PageList: Stellt die Listenübersicht zur Verfügung
  */
-export default class PageList extends Page {
+export default class PageBerechnungen extends Page {
     /**
      * Konstruktor.
      *
@@ -28,14 +28,23 @@ export default class PageList extends Page {
      * `this._mainElement` nachbearbeitet werden, um die angezeigten Inhalte
      * zu beeinflussen.
      */
+          
     async init() {
         // HTML-Inhalt nachladen
         await super.init();
+        //this._url = '/user';
         this._title = "berechnungen";
 
+        //Hier Buttons nennen
+        //Buttons
+        const loginbutton = this._mainElement.querySelector('#login')
+        const submitbutton = this._mainElement.querySelector('#submit');
+            // Event Handler registrieren
+        loginbutton.addEventListener("click", () => this._askLogin());
         //// TODO: Anzuzeigende Inhalte laden mit this._app.backend.fetch() ////
-        this._app.backend.fetch()
+        submitbutton.addEventListener("click", () => this._register());
         //// TODO: Inhalte in die HTML-Struktur einarbeiten ////
         //// TODO: Neue Methoden für Event Handler anlegen und hier registrieren ////
     }
 };
+
