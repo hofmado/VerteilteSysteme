@@ -20,13 +20,9 @@ paths:
     /:
         get:
             tags:
-            - Index
-            summary: Wurzeladresse des Webservices
-            description: Liefert eine HATEOAS-Übersicht aller collections
-            operationId: index
+                - Index
             responses:
                 '200':
-                    description: OK
                     content:
                         application/json:
                             schema:
@@ -34,50 +30,49 @@ paths:
                                 items:
                                     $ref: '#/components/schemas/HATEOAS_Collection'
                                 x-content-type: application/json
+                    description: OK
+            operationId: index
+            summary: Wurzeladresse des Webservices
+            description: Liefert eine HATEOAS-Übersicht aller collections
     /steuerjahr:
-      summary: Path used to manage the list of steuerjahrs.
-      description: >-
-        The REST endpoint/path used to list and create zero or more `Steuerjahr` entities.  This path
-        contains a `GET` and `POST` operation to perform the list and create tasks, respectively.
-      get:
-        operationId: getsteuerjahr
-        summary: List All verdiensts
-        description: Gets a list of all `Verdienst` entities.
-        tags:
-        - steuerjahr
-        responses:
-          '200':
-              description: ok
-              content:
-                application/json:
-                  schema:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Steuerjahr'
-                    x-content-type: application/json
-      post:
-        requestBody:
-          description: A new `Steuerjahr` to be created.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Steuerjahr'
-        responses:
-          '201':
-            description: Created
-            headers:
-              Location:
-                description: The URI of the newly created `Steuerjahr` resource.
+        summary: Path used to manage the list of steuerjahrs.
+        description: >-
+            The REST endpoint/path used to list and create zero or more `Steuerjahr` entities.  This path
+            contains a `GET` and `POST` operation to perform the list and create tasks, respectively.
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Steuerjahr'
+                    description: Successful response - returns an array of `Steuerjahr` entities.
+            operationId: getsteuerjahrs
+            summary: List All steuerjahrs
+            description: Gets a list of all `Steuerjahr` entities.
+        post:
+            requestBody:
+                description: A new `Steuerjahr` to be created.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Steuerjahr'
+                required: true
+            responses:
+                '201':
+                    description: Successful response.
+            operationId: createSteuerjahr
+            summary: Create a Steuerjahr
+            description: Creates a new instance of a `Steuerjahr`.
+        parameters:
+            -
+                name: jahr
+                description: ''
                 schema:
-                  type: string
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Steuerjahr'
-        operationId: createSteuerjahr
-        summary: Create a Steuerjahr
-        description: Creates a new instance of a `Steuerjahr`.
-
+                    type: number
+                in: query
     /verdienst:
         summary: Path used to manage the list of verdiensts.
         description: >-
@@ -103,13 +98,9 @@ paths:
                     application/json:
                         schema:
                             $ref: '#/components/schemas/Verdienst'
+                required: true
             responses:
                 '201':
-                    headers:
-                        Location:
-                            description: The URL of the newly created Verdienst entity.
-                            schema:
-                                type: string
                     description: Successful response.
             operationId: createVerdienst
             summary: Create a Verdienst
@@ -127,55 +118,46 @@ paths:
             The REST endpoint/path used to list and create zero or more `User` entities.  This path contains a
             `GET` and `POST` operation to perform the list and create tasks, respectively.
         get:
-          operationId: getusers
-          summary: List All users
-          description: Gets a list of all `User` entities.
-          tags:
-          - user
-          responses:
-            '200':
-                description: ok.
-                content:
+            responses:
+                '200':
+                    content:
                         application/json:
                             schema:
                                 type: array
                                 items:
                                     $ref: '#/components/schemas/User'
+                    description: Successful response - returns an array of `User` entities.
+            operationId: getusers
+            summary: List All users
+            description: Gets a list of all `User` entities.
         put:
-          tags:
-          - user
-          requestBody:
+            requestBody:
                 description: Updated `User` information.
                 content:
                     application/json:
                         schema:
                             $ref: '#/components/schemas/User'
-          responses:
+                required: true
+            responses:
                 '202':
                     description: Successful response.
-          operationId: updateUser
-          summary: Update a User
-          description: Updates an existing `User`.
+            operationId: updateUser
+            summary: Update a User
+            description: Updates an existing `User`.
         post:
-          tags:
-          - user
-          requestBody:
+            requestBody:
                 description: A new `User` to be created.
                 content:
                     application/json:
                         schema:
                             $ref: '#/components/schemas/User'
-          responses:
+                required: true
+            responses:
                 '201':
-                    headers:
-                        Location:
-                            description: The URL of the newly created Verdienst entity.
-                            schema:
-                                type: string
                     description: Successful response.
-          operationId: createUser
-          summary: Create a User
-          description: Creates a new instance of a `User`.
+            operationId: createUser
+            summary: Create a User
+            description: Creates a new instance of a `User`.
         parameters:
             -
                 name: Gesamt-Werbungskosten
@@ -215,82 +197,88 @@ components:
                     $ref: '#/components/schemas/HATEOAS_Link'
                 create:
                     $ref: '#/components/schemas/HATEOAS_Link'
-        HATEOAS_Resource:
-          title: HATEOAS-Links einer Resource
-          type: object
-          properties:
-            read:
-              $ref: '#/components/schemas/HATEOAS_Link'
-            update:
-              $ref: '#/components/schemas/HATEOAS_Link'
-            patch:
-              $ref: '#/components/schemas/HATEOAS_Link'
         HATEOAS_Link:
-          title: HATEOAS-Link
-          type: object
-          properties:
-            url:
-              type: string
-            method:
-              type: string
-            query_params:
-              type: array
-              items:
-                type: string
+            title: HATEOAS-Link
+            type: object
+            properties:
+                url:
+                    type: string
+                method:
+                    type: string
+                query_params:
+                    type: array
+                    items:
+                        type: string
         User:
             description: |-
                 Ein User hat einen Username und ein passwort mit dem er sich anmelden kann
-                Jeder user besitzt eine zusammenfassende Statistik die alle Steuerjahre und 
-                alle Verdienste zusammenfassen kann.
-                Ein User besitzt beliebig viele Steuerjahre in denen für das entsprechende Jahr
-                die Werbungskosten eingetragen werden können.
-                Ein User besitzt beliebig viele Verdienste die er zusammenfassend für jedes Jahr
-                eintragen kann.
+                    Jeder user besitzt eine zusammenfassende Statistik die alle Steuerjahre und 
+                    alle Verdienste zusammenfassen kann.
+                    Ein User besitzt beliebig viele Steuerjahre in denen für das entsprechende Jahr
+                    die Werbungskosten eingetragen werden können.
+                    Ein User besitzt beliebig viele Verdienste die er zusammenfassend für jedes Jahr
+                    eintragen kann.
             type: object
             allOf:
-                - required: 
-                  - username
-                  - passwort
-                  type: object
-                  properties:
-                    username:
-                      description: name der vom User zur anmeldung angelegt wurde
-                      type: string
-                    passwort:
-                      description: passwort um sich mit dem username anmelden zu können
-                      type: string
-                    Gesamt-Einkommen:
-                      description: gesamt einkommen über alle Jahre
-                      type: number
-                    Geamt-Werbungskosten:
-                      description: 'Alle Werbungskosten '
-                      type: number
-                    _links:
-                      $ref: '#/components/schemas/HATEOAS_Link'
-                - $ref: '#/components/schemas/Steuerjahr'
-                - $ref: '#/components/schemas/Verdienst'
-            example: |-
-                {
+                -
+                    type: object
+                    properties:
+                        username:
+                            description: name der vom User zur anmeldung angelegt wurde
+                            type: string
+                        passwort:
+                            description: passwort um sich mit dem username anmelden zu können
+                            type: string
+                        Gesamt-Einkommen:
+                            description: gesamt einkommen über alle Jahre
+                            type: number
+                        Geamt-Werbungskosten:
+                            description: 'Alle Werbungskosten '
+                            type: number
+                        Steuerjahr:
+                            $ref: '#/components/schemas/Steuerjahr'
+                            description: ''
+                        Verdienst:
+                            $ref: '#/components/schemas/Verdienst'
+                            description: ''
+                -
+                    $ref: '#/components/schemas/Steuerjahr'
+                -
+                    $ref: '#/components/schemas/Verdienst'
+            example:
+                    {
                     "Gesamt-Werbungskosten": 5000,
                     "Gesamt-Einkommen": 25000,
                     "username": "MaxMustermann",
-                    "passwort": "geheimesPasswort"
-                      "Steuerjahr": {
+                    "passwort": "geheimesPasswort",
+                    "Steuerjahr":
+                        {
                         "Werbungskosten": 5000,
                         "Jahr": 2000
-                      }
-                      "Verdienst": {
+                        },
+                    "Verdienst": 
+                        {
                         "Einkommen": 5000,
                         "Jahr": 2000
-                      }
+                        }
                     }
+                      
+        HATEOAS_Resource:
+            title: HATEOAS-Links einer Resource
+            type: object
+            properties:
+                read:
+                    $ref: '#/components/schemas/HATEOAS_Link'
+                update:
+                    $ref: '#/components/schemas/HATEOAS_Link'
+                patch:
+                    $ref: '#/components/schemas/HATEOAS_Link'
         Steuerjahr:
             oneOf:
-                - required: 
-                  - Jahr
-                  - Werbungskosten          
-                  type: object
-                  properties:
+                -
+                    required: []
+                    type: object
+                    properties:
                         Jahr:
                             description: Jahr an dem die Werbungskosten angefallen sind.
                             type: integer
@@ -299,35 +287,33 @@ components:
                             type: number
                         _links:
                             $ref: '#/components/schemas/HATEOAS_Link'
+                            description: ''
             description: ein Jahr mit angefallen Werbungskosten
             type: object
-            example: |-
+            example:
                 {
-                  "Werbungskosten": 5000,
-                  "Jahr": 2000,
+                "Werbungskosten": 5000,
+                "Jahr": 2000
                 }
+                
         Verdienst:
             oneOf:
                 -
-                    required: 
-                      - jahr
-                      - Einkommen
-                    
+                    required: []
                     type: object
                     properties:
-                      Jahr:
-                        description: Jahr an dem die Werbungskosten angefallen sind.
-                        type: integer
-                      Werbungskosten:
-                        description: Werbungskosten für ein Steuerjahr
-                        type: number
-                      _links:
-                        $ref: '#/components/schemas/HATEOAS_Link'
-            description: 'ein Jahr mit angefallen Werbungskosten'
+                        jahr:
+                            description: ....
+                            type: integer
+                        Einkommen:
+                            description: einkommen das in dem Jahr angefallen ist.
+                            type: number
+            description: Veridenste die jährlich während dem Studium dazu gekommen sind.
             type: object
-            example: |-
-              {
+            example: 
+                {
                 "Einkommen": 5000,
-                "Jahr": 2000,
-              }
+                "Jahr": 2000
+                }
+    securitySchemes: {}
       
