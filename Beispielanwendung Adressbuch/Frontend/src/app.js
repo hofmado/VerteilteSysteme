@@ -24,7 +24,7 @@ class App {
         this.router = new Router([
             {
                 url: "^/$",
-                show: () => this._gotoList()
+                show: () => this._gotoLogin()
             },{
                 url: "^/new/$",
                 show: () => this._gotoNew()
@@ -36,7 +36,7 @@ class App {
                 show: () => this._gotoLogin(),
             },{
                 url: ".*",
-                show: () => this._gotoList()
+                show: () => this._gotoLogin()
             },
         ]);
 
