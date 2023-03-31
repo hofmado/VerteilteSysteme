@@ -118,6 +118,9 @@ paths:
             The REST endpoint/path used to list and create zero or more `User` entities.  This path contains a
             `GET` and `POST` operation to perform the list and create tasks, respectively.
         get:
+            tags:
+                - password
+                - username
             responses:
                 '200':
                     content:
@@ -152,6 +155,26 @@ paths:
                         schema:
                             $ref: '#/components/schemas/User'
                 required: true
+            tags:
+                - username
+                - password
+            parameters:
+                -
+                    name: password
+                    description: ''
+                    schema:
+                        type: string
+                    in: query
+                -
+                    name: userlogin
+                    description: |-
+                        {
+                            "username": "MaxMustermann",
+                            "password": "geheimesPasswort"
+                            
+                        }
+                    schema: {}
+                    in: header
             responses:
                 '201':
                     description: Successful response.
@@ -246,23 +269,16 @@ components:
                 -
                     $ref: '#/components/schemas/Verdienst'
             example:
-                    {
-                    "Gesamt-Werbungskosten": 5000,
-                    "Gesamt-Einkommen": 25000,
-                    "username": "MaxMustermann",
-                    "password": "geheimesPasswort",
-                    "Steuerjahr":
-                        {
-                        "Werbungskosten": 5000,
-                        "Jahr": 2000
-                        },
-                    "Verdienst": 
-                        {
-                        "Einkommen": 5000,
-                        "Jahr": 2000
-                        }
-                    }
-                      
+                Gesamt-Werbungskosten: 5000
+                Gesamt-Einkommen: 25000
+                username: MaxMustermann
+                passwort: geheimesPasswort
+                Steuerjahr:
+                    Werbungskosten: 5000
+                    Jahr: 2000
+                Verdienst:
+                    Einkommen: 5000
+                    Jahr: 2000
         HATEOAS_Resource:
             title: HATEOAS-Links einer Resource
             type: object
@@ -291,11 +307,8 @@ components:
             description: ein Jahr mit angefallen Werbungskosten
             type: object
             example:
-                {
-                "Werbungskosten": 5000,
-                "Jahr": 2000
-                }
-                
+                Werbungskosten: 5000
+                Jahr: 2000
         Verdienst:
             oneOf:
                 -
@@ -310,9 +323,6 @@ components:
                             type: number
             description: Veridenste die jährlich während dem Studium dazu gekommen sind.
             type: object
-            example: 
-                {
-                "Einkommen": 5000,
-                "Jahr": 2000
-                }
-    securitySchemes: {}
+            example:
+                Einkommen: 5000
+                Jahr: 2000
