@@ -20,11 +20,11 @@ export default class LoginService {
      * @param {Object} query Optionale Suchparameter
      * @return {Promise} Liste der gefundenen Adressen
      */
-    async findUserByName(username) {
+    async read(username) {
         try {
           return await this._collection.findOne({ username });
         } catch (error) {
-          return null
+          return null;
         }
       }
     

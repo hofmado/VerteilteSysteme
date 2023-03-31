@@ -45,11 +45,11 @@ export default class PageLogin extends Page {
             }
 
             const userData = await response.json();
-            const password2 = userData.password;
+            const _password = userData.password;
 
-            if (password2 === this.password) {
+            if (_password === this.password) {
                 alert("Login successful!");
-                location.hash = `/#/user/${userData._id}`;
+                location.hash = `/#/steuerjahr/${userData.username}`;
             } else {
                 alert("Invalid username or password!");
                 usernamefeld.value = null;
@@ -97,7 +97,7 @@ export default class PageLogin extends Page {
     
             const responseData = await response.json();
             alert("Registration successful!");
-            location.hash = `/#/user/${responseData._id}`;
+            location.hash = `/#/steuerjahr/${responseData.username}`;
         } catch (ex) {
             this._app.showException(ex);
             return;

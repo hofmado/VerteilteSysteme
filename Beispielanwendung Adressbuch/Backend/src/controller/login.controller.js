@@ -48,27 +48,15 @@ export default class LoginController {
     }
 
     /**
-     * GET /address
-     * Adressen suchen
-     
-    async search(req, res, next) {
-        let result = await this._service.search(req.query);
-        result.forEach(entity => this._insertHateoasLinks(entity));
-        res.sendResult(result);
-        return next();
-    }
-    **/
-
-    /**
      * POST /address
      * Neue Adresse anlegen
      */
-    async create(req, res, next) {
+    async createUser(req, res, next) {
         let result = await this._service.create(req.body);
         this._insertHateoasLinks(result);
 
         res.status(201);
-        res.header("Location", `${this._prefix}/${result._id}`);
+        res.header("Location", `${this._prefix}/${result.username}`);
         res.sendResult(result);
 
         return next();
@@ -78,8 +66,8 @@ export default class LoginController {
      * 
      * USER auslesen
      */
-    async read(req, res, next) {
-        let result = await this._service.read(req.params.id);
+    async getusers(req, res, next) {
+        let result = await this._service.read(req.params.username);
 
         if (result) {
             this._insertHateoasLinks(result);
