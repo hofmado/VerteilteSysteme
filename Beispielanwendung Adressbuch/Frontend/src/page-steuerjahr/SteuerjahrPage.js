@@ -1,3 +1,5 @@
+"use strict";
+
 import Page from "../page.js";
 import HtmlTemplate from "./SteuerjahrPage.html";
 
@@ -24,7 +26,7 @@ export default class SteuerjahrPage extends Page {
         //Buttonmethode für die GET-Anfrage
         getDataButton.addEventListener('click', () => {
             const data = { jahr: feldJahr.value };
-            fetch('/user/steuerjahr/', {
+            fetch('/steuerjahr/(.*)', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -33,7 +35,7 @@ export default class SteuerjahrPage extends Page {
             })
                 .then(response => response.json())
                 .then(data => {
-                    feldWerbungskosten.innerHTML = data.werbungskosten;
+                    feldJahr.innerHTML = data.Jahr;
                 });
         });
         
@@ -56,6 +58,7 @@ export default class SteuerjahrPage extends Page {
             .then(response => response.json())
             .then(data => {
                 feldWerbungskosten.innerHTML = data.werbungskosten;
+                feldJahr.innerHTML = data.jahr;
             });
         });
           

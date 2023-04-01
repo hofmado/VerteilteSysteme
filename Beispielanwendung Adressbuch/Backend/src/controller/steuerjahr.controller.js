@@ -21,8 +21,8 @@ export default class SteuerjahrController {
         this._prefix = prefix;
 
         // Collection: Steuerjahr
-        server.get(prefix, wrapHandler(this, this.read));
-        server.post(prefix, wrapHandler(this, this.create));
+        server.get(prefix, wrapHandler(this, this.readSteuerjahr));
+        server.post(prefix, wrapHandler(this, this.createSteuerjahr));
     }
 
     /**
@@ -37,15 +37,15 @@ export default class SteuerjahrController {
         let url = `${this._prefix}/${entity._id}`;
 
         entity._links = {
-            read:   {url: url, method: "GET"},
-            create: {url: url, method: "POST"},
+            readSteuerjahr:   {url: url, method: "GET"},
+            createSteuerjahr: {url: url, method: "POST"},
         }
     }
 
     /**
-     * GET /steuerjahr
+     * GET /steuerjahr/{jahr}
      */
-    async read(req, res, next) {
+    async readSteuerjahr(req, res, next) {
         let result = await this._service.read(req.params.parseInt(document.getElementById("jahr").value));
       
         if (result) {
@@ -58,9 +58,9 @@ export default class SteuerjahrController {
         return next();
     }
     /**
-     * POST /user/steuerjahr/:id
+     * POST /user/steuerjahr
      */ 
-    async create(req, res, next) { 
+    async createSteuerjahr(req, res, next) { 
         let result = await this._service.create(req.params.user);
         this._insertHateoasLinks(result);
 

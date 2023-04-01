@@ -12,7 +12,7 @@ export default class steuerjahr_service {
    * @param {Object} jahr Zu gespeichertem Steuerjahr
    * @return {Promise} zu gespeichertes Steuerjahr
    */
-  async read(query) {
+  async readSteuerjahr(query) {
     let cursor = await this._steuerjahr.findOne(query, {
       sort: {
         jahr:1,
@@ -27,7 +27,7 @@ export default class steuerjahr_service {
    * @param {Object} user Zu speichernder Steuerjahr an User
    * @return {Promise} zu speicherndes Stuerjahr an User
    */
-  async create(user) {
+  async createSteuerjahr() {
       if(user == null) return;
 
       // Get input values

@@ -32,8 +32,8 @@ export default class RootController {
         res.sendResult([
             {
                 _name: "steuerjahr",
-                query: {url: "/steuerjahr", method: "GET", query_params: ["search", "jahr"]},
-                create: {url: "/steuerjahr", method: "POST"},
+                readSteuerjahr: {url: "/steuerjahr/", method: "GET", query_params: ["search", "jahr"]},
+                createSteuerjahr: {url: "/steuerjahr", method: "POST"},
             }
         ]);
 

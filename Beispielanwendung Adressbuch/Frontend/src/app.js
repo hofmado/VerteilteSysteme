@@ -29,6 +29,9 @@ class App {
                 url: "^/steuerjahr/$",
                 show: () => this._gotoSteuerjahr()
             },{
+                url: "^/steuerjahr/(.*)$",
+                show: () => this._gotoSteuerjahr(matches[1]),
+            },{
                 url: ".*",
                 show: () => this._gotoList()
             },
@@ -76,6 +79,21 @@ class App {
 
     /**
      * Kalkulationsseite anzeigen. Wird vom Single Page Router aufgerufen.
+     */
+    async _gotoSteuerjahr(id) {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageKalk} = await import("./page-steuerjahr/SteuerjahrPage.js");
+
+            let page = new PageKalk(this, id);
+            await page.init();
+            this._showPage(page, "steuerjahr");
+        } catch (ex) {
+            this.showException(ex);
+        }
+    }
+    /**
+     * Kalkulationsseite anzeigen. Wird vom Single Page Router aufgerufen. Mit sepz. key
      */
     async _gotoSteuerjahr() {
         try {
