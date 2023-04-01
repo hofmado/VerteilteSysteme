@@ -38,10 +38,10 @@ export default class PageBerechnungen extends Page {
 
         //Hier Buttons nennen
         //Buttons
-        const berechnennbutton = this._mainElement.querySelector('#button')
+        const berechnenbutton = this._mainElement.querySelector('#button');
         //const submitbutton = this._mainElement.querySelector('#submit');
             // Event Handler registrieren
-        berechnennbutton.addEventListener("click", () => this._gotoBerechnungen());
+        berechnenbutton.addEventListener("click", () => this._gotoBerechnungen());
         //// TODO: Anzuzeigende Inhalte laden mit this._app.backend.fetch() ////
         //submitbutton.addEventListener("click", () => this._register());
         //// TODO: Inhalte in die HTML-Struktur einarbeiten ////
