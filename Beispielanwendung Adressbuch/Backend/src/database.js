@@ -39,7 +39,7 @@ class DatabaseFactory {
                     "Gesamt-Werbungskosten": 5000,
                     "Gesamt-Einkommen": 25000,
                     "username": "MaxMustermann",
-                    "passwort": "geheimesPasswort",
+                    "password": "geheimesPasswort",
                     "Steuerjahr": {
                       "Jahr": 2000,
                       "Werbungskosten": 5000
@@ -57,7 +57,7 @@ class DatabaseFactory {
                     "Gesamt-Werbungskosten": 2000,
                     "Gesamt-Einkommen": 15000,
                     "username": "MusterMAx",
-                    "passwort": "1",
+                    "password": "1",
                     "Steuerjahr": {
                       "Jahr": 2000,
                       "Werbungskosten": 1000
