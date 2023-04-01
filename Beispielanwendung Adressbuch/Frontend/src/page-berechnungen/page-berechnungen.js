@@ -34,15 +34,16 @@ export default class PageBerechnungen extends Page {
         await super.init();
         //this._url = '/user';
         this._title = "berechnungen";
+        //this._dataset = await this._app.backend.fetch("GET", this._url); Wird nachher benötigt
 
         //Hier Buttons nennen
         //Buttons
-        const loginbutton = this._mainElement.querySelector('#login')
-        const submitbutton = this._mainElement.querySelector('#submit');
+        const berechnennbutton = this._mainElement.querySelector('#button')
+        //const submitbutton = this._mainElement.querySelector('#submit');
             // Event Handler registrieren
-        loginbutton.addEventListener("click", () => this._askLogin());
+        berechnennbutton.addEventListener("click", () => this._gotoBerechnungen());
         //// TODO: Anzuzeigende Inhalte laden mit this._app.backend.fetch() ////
-        submitbutton.addEventListener("click", () => this._register());
+        //submitbutton.addEventListener("click", () => this._register());
         //// TODO: Inhalte in die HTML-Struktur einarbeiten ////
         //// TODO: Neue Methoden für Event Handler anlegen und hier registrieren ////
     }
