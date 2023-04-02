@@ -3,11 +3,7 @@
 import DatabaseFactory from "../database.js";
 import {ObjectId} from "mongodb";
 
-/**
- * Geschäftslogik zur Verwaltung von Adressen. Diese Klasse implementiert die
- * eigentliche Anwendungslogik losgelöst vom technischen Übertragungsweg.
- * Die Adressen werden der Einfachheit halber in einer MongoDB abgelegt.
- */
+
 export default class LoginService {
     /**
      * Konstruktor.

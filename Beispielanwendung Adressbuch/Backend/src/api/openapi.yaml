@@ -34,84 +34,6 @@ paths:
             operationId: index
             summary: Wurzeladresse des Webservices
             description: Liefert eine HATEOAS-Übersicht aller collections
-    /steuerjahr:
-        summary: Path used to manage the list of steuerjahrs.
-        description: >-
-            The REST endpoint/path used to list and create zero or more `Steuerjahr` entities.  This path
-            contains a `GET` and `POST` operation to perform the list and create tasks, respectively.
-        get:
-            responses:
-                '200':
-                    content:
-                        application/json:
-                            schema:
-                                type: array
-                                items:
-                                    $ref: '#/components/schemas/Steuerjahr'
-                    description: Successful response - returns an array of `Steuerjahr` entities.
-            operationId: getsteuerjahrs
-            summary: List All steuerjahrs
-            description: Gets a list of all `Steuerjahr` entities.
-        post:
-            requestBody:
-                description: A new `Steuerjahr` to be created.
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/Steuerjahr'
-                required: true
-            responses:
-                '201':
-                    description: Successful response.
-            operationId: createSteuerjahr
-            summary: Create a Steuerjahr
-            description: Creates a new instance of a `Steuerjahr`.
-        parameters:
-            -
-                name: jahr
-                description: ''
-                schema:
-                    type: number
-                in: query
-    /verdienst:
-        summary: Path used to manage the list of verdiensts.
-        description: >-
-            The REST endpoint/path used to list and create zero or more `Verdienst` entities.  This path
-            contains a `GET` and `POST` operation to perform the list and create tasks, respectively.
-        get:
-            responses:
-                '200':
-                    content:
-                        application/json:
-                            schema:
-                                type: array
-                                items:
-                                    $ref: '#/components/schemas/Verdienst'
-                    description: Successful response - returns an array of `Verdienst` entities.
-            operationId: getverdiensts
-            summary: List All verdiensts
-            description: Gets a list of all `Verdienst` entities.
-        post:
-            requestBody:
-                description: A new `Verdienst` to be created.
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/Verdienst'
-                required: true
-            responses:
-                '201':
-                    description: Successful response.
-            operationId: createVerdienst
-            summary: Create a Verdienst
-            description: Creates a new instance of a `Verdienst`.
-        parameters:
-            -
-                name: jahr
-                description: ''
-                schema:
-                    type: number
-                in: query
     /user:
         summary: Path used to manage the list of users.
         description: >-
@@ -166,14 +88,10 @@ paths:
                         type: string
                     in: query
                 -
-                    name: userlogin
-                    description: |-
-                        {
-                            "username": "MaxMustermann",
-                            "password": "geheimesPasswort"
-                            
-                        }
-                    schema: {}
+                    name: username
+                    description: ''
+                    schema:
+                        type: string
                     in: header
             responses:
                 '201':
