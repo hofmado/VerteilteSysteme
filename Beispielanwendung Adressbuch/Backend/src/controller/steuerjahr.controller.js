@@ -46,7 +46,7 @@ export default class SteuerjahrController {
      * GET /steuerjahr/{jahr}
      */
     async readSteuerjahr(req, res, next) {
-        let result = await this._service.read(req.params.parseInt(document.getElementById("jahr").value));
+        let result = await this._service.readSteuerjahr(req.params.parseInt(document.getElementById("feldJahr").value));
       
         if (result) {
           this._insertHateoasLinks(result);
@@ -61,7 +61,7 @@ export default class SteuerjahrController {
      * POST /user/steuerjahr
      */ 
     async createSteuerjahr(req, res, next) { 
-        let result = await this._service.create(req.params.user);
+        let result = await this._service.createSteuerjahr(req.params.user);
         this._insertHateoasLinks(result);
 
         res.status(201);

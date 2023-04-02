@@ -39,7 +39,6 @@ export default class PageList extends Page {
         this._title = "Übersicht";
 
         // Platzhalter anzeigen, wenn noch keine Daten vorhanden sind
-        let data = await this._app.backend.fetch("GET", "/steuerjahr");
         this._emptyMessageElement = this._mainElement.querySelector(".empty-placeholder");
 
         if (data.length) {

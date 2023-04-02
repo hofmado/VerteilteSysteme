@@ -58,7 +58,7 @@ paths:
                 Neues STeuerjahr anlegen. Speichert das übergebe Steuerjahr in der Datenbank. Der Wert des
                 Feldes "_id" wird dabei ignoriert, da in jedem Fall eine neues Steuerjahr mit neuer ID
                 angelegt wird.
-    '/steuerjahr/{id}':
+    /steuerjahr/{id}:
         get:
             tags:
                 - Steuerjahr
