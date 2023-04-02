@@ -46,6 +46,6 @@ export default class PageBerechnungen extends Page {
         //submitbutton.addEventListener("click", () => this._register());
         //// TODO: Inhalte in die HTML-Struktur einarbeiten ////
         //// TODO: Neue Methoden für Event Handler anlegen und hier registrieren ////
-    }
+    }    
 };
 
