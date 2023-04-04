@@ -29,32 +29,25 @@ export default class PageLogin extends Page {
         try {
             const usernamefeld = document.getElementById("username");
             const passwordfeld = document.getElementById("password");
-            // Set username and password properties
-            this.username = usernamefeld.value;
-            this.password = passwordfeld.value;
-
-            const response = await fetch(`/user/${this.username}`, {
+            // Set username and password properties and safe them in data file
+            const data = {username: usernamefeld.value, password: passwordfeld.value}
+            const response = await fetch(`/user/`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             });
 
             if (!response.ok) {
                 throw new Error('Failed to retrieve user data');
-            }
+            };
 
-            const userData = await response.json();
-            const _password = userData.password;
+            .then(response => response.json())
+            .then(data =>{
+                this.sessionStorage.setItem('userId', responseData._id);
+            });
 
-            if (_password === this.password) {
-                alert("Login successful!");
-                location.hash = `/#/steuerjahr/${userData.username}`;
-            } else {
-                alert("Invalid username or password!");
-                usernamefeld.value = null;
-                passwordfeld.value = null;
-            }
         } catch (ex) {
             console.error(ex);
             this._app.showException(ex);
@@ -96,7 +89,7 @@ export default class PageLogin extends Page {
             }
     
             const responseData = await response.json();
-            alert("Registration successful!");
+            this.sessionStorage.setItem('userId', responseData._id);
             location.hash = `/#/steuerjahr/${responseData.username}`;
         } catch (ex) {
             this._app.showException(ex);

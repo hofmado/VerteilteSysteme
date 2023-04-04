@@ -56,7 +56,7 @@ export default class LoginController {
         this._insertHateoasLinks(result);
 
         res.status(201);
-        res.header("Location", `${this._prefix}/${result.username}`);
+        res.header("Location", `${this._prefix}/${result._id}`);
         res.sendResult(result);
 
         return next();
