@@ -26,19 +26,33 @@ export default class SteuerjahrPage extends Page {
         const feldWerbungskosten = this._mainElement.querySelector('#werbungskosten');
 
         //Buttonmethode für die GET-Anfrage
-        getDataButton.addEventListener('click', () => {
-            this._app.backend.fetch("GET", `/steuerjahr/${user_id}/${feldJahr.value}`)
-            .then(response => {
-                feldWerbungskosten.innerHTML = "" + response.werbungskosten;
-            });
-        });
+        getDataButton.addEventListener('click', () => this._getAnfrage(user_id, feldJahr, feldWerbungskosten));
         
         //Buttonmethode für die POST-Anfrage
-        saveDataButton.addEventListener('click', () => {
-            this._app.backend.fetch("POST", `/steuerjahr/${user_id}/${feldJahr.value}/${feldKosten.value}/${feldFahrtweg.value}`)
+        saveDataButton.addEventListener('click', () => this._postAnfrage(user_id, feldJahr, feldKosten, feldFahrtweg, feldWerbungskosten));
+    }
+
+    _getAnfrage(user_id, feldJahr, feldWerbungskosten) {
+        this._app.backend.fetch("GET", `/steuerjahr/${user_id}/${feldJahr.value}`)
             .then(response => {
                 feldWerbungskosten.innerHTML = "" + response.werbungskosten;
             });
-        });
+    }
+
+    _postAnfrage(user_id, feldJahr, feldKosten, feldFahrtweg, feldWerbungskosten) {
+        let dataset = {
+            user_id: user_id, 
+            jahr: parseInt(feldJahr.value),
+            kosten: parseInt(feldKosten.value),
+            fahrtweg: parseInt(feldFahrtweg.value)
+        }
+
+        this._app.backend.fetch("POST", '/steuerjahr', {body: dataset}).then(
+            setTimeout(() => {
+                //whait for mongodb server
+                this._getAnfrage(user_id,feldJahr,feldWerbungskosten)
+            }, 1000)
+        )
+        
     }
 }

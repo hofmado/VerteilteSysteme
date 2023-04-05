@@ -20,9 +20,11 @@ export default class SteuerjahrController {
         this._service = new steuerjahr_service();
         this._prefix = prefix;
 
+        // Collection: Steuerjahre
+        server.post(prefix, wrapHandler(this, this.createSteuerjahr));
+
         //Entity Steuerjahr
         server.get(prefix + "/:user_id" + "/:jahr", wrapHandler(this, this.readSteuerjahr));
-        server.post(prefix + "/:user_id" + "/:jahr" + "/:kosten" + "/:fahrtweg", wrapHandler(this, this.createSteuerjahr));
     }
 
     /**
@@ -59,15 +61,13 @@ export default class SteuerjahrController {
      * POST /user/steuerjahr
      */ 
     async createSteuerjahr(req, res, next) { 
-        let result = await this._service.createSteuerjahr(req.params.user_id, req.params.jahr, req.params.kosten, req.params.fahrtweg);
+        let result = await this._service.createSteuerjahr(req.body);
+        this._insertHateoasLinks(result);
 
-        if (result) {
-            this._insertHateoasLinks(result);
-            res.sendResult(result);
-        } else {
-            throw new RestifyError.NotFoundError("Erstellen lief schief.");
-        }
-    
+        res.status(201);
+        res.header("Location", `${this._prefix}/${result._id}`);
+        res.sendResult(result);
+
         return next();
     }
 }

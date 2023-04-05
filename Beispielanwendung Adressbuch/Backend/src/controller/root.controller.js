@@ -32,6 +32,7 @@ export default class RootController {
         res.sendResult([
             {
                 _name: "steuerjahr",
+                create: {url: "/steuerjahr", method: "POST"},
             }
         ]);
 

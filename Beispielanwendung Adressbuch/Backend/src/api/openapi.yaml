@@ -38,7 +38,7 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/Steuerjahr'
+                            $ref: '#/components/schemas/Steuerdaten'
             tags:
                 - Steuerjahr
             responses:
@@ -46,7 +46,7 @@ paths:
                     headers:
                         Location:
                             schema:
-                                type: number
+                                type: string
                     content:
                         application/json:
                             schema:
@@ -143,6 +143,26 @@ components:
                 user_id: 6420557cd5033a24fc6777aa
                 jahr: 2000
                 werbungskosten: 15000
+        Steuerdaten:
+            title: Steuerdaten
+            required: []
+            type: object
+            properties:
+                _links:
+                    $ref: '#/components/schemas/HATEOAS_Resource'
+                user_id:
+                    type: string
+                jahr:
+                    type: number
+                kosten:
+                    type: number
+                fahrtweg:
+                    type: number    
+            example:
+                user_id: 6420557cd5033a24fc6777aa
+                jahr: 2000
+                kosten: 15000  
+                fahrtweg: 20      
 tags:
     -
         name: Index

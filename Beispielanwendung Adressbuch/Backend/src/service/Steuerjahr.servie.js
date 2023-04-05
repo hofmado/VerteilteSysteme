@@ -17,20 +17,23 @@ export default class steuerjahr_service {
     return result;
   }
 
-  async createSteuerjahr(user_id, jahr, kosten, fahrtweg) {
+  async createSteuerjahr(dataset) {
+    let user_id = dataset.user_id;
+    let jahr = parseInt(dataset.jahr); 
+    let kosten = parseInt(dataset.kosten);
+    let fahrtweg = parseInt(dataset.fahrtweg);
+    
     // Calculate tax savings
     const fahrtkosten = fahrtweg * 0.3*225;
     const newWerbungskosten = fahrtkosten + kosten ;
-    //TODO: user_id durch korrekten backendZugriff austauschen
-  
-    let newSteuerJahr = {
-      user_id:            steuerjahr.user_id        || user_id,
-      jahr:               steuerjahr.jahr           || jahr,
-      werbungskosten:     steuerjahr.werbungskosten || newWerbungskosten.toFixed(2),
+    let steuerjahr = {
+      user_id:            user_id,
+      jahr:               jahr,
+      werbungskosten:     parseFloat(newWerbungskosten.toFixed(2)),
     };
 
     // Display tax savings
-    let result = await this._steuerjahr.insertOne(newSteuerJahr);
-    return await this._steuerjahr.findOne({_id: result._id});
+    let result = await this._steuerjahr.insertOne(steuerjahr);
+    return await this._steuerjahr.findOne({_id: result.insertedId});
   }
 }
