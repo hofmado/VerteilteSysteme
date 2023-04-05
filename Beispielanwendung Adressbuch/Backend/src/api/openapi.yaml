@@ -32,6 +32,7 @@ paths:
             operationId: index
             summary: Wurzeladresse des Webservices
             description: Liefert eine HATEOAS-Übersicht aller collections
+    
     /steuerjahr:
         get:
             tags:
@@ -40,11 +41,18 @@ paths:
                 -
                     style: simple
                     explode: false
-                    name: _id
+                    name: user_id
                     schema:
                         type: string
                     in: header
                     required: true
+                -
+                    name: jahr
+                    description: jahr für das Steuerjahr
+                    schema: 
+                        type: integer
+                    in: header
+                    required: false
             responses:
                 '200':
                     content:
@@ -79,9 +87,9 @@ paths:
             operationId: createSteuerjahr
             summary: Steuerjahr anlegen
             description: >-
-                Neues STeuerjahr anlegen. Speichert das übergebe Steuerjahr in der Datenbank. Der Wert des
-                Feldes "_id" wird dabei ignoriert, da in jedem Fall eine neues Steuerjahr mit neuer ID
-                angelegt wird.
+                Neues STeuerjahr anlegen. Speichert das übergebene Steuerjahr in der Datenbank. Der Wert des
+                Feldes "user_id" nimmt die des Feldes _id des Users.
+    
 components:
     schemas:
         HATEOAS_Collection:
@@ -125,14 +133,14 @@ components:
             properties:
                 _links:
                     $ref: '#/components/schemas/HATEOAS_Resource'
-                _id:
+                user_id:
                     type: string
                 jahr:
                     type: integer
                 werbungskosten:
                     type: integer
             example:
-                _id: 621ff9a936997df5baba746e
+                user_id: 6420557cd5033a24fc6777aa
                 jahr: 2000
                 werbungskosten: 15000
 tags:

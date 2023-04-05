@@ -36,7 +36,7 @@ export default class PageList extends Page {
     async init() {
         // HTML-Inhalt nachladen
         await super.init();
-        this._title = "Übersicht";
+        this._title = "Steuerjahr";
 
         // Platzhalter anzeigen, wenn noch keine Daten vorhanden sind
         this._emptyMessageElement = this._mainElement.querySelector(".empty-placeholder");

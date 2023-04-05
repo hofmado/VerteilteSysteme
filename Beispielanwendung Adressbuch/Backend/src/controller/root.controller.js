@@ -32,7 +32,7 @@ export default class RootController {
         res.sendResult([
             {
                 _name: "steuerjahr",
-                readSteuerjahr: {url: "/steuerjahr/{id}", method: "GET", query_params: ["search", "jahr"]},
+                readSteuerjahr: {url: "/steuerjahr", method: "GET", query_params: ["user_id", "jahr"]},
                 createSteuerjahr: {url: "/steuerjahr", method: "POST"},
             }
         ]);

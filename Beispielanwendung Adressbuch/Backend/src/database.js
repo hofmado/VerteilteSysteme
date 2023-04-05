@@ -37,25 +37,24 @@ class DatabaseFactory {
 
 
         let user = this.database.collection("steuerjahr");
-        if (await user.estimatedDocumentCount() === 0) {
-            user.insertMany([
-                {
-                    "Jahr": 2020,
-                    "Werbungskosten": 5000
-                },
-            ]);
-        }
-    
-        if (await steuerjahr.estimatedDocumentCount() === 0) { 
-
+        if (await steuerjahr.estimatedDocumentCount() === 0) {
             steuerjahr.insertMany([
                 {
-                    jahr: "2022",
-                    steuerablassung: "2500",
+                    "user_id": "6420557cd5033a24fc6777aa",
+                    "jahr": 2023,
+                    "werbungskosten": 2500
+                },
+            ]);
+            steuerjahr.insertMany([
+                {
+                    "user_id": "6420557cd5033a24fc6777aa",
+                    "jahr": 2022,
+                    "werbungskosten": 2500
                 },
                 {
-                    jahr: "2021",
-                    steuerablassung: "3500",
+                    "user_id": "6420557cd5033a24fc6777aa",
+                    "jahr": 2021,
+                    "werbungskosten": 5500
                 },
             ]);
         } 

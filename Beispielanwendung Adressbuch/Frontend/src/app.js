@@ -19,6 +19,7 @@ class App {
     constructor() {
         // Datenbank-Klasse zur Verwaltung der Datensätze
         this.backend = new Backend();
+//TODO: nach anmeldung sollen die webpages steuerjahr etc erreichbar werden, davor nicht!
 
         // Single Page Router zur Steuerung der sichtbaren Inhalte
         this.router = new Router([
