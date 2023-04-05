@@ -32,39 +32,7 @@ paths:
             operationId: index
             summary: Wurzeladresse des Webservices
             description: Liefert eine HATEOAS-Übersicht aller collections
-    
     /steuerjahr:
-        get:
-            tags:
-                - Steuerjahr
-            parameters:
-                -
-                    style: simple
-                    explode: false
-                    name: user_id
-                    schema:
-                        type: string
-                    in: header
-                    required: true
-                -
-                    name: jahr
-                    description: jahr für das Steuerjahr
-                    schema: 
-                        type: integer
-                    in: header
-                    required: false
-            responses:
-                '200':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Steuerjahr'
-                    description: OK
-                '404':
-                    description: Not Found
-            operationId: getSteuerjahr
-            summary: Steuerjahr lesen
-            description: Liest eine einzelnes Steuerjahr vom Server.
         post:
             requestBody:
                 content:
@@ -78,7 +46,7 @@ paths:
                     headers:
                         Location:
                             schema:
-                                type: integer
+                                type: number
                     content:
                         application/json:
                             schema:
@@ -89,7 +57,39 @@ paths:
             description: >-
                 Neues STeuerjahr anlegen. Speichert das übergebene Steuerjahr in der Datenbank. Der Wert des
                 Feldes "user_id" nimmt die des Feldes _id des Users.
-    
+    '/steuerjahr/{user_id}/{jahr}':
+        get:
+            tags:
+                - Steuerjahr
+            parameters:
+                -
+                    style: simple
+                    explode: false
+                    name: user_id
+                    schema:
+                        type: string
+                    in: path
+                    required: true
+                -
+                    style: simple
+                    explode: false
+                    name: jahr
+                    schema:
+                        type: number
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Steuerjahr'
+                    description: OK
+                '404':
+                    description: Not Found
+            operationId: getSteuerjahr
+            summary: Adresse lesen
+            description: Liest eine einzelne Adresse vom Server.
 components:
     schemas:
         HATEOAS_Collection:
@@ -136,9 +136,9 @@ components:
                 user_id:
                     type: string
                 jahr:
-                    type: integer
+                    type: number
                 werbungskosten:
-                    type: integer
+                    type: number
             example:
                 user_id: 6420557cd5033a24fc6777aa
                 jahr: 2000

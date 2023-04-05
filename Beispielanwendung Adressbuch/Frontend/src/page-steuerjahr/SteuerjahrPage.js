@@ -27,42 +27,17 @@ export default class SteuerjahrPage extends Page {
 
         //Buttonmethode für die GET-Anfrage
         getDataButton.addEventListener('click', () => {
-            this._app.backend.fetch("GET", `/steuerjahr/${this.user_id}/${feldJahr.value}`).then();
-            /*
-            fetch('/steuerjahr', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    "jahr": feldJahr.value,
-                    "user_id": user_id
-                }
-            })
-                .then(response => response.json())
-                .then(data => {
-                    feldWerbungskosten.innerHTML = data.werbungskosten;
-                    console.log(data.werbungskosten);
-                });*/
+            this._app.backend.fetch("GET", `/steuerjahr/${user_id}/${feldJahr.value}`)
+            .then(response => {
+                feldWerbungskosten.innerHTML = "" + response.werbungskosten;
+            });
         });
         
         //Buttonmethode für die POST-Anfrage
         saveDataButton.addEventListener('click', () => {
-            const data = {
-                jahr: feldJahr.value,
-                kosten: feldKosten.value,
-                fahrtweg: feldFahrtweg.value,
-                werbungskosten: 0,
-            };
-
-            fetch('/steuerjahr', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(data => {
-                feldWerbungskosten.innerHTML = data.werbungskosten;
+            this._app.backend.fetch("POST", `/steuerjahr/${user_id}/${feldJahr.value}/${feldKosten.value}/${feldFahrtweg.value}`)
+            .then(response => {
+                feldWerbungskosten.innerHTML = "" + response.werbungskosten;
             });
         });
     }
