@@ -36,11 +36,11 @@ class DatabaseFactory {
         let steuerjahr = this.database.collection("steuerjahr");
 
 
-        let user = this.database.collection("user");
+        let user = this.database.collection("steuerjahr");
         if (await user.estimatedDocumentCount() === 0) {
             user.insertMany([
                 {
-                    "Jahr": 2001,
+                    "Jahr": 2020,
                     "Werbungskosten": 5000
                 },
             ]);

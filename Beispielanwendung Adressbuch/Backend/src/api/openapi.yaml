@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-    title: Adressbuch
+    title: Steuerwebpage
     version: '1.0'
     description: >-
         Die Steuer-App nutzt einen simplen REST-Webservices zur Kommunikation mit dem Backend. Dieser
@@ -33,6 +33,30 @@ paths:
             summary: Wurzeladresse des Webservices
             description: Liefert eine HATEOAS-Übersicht aller collections
     /steuerjahr:
+        get:
+            tags:
+                - Steuerjahr
+            parameters:
+                -
+                    style: simple
+                    explode: false
+                    name: _id
+                    schema:
+                        type: string
+                    in: header
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Steuerjahr'
+                    description: OK
+                '404':
+                    description: Not Found
+            operationId: getSteuerjahr
+            summary: Steuerjahr lesen
+            description: Liest eine einzelnes Steuerjahr vom Server.
         post:
             requestBody:
                 content:
@@ -58,31 +82,6 @@ paths:
                 Neues STeuerjahr anlegen. Speichert das übergebe Steuerjahr in der Datenbank. Der Wert des
                 Feldes "_id" wird dabei ignoriert, da in jedem Fall eine neues Steuerjahr mit neuer ID
                 angelegt wird.
-    /steuerjahr/{id}:
-        get:
-            tags:
-                - Steuerjahr
-            parameters:
-                -
-                    style: simple
-                    explode: false
-                    name: id
-                    schema:
-                        type: string
-                    in: path
-                    required: true
-            responses:
-                '200':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Steuerjahr'
-                    description: OK
-                '404':
-                    description: Not Found
-            operationId: getSteuerjahr
-            summary: Steuerjahr lesen
-            description: Liest eine einzelnes Steuerjahr vom Server.
 components:
     schemas:
         HATEOAS_Collection:
@@ -121,6 +120,7 @@ components:
                         type: string
         Steuerjahr:
             title: Steuerjahr
+            required: []
             type: object
             properties:
                 _links:

@@ -29,9 +29,6 @@ class App {
                 url: "^/steuerjahr/$",
                 show: () => this._gotoSteuerjahr()
             },{
-                url: "^/steuerjahr/(.*)$",
-                show: () => this._gotoSteuerjahr(matches[1]),
-            },{
                 url: ".*",
                 show: () => this._gotoList()
             },
