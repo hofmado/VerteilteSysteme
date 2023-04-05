@@ -40,94 +40,102 @@ paths:
             The REST endpoint/path used to list and create zero or more `User` entities.  This path contains a
             `GET` and `POST` operation to perform the list and create tasks, respectively.
         get:
-            tags:
-                - password
-                - username
-                - id
-            parameters:
-                -
-                    name: username
-                    description: username of the login
+    tags:
+        - password
+        - username
+        - id
+    parameters:
+        -
+            name: username
+            description: username of the login
+            schema:
+                type: string
+            in: header
+            required: true
+        -
+            name: password
+            description: password of the login frontend
+            schema:
+                type: string
+            in: header
+            required: true
+    responses:
+        '200':
+            content:
+                application/json:
                     schema:
                         type: string
-                    in: header
-                    required: true
-                -
-                    name: password
-                    description: password of the login frontend
-                    schema:
-                        type: string
-                    in: header
-                    required: true
-            responses:
-                '200':
-                    content:
-                        application/json:
-                            schema:
-                                type: string
-                    description: Successful response - returns an array of `User` entities.
-                '400':
-                    description: Kein Username oder Passwort erhalten
-            operationId: getusers
-            summary: sucht einen user und liest das zugehörige Pw aus
-            description: Gets a list of all `User` entities.
-        put:
-            requestBody:
-                description: Updated `User` information.
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/User'
-                required: true
-            responses:
-                '202':
-                    description: Successful response.
-            operationId: updateUser
-            summary: Update a User
-            description: Updates an existing `User`.
-        post:
-            requestBody:
-                description: A new `User` to be created.
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/User'
-                required: true
-            tags:
-                - username
-                - password
-            parameters:
-                -
-                    name: password
-                    description: ''
-                    schema:
-                        type: string
-                    in: query
-                -
-                    name: username
-                    description: ''
-                    schema:
-                        type: string
-                    in: header
-            responses:
-                '201':
-                    description: Successful response.
-            operationId: createUser
-            summary: Create a User
-            description: Creates a new instance of a `User`.
-        parameters:
-            -
-                name: password
-                description: ''
+                    examples:
+                        _id:
+                            value: '"dagaskjfulkfka5dek34le"'
+            description: Successful response - returns an array of `User` entities.
+        '400':
+            description: Kein Username oder Passwort erhalten
+    operationId: getusers
+    summary: sucht einen user und liest das zugehörige Pw aus
+    description: Gets a list of all `User` entities.
+put:
+    requestBody:
+        description: Updated `User` information.
+        content:
+            application/json:
                 schema:
-                    type: string
-                in: query
-            -
-                name: username
-                description: ''
+                    $ref: '#/components/schemas/User'
+        required: true
+    responses:
+        '202':
+            description: Successful response.
+    operationId: updateUser
+    summary: Update a User
+    description: Updates an existing `User`.
+post:
+    requestBody:
+        description: A new `User` to be created.
+        content:
+            application/json:
                 schema:
+                    $ref: '#/components/schemas/User'
+        required: true
+    tags:
+        - username
+        - password
+    parameters:
+        -
+            name: userdata
+            description: ''
+            schema:
+                type: array
+                items:
                     type: string
-                in: query
+            in: header
+    responses:
+        '201':
+            content:
+                application/json:
+                    schema:
+                        type: string
+                    examples:
+                        _id:
+                            value: '"xxehfohjiwowio45jiiwe"'
+            description: Successful response.
+        '400':
+            description: No Username or password received
+    operationId: createUser
+    summary: Create a User
+    description: Creates a new instance of a `User`.
+parameters:
+    -
+        name: password
+        description: ''
+        schema:
+            type: string
+        in: query
+    -
+        name: username
+        description: ''
+        schema:
+            type: string
+        in: query
 components:
     schemas:
         HATEOAS_Collection:
