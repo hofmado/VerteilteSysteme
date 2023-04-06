@@ -300,10 +300,10 @@ components:
                     required: []
                     type: object
                     properties:
-                        jahr:
-                            description: ....
+                       jahr:
+                           description: 
                             type: integer
-                        Einkommen:
+                    Einkommen:
                             description: einkommen das in dem Jahr angefallen ist.
                             type: number
             description: Veridenste die jährlich während dem Studium dazu gekommen sind.

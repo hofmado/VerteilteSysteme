@@ -6,8 +6,8 @@ import OpenApiEnforcerMiddleware from "@dschulmeis/restify-openapi-enforcer-midd
 
 import DatabaseFactory from "./database.js";
 import RootController from "./controller/root.controller.js";
-import AdressController from "./controller/address.controller.js";
-import AdressController from "./controller/Controller.Berechnungen.js"; //Eigene Controller Datei
+//import AdressController from "./controller/address.controller.js";
+import BerechnungenController from "./controller/Controller.Berechnungen.js"; //Eigene Controller Datei
 //TO-DO: eigene Controller Datei hinzufügen!!
 
 // Verzeichnisnamen der Quellcodedatei ermitteln

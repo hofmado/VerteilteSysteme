@@ -2,7 +2,15 @@
 
 import { MongoClient } from "mongodb";
 
+//Allumfassende Methode, whatever; Klammer geht ganz unten zu
+export default class berechnungen_service {
+  
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------
 //Lösung von ChatgGPT #2
+/*
 async function sumAllTaxYears(username) {
   const userCollection = DatabaseFactory.database.collection("user");
 
@@ -14,7 +22,7 @@ async function sumAllTaxYears(username) {
   }
   
   return sum;
-}
+}*/
 
 //Lösung von ChatgGPT #1
 /*async getSteuerjahre(username) {

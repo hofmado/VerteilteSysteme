@@ -1,17 +1,51 @@
-//Hier get und put beschreiben
-
-//Von root.controller erben lassen
-const parent = require('./root.controller');
-
-//ChatGPT-Code:
 "use strict";
 
-import express from "express";
-import DatabaseFactory from "../database/DatabaseFactory.js";
+//Imports
+import berechnungen from "../service/berechnungen.js";
+import {wrapHandler} from "../utils.js";
+import RestifyError from "restify-errors";
 
-const router = express.Router();
+//Von root.controller erben lassen
+//const parent = require('./root.controller');
 
-async function sumAllTaxYears(username) {
+export default class BerechnungenController {
+  /**
+   * Konstruktor. Hier werden die URL-Handler registrert.
+   *
+   * @param {Object} server Restify Serverinstanz
+   * @param {String} prefix Gemeinsamer Prefix aller URLs
+   */
+  constructor(server, prefix) {
+      this._service = new berechnungen_service();
+      this._prefix = prefix;
+
+      // Collection: Steuerjahre
+      //server.post(prefix, wrapHandler(this, this.createSteuerjahr));
+
+      //Entity Steuerjahr
+      server.get(prefix + "/:user_id" + "/:jahr", wrapHandler(this, this.readSteuerjahr));
+  }
+}
+
+
+
+
+
+//---------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+//Imports auskommentiert da Fehler geworfen werden
+//import express from "express";
+//import DatabaseFactory from "../database/DatabaseFactory.js";
+
+//const router = express.Router();
+
+/*async function sumAllTaxYears(username) {
   const userCollection = DatabaseFactory.database.collection("user");
 
   const user = await userCollection.findOne({ username });
@@ -22,8 +56,9 @@ async function sumAllTaxYears(username) {
   }
   
   return sum;
-}
+}*/
 
+/*
 router.get("/:username/sumAllTaxYears", async (req, res) => {
   const { username } = req.params;
 
@@ -34,9 +69,9 @@ router.get("/:username/sumAllTaxYears", async (req, res) => {
     console.error(err);
     res.status(500).send({ message: "Error retrieving sum of all tax years" });
   }
-});
+});*/
 
-export default router;
+//export default router;
 
 /*import 
 

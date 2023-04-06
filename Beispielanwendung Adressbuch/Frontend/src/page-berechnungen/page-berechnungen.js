@@ -40,8 +40,8 @@ export default class PageBerechnungen extends Page {
         //Felder im Frontend
         const anzS = parseInt(document.querySelector("#anzS").value);
         const nebenJ = document.querySelector("#nebenJ").checked;
-        const gesamtE = parseDouble(document.querySelector("#gesamtE").value);
-        gesamtE = 0;
+        //const gesamtE = parseDouble(document.querySelector("#gesamtE").value);
+        let gesamtE = 0;
 
         const button = this.mainElement.querySelector("#button");
         const buttonS = this.mainElement.querySelector("#buttonS");
