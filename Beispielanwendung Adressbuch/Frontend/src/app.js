@@ -31,7 +31,7 @@ class App {
             
             //Eigene Regeln????
             {
-                url: "/page-berechnungen/$",
+                url: "^/page-berechnungen/$",
                 show: () => this._gotoBerechnungen()
             },
 
