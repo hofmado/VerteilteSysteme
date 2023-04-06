@@ -48,26 +48,33 @@ export default class PageBerechnungen extends Page {
 
 
         //EventListener für Buttons
-        /*button.addEventListener("click", () => {
+        //Get
+        button.addEventListener("click", () => this._getSteuerjahre(user_id));
             
         }
 
+        //Post
         /*buttonS.addEventListener("click", () => {
             ;
         }*/
 
         //Methode um alle Steuerjahre eines Users abzurufen und sie dann in einem Array zu speichern
-        async function getSteuerjahre(user_id) {
+        async _getSteuerjahre(user_id) {
             const response = await fetch(`/steuerjahre/${user_id}`);
             const data = await response.json();
           
             const steuerjahre = data.map(item => item.jahr);
-          
+            
             //Nun alle Steuerjahre in einer Schleife zusammenzählen
-            for (let i = 0; i < steuerjahre.length; i++) {
+            steuerjahre.forEach(jahr => {
+                gesamtE += jahr;
+            });
+        }
+
+            /*for (let i = 0; i < steuerjahre.length; i++) {
                 
                 const response = await this._app.backend.fetch("GET", `/steuerjahr/${user_id}/${steuerjahre[i].value}`);
-                allWerbungskosten.push(response.werbungskosten);
+                allWerbungskosten.push(response.werbungskosten);*/
 
             //return steuerjahre;
         }
@@ -81,8 +88,8 @@ export default class PageBerechnungen extends Page {
                 forEach
 
                 feldWerbungskosten.innerHTML = "" + response.werbungskosten;
-            });*/
-    }
+            });
+    }*/
 
             /*
             const allWerbungskosten = [];
@@ -94,8 +101,8 @@ export default class PageBerechnungen extends Page {
             }*/
           
             /*const gesamtWerbungskosten = allWerbungskosten.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-            return gesamtWerbungskosten;*/
-          }
+            return gesamtWerbungskosten;
+          }*/
 
 
 
@@ -112,5 +119,5 @@ export default class PageBerechnungen extends Page {
         //// TODO: Inhalte in die HTML-Struktur einarbeiten ////
         //// TODO: Neue Methoden für Event Handler anlegen und hier registrieren ////
         
-};
+
 
