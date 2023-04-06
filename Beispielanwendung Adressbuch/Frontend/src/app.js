@@ -78,12 +78,13 @@ class App {
         }
     }
 
-    async _gotoBerechnungen() {
+    //Diese Methode noch überladen ohne Parameter?
+    async _gotoBerechnungen(id) {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
             let {default: PageBerechnungen} = await import("./page-berechnungen/page-berechnungen.js");
 
-            let page = new PageBerechnungen(this);
+            let page = new PageBerechnungen(this, id);
             await page.init();
             this._showPage(page, "berechnungen");
         } catch (ex) {

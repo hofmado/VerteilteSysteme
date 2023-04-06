@@ -32,20 +32,85 @@ export default class PageBerechnungen extends Page {
     async init() {
         // HTML-Inhalt nachladen
         await super.init();
-        //this._url = '/user';
         this._title = "berechnungen";
+
+        //User ID vorerst fix vergeben, nachher aus DB holen
+        const user_id ="6420557cd5033a24fc6777aa";
+
+        //Felder im Frontend
+        const anzS = parseInt(document.querySelector("#anzS").value);
+        const nebenJ = document.querySelector("#nebenJ").checked;
+        const gesamtE = parseDouble(document.querySelector("#gesamtE").value);
+        gesamtE = 0;
+
+        const button = this.mainElement.querySelector("#button");
+        const buttonS = this.mainElement.querySelector("#buttonS");
+
+
+        //EventListener für Buttons
+        /*button.addEventListener("click", () => {
+            
+        }
+
+        /*buttonS.addEventListener("click", () => {
+            ;
+        }*/
+
+        //Methode um alle Steuerjahre eines Users abzurufen und sie dann in einem Array zu speichern
+        async function getSteuerjahre(user_id) {
+            const response = await fetch(`/steuerjahre/${user_id}`);
+            const data = await response.json();
+          
+            const steuerjahre = data.map(item => item.jahr);
+          
+            //Nun alle Steuerjahre in einer Schleife zusammenzählen
+            for (let i = 0; i < steuerjahre.length; i++) {
+                
+                const response = await this._app.backend.fetch("GET", `/steuerjahr/${user_id}/${steuerjahre[i].value}`);
+                allWerbungskosten.push(response.werbungskosten);
+
+            //return steuerjahre;
+        }
+
+        _/*getAllSteuerjahre(user_id) {
+
+            this._app.backend.fetch("GET", `/steuerjahr/${user_id}')
+            .then(response => {
+
+                //Schleife um alle Steuerjahre zusammenzurechnen
+                forEach
+
+                feldWerbungskosten.innerHTML = "" + response.werbungskosten;
+            });*/
+    }
+
+            /*
+            const allWerbungskosten = [];
+            const allSteuerjahre = document.querySelectorAll(".steuerjahr");
+          
+            for (let i = 0; i < allSteuerjahre.length; i++) {
+              const response = await this._app.backend.fetch("GET", `/steuerjahr/${user_id}/${allSteuerjahre[i].value}`);
+              allWerbungskosten.push(response.werbungskosten);
+            }*/
+          
+            /*const gesamtWerbungskosten = allWerbungskosten.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+            return gesamtWerbungskosten;*/
+          }
+
+
+
         //this._dataset = await this._app.backend.fetch("GET", this._url); Wird nachher benötigt
 
         //Hier Buttons nennen
         //Buttons
-        const berechnenbutton = this._mainElement.querySelector('#button');
+        //const berechnenbutton = this._mainElement.querySelector('#button');
         //const submitbutton = this._mainElement.querySelector('#submit');
             // Event Handler registrieren
-        berechnenbutton.addEventListener("click", () => this._gotoBerechnungen());
+        //berechnenbutton.addEventListener("click", () => this._gotoBerechnungen());
         //// TODO: Anzuzeigende Inhalte laden mit this._app.backend.fetch() ////
         //submitbutton.addEventListener("click", () => this._register());
         //// TODO: Inhalte in die HTML-Struktur einarbeiten ////
         //// TODO: Neue Methoden für Event Handler anlegen und hier registrieren ////
-    }    
+        
 };
 
