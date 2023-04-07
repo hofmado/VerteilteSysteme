@@ -16,11 +16,11 @@ export default class BerechnungenController {
    * @param {String} prefix Gemeinsamer Prefix aller URLs
    */
   constructor(server, prefix) {
-      this._service = new berechnungen_service();
+      this._service = new berechnungen();
       this._prefix = prefix;
 
-      // Collection: Steuerjahre
-      //server.post(prefix, wrapHandler(this, this.createSteuerjahr));
+      Collection: berechnungen
+      server.post(prefix, wrapHandler(this, this.createSteuerjahr));
 
       //Entity Steuerjahr
       server.get(prefix + "/:user_id" + "/:jahr", wrapHandler(this, this.readSteuerjahr));

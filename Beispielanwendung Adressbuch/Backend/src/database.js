@@ -1,5 +1,5 @@
 //import DatabaseFactory from "app/source/database.js";
-import {MongoClient} from "mongodb";
+import { MongoClient } from "mongodb";
 
 class DatabaseFactory {
   /**
@@ -26,19 +26,19 @@ class DatabaseFactory {
      */
   async _createDemoData() {
 
-    let steuerjahr = this.database.collection("steuerjahr");
+    let berechnungen = this.database.collection("berechnungen");
 
 
-    let user = this.database.collection("steuerjahr");
-    if (await steuerjahr.estimatedDocumentCount() === 0) {
-        steuerjahr.insertMany([
+    let user = this.database.collection("berechnungen");
+    if (await berechnungen.estimatedDocumentCount() === 0) {
+        berechnungen.insertMany([
             {
                 "user_id": "6420557cd5033a24fc6777aa",
                 "jahr": 2023,
                 "werbungskosten": 2500
             },
         ]);
-        steuerjahr.insertMany([
+        berechnungen.insertMany([
             {
                 "user_id": "6420557cd5033a24fc6777aa",
                 "jahr": 2022,
