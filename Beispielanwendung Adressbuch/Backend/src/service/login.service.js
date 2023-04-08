@@ -18,7 +18,7 @@ export default class LoginService {
      */
     async read(username, password) {
       try {
-        const user = await this._collection.findOne({ username });
+        let user = await this._collection.findOne({ username: username, _password: password });
           if (user && user.password === password) {
             return user._id;
           } else {
