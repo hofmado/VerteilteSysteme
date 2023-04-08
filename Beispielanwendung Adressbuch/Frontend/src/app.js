@@ -19,26 +19,25 @@ class App {
     constructor() {
         // Datenbank-Klasse zur Verwaltung der Datensätze
         this.backend = new Backend();
+//TODO: nach anmeldung sollen die webpages steuerjahr etc erreichbar werden, davor nicht!
 
         // Single Page Router zur Steuerung der sichtbaren Inhalte
-
-        // To-Do: Routing-Regeln anpassen und ggf. neue Methoden anlegen
         this.router = new Router([
             {
                 url: "^/$",
                 show: () => this._gotoList()
-            },
-            
-            //Eigene Regeln????
-            {
-                url: "^/page-berechnungen/$",
-                show: () => this._gotoBerechnungen()
-            },
-
-            {
+            },{
+                url: "^/steuerjahr/$",
+                show: () => this._gotoSteuerjahr()
+            },{
                 url: ".*",
                 show: () => this._gotoList()
             },
+            //Methodenaufruf für Gesamtsteuerseite
+            {
+                url: "^/berechnungen/$",
+                show: () => this._gotoBerechnungen()
+            }
         ]);
 
         // Fenstertitel merken, um später den Name der aktuellen Seite anzuhängen
@@ -65,6 +64,9 @@ class App {
         }
     }
 
+    /**
+     * Übersichtsseite anzeigen. Wird vom Single Page Router aufgerufen.
+     */
     async _gotoList() {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
@@ -78,19 +80,51 @@ class App {
         }
     }
 
-    //Diese Methode noch überladen ohne Parameter?
-    async _gotoBerechnungen(id) {
+    /**
+     * Kalkulationsseite anzeigen. Wird vom Single Page Router aufgerufen.
+     */
+    async _gotoSteuerjahr(id) {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
-            let {default: PageBerechnungen} = await import("./page-berechnungen/page-berechnungen.js");
+            let {default: PageKalk} = await import("./page-steuerjahr/SteuerjahrPage.js");
 
-            let page = new PageBerechnungen(this, id);
+            let page = new PageKalk(this, id);
+            await page.init();
+            this._showPage(page, "steuerjahr");
+        } catch (ex) {
+            this.showException(ex);
+        }
+    }
+    /**
+     * Kalkulationsseite anzeigen. Wird vom Single Page Router aufgerufen. Mit sepz. key
+     */
+    async _gotoSteuerjahr() {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageKalk} = await import("./page-steuerjahr/SteuerjahrPage.js");
+
+            let page = new PageKalk(this);
+            await page.init();
+            this._showPage(page, "steuerjahr");
+        } catch (ex) {
+            this.showException(ex);
+        }
+    }
+
+    //Methode für Gesamtsteuerseite
+    async _gotoBerechnungen() {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageKalk} = await import("./page-berechnungen/pageBerechnungen.js");
+
+            let page = new PageKalk(this);
             await page.init();
             this._showPage(page, "berechnungen");
         } catch (ex) {
             this.showException(ex);
         }
     }
+
     /**
      * Interne Methode zum Umschalten der sichtbaren Seite.
      *

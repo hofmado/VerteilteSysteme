@@ -1,18 +1,64 @@
+//Einfacher Code um Verfügbarkeit des Servers zu prüfen
 "use strict";
 
-import Page from "../page.js"; /* page-js bleibt?*/
-import HtmlTemplate from "./page-berechnungen.html"; /* hier page-berechnungen statt page-list.html eingefügt*/
+import Page from "../page.js";
+import HtmlTemplate from "./pageBerechnungen.html";
+
+export default class PageBerechnungen extends Page {
+    constructor(app) {
+        super(app, HtmlTemplate);
+        this._emptyMessageElement = null;
+    }
+
+    async init() {
+        await super.init();
+        this._title = "berechnungen";
+        this.addEventListener('load', fetchPing);
+
+        const response = await fetch('/ping');
+        if (response.ok) {
+            console.log('Server is up and running!');
+        } else {
+            console.error('Server is not responding.');
+        }
+
+        
+    }
+
+    async fetchPing() {
+        try {
+            const response = await fetch("/ping");
+            if (response.ok) {
+                const data = await response.text();
+                console.log(data); // hier wird die Antwort ausgegeben
+                return true;
+            } else {
+                throw new Error(response.statusText);
+            }
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    }
+}
+
+//Vorerst auskommentiert, um Verfügbarkeit des Servers zu prüfen
+/*"use strict";
+
+import Page from "../page.js";
+import HtmlTemplate from "./pageBerechnungen.html";
 
 /**
  * Klasse PageList: Stellt die Listenübersicht zur Verfügung
- */
+ 
 export default class PageBerechnungen extends Page {
     /**
      * Konstruktor.
      *
      * @param {App} app Instanz der App-Klasse
      */
-    constructor(app) {
+
+    /*constructor(app) {
         super(app, HtmlTemplate);
 
         this._emptyMessageElement = null;
@@ -29,7 +75,7 @@ export default class PageBerechnungen extends Page {
      * zu beeinflussen.
      */
           
-    async init() {
+    /*async init() {
         // HTML-Inhalt nachladen
         await super.init();
         this._title = "berechnungen";
@@ -59,7 +105,7 @@ export default class PageBerechnungen extends Page {
         }*/
 
         //Methode um alle Steuerjahre eines Users abzurufen und sie dann in einem Array zu speichern
-        async _getSteuerjahre(user_id) {
+        /*async _getSteuerjahre(user_id) {
             const response = await fetch(`/steuerjahre/${user_id}`);
             const data = await response.json();
           
@@ -74,10 +120,20 @@ export default class PageBerechnungen extends Page {
             /*for (let i = 0; i < steuerjahre.length; i++) {
                 
                 const response = await this._app.backend.fetch("GET", `/steuerjahr/${user_id}/${steuerjahre[i].value}`);
-                allWerbungskosten.push(response.werbungskosten);*/
+                allWerbungskosten.push(response.werbungskosten);
 
             //return steuerjahre;
-        }
+        }*/
+
+
+
+        //Ende Produktiver Bereich
+        //---------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------
 
         _/*getAllSteuerjahre(user_id) {
 
