@@ -164,6 +164,8 @@ components:
                 _id:
                     description: the Id of an user in mongo db
                     type: string
+                _links:
+                            $ref: '#/components/schemas/HATEOAS_Link'
             example: |-
                 {
                     "_id": "wHFBHLWlhfwbffbssu56ug"
