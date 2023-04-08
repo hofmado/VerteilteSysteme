@@ -30,22 +30,11 @@ export default class PageLogin extends Page {
             const usernamefeld = document.getElementById("username");
             const passwordfeld = document.getElementById("password");
             // Set username and password properties and safe them in data file
-            const data = {username: usernamefeld.value, password: passwordfeld.value}
-            const response = await fetch(`/user/`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to retrieve user data');
-            };
-
-            .then(response => response.json())
-            .then(data =>{
-                this.sessionStorage.setItem('userId', responseData._id);
+            const username= usernamefeld.value; 
+            const password= passwordfeld.value;
+            this._app.backend.fetch("GET", `/steuerjahr/${username}/${password}`)
+            .then(response => {
+                this.sessionStorage.setItem('userId', response._id);
             });
 
         } catch (ex) {
