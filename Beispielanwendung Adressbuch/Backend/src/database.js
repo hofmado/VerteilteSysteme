@@ -56,6 +56,12 @@ class DatabaseFactory {
                     "jahr": 2021,
                     "werbungskosten": 5500
                 },
+                //Steuerjahr "0", als Möglichkeit die Gesamtkosten unter "werbungskosten" abzuspeichern
+                {
+                    "user_id": "6420557cd5033a24fc6777aa",
+                    "jahr": 0,
+                    "werbungskosten": 0
+                },
             ]);
         } 
     }

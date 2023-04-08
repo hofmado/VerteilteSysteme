@@ -1,6 +1,6 @@
 "use strict"
 
-import steuerjahr_service from "../service/Steuerjahr.service.js";
+//import steuerjahr_service from "../service/Steuerjahr.service.js";
 import berechnungen_service from "../service/berechnungen.service.js"; //Service anlegen!!!
 import {wrapHandler} from "../utils.js";
 import RestifyError from "restify-errors";

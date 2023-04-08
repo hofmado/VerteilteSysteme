@@ -1,64 +1,18 @@
-//Einfacher Code um Verfügbarkeit des Servers zu prüfen
 "use strict";
 
-import Page from "../page.js";
-import HtmlTemplate from "./pageBerechnungen.html";
-
-export default class PageBerechnungen extends Page {
-    constructor(app) {
-        super(app, HtmlTemplate);
-        this._emptyMessageElement = null;
-    }
-
-    async init() {
-        await super.init();
-        this._title = "berechnungen";
-        this.addEventListener('load', fetchPing);
-
-        const response = await fetch('/ping');
-        if (response.ok) {
-            console.log('Server is up and running!');
-        } else {
-            console.error('Server is not responding.');
-        }
-
-        
-    }
-
-    async fetchPing() {
-        try {
-            const response = await fetch("/ping");
-            if (response.ok) {
-                const data = await response.text();
-                console.log(data); // hier wird die Antwort ausgegeben
-                return true;
-            } else {
-                throw new Error(response.statusText);
-            }
-        } catch (error) {
-            console.error(error);
-            return false;
-        }
-    }
-}
-
-//Vorerst auskommentiert, um Verfügbarkeit des Servers zu prüfen
-/*"use strict";
-
-import Page from "../page.js";
-import HtmlTemplate from "./pageBerechnungen.html";
+import Page from "../page.js"; /* page-js bleibt?*/
+import HtmlTemplate from "./pageBerechnungen.html"; /* hier page-berechnungen statt page-list.html eingefügt*/
 
 /**
  * Klasse PageList: Stellt die Listenübersicht zur Verfügung
- 
+ */
 export default class PageBerechnungen extends Page {
     /**
      * Konstruktor.
      *
      * @param {App} app Instanz der App-Klasse
      */
-
-    /*constructor(app) {
+    constructor(app) {
         super(app, HtmlTemplate);
 
         this._emptyMessageElement = null;
@@ -75,7 +29,7 @@ export default class PageBerechnungen extends Page {
      * zu beeinflussen.
      */
           
-    /*async init() {
+    async init() {
         // HTML-Inhalt nachladen
         await super.init();
         this._title = "berechnungen";
@@ -84,7 +38,7 @@ export default class PageBerechnungen extends Page {
         const user_id ="6420557cd5033a24fc6777aa";
 
         //Felder im Frontend
-        const anzS = parseInt(document.querySelector("#anzS").value);
+        const startjahr = parseInt(document.querySelector("#anzJ").value);
         const nebenJ = document.querySelector("#nebenJ").checked;
         //const gesamtE = parseDouble(document.querySelector("#gesamtE").value);
         let gesamtE = 0;
@@ -95,16 +49,39 @@ export default class PageBerechnungen extends Page {
 
         //EventListener für Buttons
         //Get
-        button.addEventListener("click", () => this._getSteuerjahre(user_id));
-            
-        }
+        button.addEventListener("click", () => this._getGesamtkosten(user_id));
 
         //Post
-        /*buttonS.addEventListener("click", () => {
-            ;
-        }*/
+        buttonS.addEventListener("click", () => this.setGesamtkosten(user_id));
+    }
 
         //Methode um alle Steuerjahre eines Users abzurufen und sie dann in einem Array zu speichern
+        _getGesamtkosten(user_id, startjahr) {
+            //for-Schleife um alle angeforderten Jahre durchzugehen
+            for(let i = startjahr; i <= 2023; i++){
+            this._app.backend.fetch("GET", `/steuerjahr/${user_id}/${i}`)
+                .then(response => {
+                    gesamtE += response.werbungskosten;}
+                );
+            }
+        }
+
+        //Methode um Gesamtersparnis abzuspeichern
+        _setGesamtkosten(user_id){
+            let dataset = {
+                user_id: user_id, 
+                werbungskosten: gesamtE
+            }
+    
+            this._app.backend.fetch("POST", '/steuerjahr', {body: dataset}).then(
+                setTimeout(() => {
+                    //whait for mongodb server
+                    //this._getAnfrage(user_id,feldJahr,feldWerbungskosten)
+                }, 1000)
+            )
+        }
+    }
+
         /*async _getSteuerjahre(user_id) {
             const response = await fetch(`/steuerjahre/${user_id}`);
             const data = await response.json();
@@ -115,7 +92,7 @@ export default class PageBerechnungen extends Page {
             steuerjahre.forEach(jahr => {
                 gesamtE += jahr;
             });
-        }
+        }*/
 
             /*for (let i = 0; i < steuerjahre.length; i++) {
                 
@@ -124,56 +101,3 @@ export default class PageBerechnungen extends Page {
 
             //return steuerjahre;
         }*/
-
-
-
-        //Ende Produktiver Bereich
-        //---------------------------------------------------------------------------------------------
-        //---------------------------------------------------------------------------------------------
-        //---------------------------------------------------------------------------------------------
-        //---------------------------------------------------------------------------------------------
-        //---------------------------------------------------------------------------------------------
-        //---------------------------------------------------------------------------------------------
-
-        _/*getAllSteuerjahre(user_id) {
-
-            this._app.backend.fetch("GET", `/steuerjahr/${user_id}')
-            .then(response => {
-
-                //Schleife um alle Steuerjahre zusammenzurechnen
-                forEach
-
-                feldWerbungskosten.innerHTML = "" + response.werbungskosten;
-            });
-    }*/
-
-            /*
-            const allWerbungskosten = [];
-            const allSteuerjahre = document.querySelectorAll(".steuerjahr");
-          
-            for (let i = 0; i < allSteuerjahre.length; i++) {
-              const response = await this._app.backend.fetch("GET", `/steuerjahr/${user_id}/${allSteuerjahre[i].value}`);
-              allWerbungskosten.push(response.werbungskosten);
-            }*/
-          
-            /*const gesamtWerbungskosten = allWerbungskosten.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-            return gesamtWerbungskosten;
-          }*/
-
-
-
-        //this._dataset = await this._app.backend.fetch("GET", this._url); Wird nachher benötigt
-
-        //Hier Buttons nennen
-        //Buttons
-        //const berechnenbutton = this._mainElement.querySelector('#button');
-        //const submitbutton = this._mainElement.querySelector('#submit');
-            // Event Handler registrieren
-        //berechnenbutton.addEventListener("click", () => this._gotoBerechnungen());
-        //// TODO: Anzuzeigende Inhalte laden mit this._app.backend.fetch() ////
-        //submitbutton.addEventListener("click", () => this._register());
-        //// TODO: Inhalte in die HTML-Struktur einarbeiten ////
-        //// TODO: Neue Methoden für Event Handler anlegen und hier registrieren ////
-        
-
-
