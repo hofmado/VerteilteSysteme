@@ -1,15 +1,15 @@
 openapi: 3.1.0
 info:
-    title: Adressbuch
+    title: Steuerberechnung
     version: '1.0'
     description: >-
         Die Adressbuch-App nutzt einen simplen REST-Webservices zur Kommunikation mit dem Backend. Dieser
         ermöglicht die üblichen CRUD-Operationen zur Suche, Anzeige, Bearbeitung und Löschung von Adressen,
         wobei jede Adresse aus einem Vornamen, Nachnamen, Telefonnummer und eine E-Mailadresse besteht.
     contact:
-        name: Dennis Schulmeister-Zimolong
-        url: 'https://www.wpvs.de'
-        email: dhbw@windows3.de
+        name: Gruppe Steuerabsetzen
+        url: 'https://www.karlsruhe.dhbw.de/startseite.html'
+        email: dominik.r.hoffmann@gmail.com
     license:
         name: CC-BY-4.0
         url: 'https://creativecommons.org/licenses/by/4.0/deed.de'
@@ -92,24 +92,23 @@ paths:
                 - _id
             parameters:
                 -
-                    name: user
-                    description: |-
-                        {
-                            "username": "MusterMAx",
-                            "password": "1",
-                        }
+                    name: username
                     schema:
-                        type: array
-                        items:
-                            type: string
-                    in: header
+                        type: string
+                    in: path
+                    required: true
+                -
+                    name: password
+                    schema:
+                        type: string
+                    in: path
                     required: true
             responses:
                 '200':
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/User'
+                                type: string
                             examples:
                                 _id:
                                     value: |-
@@ -119,7 +118,7 @@ paths:
                     description: Deliveres a _id back to the frontend
                 '400':
                     description: Failed to retieve userdata
-            summary: Übergibt den Usernamen und Passwort und liefert eine Id zurück
+        summary: Übergibt den Usernamen und Passwort und liefert eine Id zurück
 components:
     schemas:
         HATEOAS_Collection:
