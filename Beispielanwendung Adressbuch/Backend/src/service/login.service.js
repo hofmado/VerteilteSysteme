@@ -16,10 +16,10 @@ export default class LoginService {
      * @param {Object} query Optionale Suchparameter
      * @return {Promise} Liste der gefundenen Adressen
      */
-    async read(_username, _password) {
+    async read(username, password) {
       try {
-        const user = await this._collection.findOne({ _username });
-          if (user && user.password === _password) {
+        const user = await this._collection.findOne({ username });
+          if (user && user.password === password) {
             return user._id;
           } else {
             return null;

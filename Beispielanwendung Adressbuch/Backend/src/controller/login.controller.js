@@ -48,7 +48,7 @@ export default class LoginController {
     }
 
     /**
-     * POST /address
+     * POST /user
      * Neue Adresse anlegen
      */
     async createUser(req, res, next) {
@@ -64,14 +64,15 @@ export default class LoginController {
 
     /**
      * 
+     * GET /user/ username/password
      * USER auslesen
      */
-    async getusers(req, res, next) {
-        let result = await this._service.read(req.params.username);
-
-        if (result) {
-            this._insertHateoasLinks(result);
-            res.sendResult(result);
+    async getusers(req1, res, next) {
+        let result1 = await this._service.read(req1.params.username, req1.params.password);
+        
+        if (result1) {
+            this._insertHateoasLinks(result1);
+            res.sendResult(result1);
         } else {
             throw new RestifyError.NotFoundError("Username nicht gefunden");
         }
