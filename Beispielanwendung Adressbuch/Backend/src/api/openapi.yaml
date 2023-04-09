@@ -53,43 +53,36 @@ paths:
                                     password: '1'
                 required: true
             tags:
-                - username
-                - password
-                - _id
+                - User
+            parameters:
+                -
+                    name: password
+                    description: ''
+                    schema:
+                        type: string
+                    in: query
+                -
+                    name: username
+                    description: ''
+                    schema:
+                        type: string
+                    in: query
             responses:
                 '201':
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/User'
-                            examples:
-                                _id:
-                                    value: '"xxehfohjiwowio45jiiwe"'
                     description: Successful response.
                 '400':
                     description: No Username or password received
             operationId: createUser
             summary: Create a User
             description: Creates a new instance of a `User`.
-        parameters:
-            -
-                name: password
-                description: ''
-                schema:
-                    type: string
-                in: query
-            -
-                name: username
-                description: ''
-                schema:
-                    type: string
-                in: query
     '/user/{username}/{password}':
         get:
             tags:
-                - username
-                - password
-                - _id
+                - User
             parameters:
                 -
                     name: username
@@ -108,19 +101,13 @@ paths:
                     content:
                         application/json:
                             schema:
-                                type: string
-                            examples:
-                                _id:
-                                    value: |-
-                                        {
-                                            _id:"afgwoebqdfnuwuihf5un3"
-                                        }
+                                $ref: '#/components/schemas/User'
                     description: Deliveres a _id back to the frontend
                 '400':
                     description: Failed to retieve userdata
-        operationId: getUser
-        summary: sucht nach einem User
-        description: Übergabe von Usernaem und Password um ID zurück zuliefern
+            operationId: getUser
+            summary: sucht nach einem User
+            description: Übergabe von Usernaem und Password um ID zurück zuliefern
 components:
     schemas:
         HATEOAS_Collection:
@@ -145,6 +132,16 @@ components:
                     type: array
                     items:
                         type: string
+        HATEOAS_Resource:
+            title: HATEOAS-Links einer Resource
+            type: object
+            properties:
+                read:
+                    $ref: '#/components/schemas/HATEOAS_Link'
+                update:
+                    $ref: '#/components/schemas/HATEOAS_Link'
+                patch:
+                    $ref: '#/components/schemas/HATEOAS_Link'
         User:
             description: |-
                 Ein User hat einen Username und ein passwort mit dem er sich anmelden kann
@@ -167,50 +164,10 @@ components:
                     description: the Id of an user in mongo db
                     type: string
                 _links:
-                            $ref: '#/components/schemas/HATEOAS_Link'
+                    $ref: '#/components/schemas/HATEOAS_Resource'
             example: |-
                 {
                     "_id": "wHFBHLWlhfwbffbssu56ug"
                     "username": "MaxMustermann",
                     "password": "geheimesPasswort"
                 }
-
-        '/user/{username}/{password}':
-            description: |-
-                Ein User hat einen Username und ein passwort mit dem er sich anmelden kann
-                    Jeder user besitzt eine zusammenfassende Statistik die alle Steuerjahre und 
-                    alle Verdienste zusammenfassen kann.
-                    Ein User besitzt beliebig viele Steuerjahre in denen für das entsprechende Jahr
-                    die Werbungskosten eingetragen werden können.
-                    Ein User besitzt beliebig viele Verdienste die er zusammenfassend für jedes Jahr
-                    eintragen kann.
-            required: []
-            type: object
-            properties:
-                username:
-                    description: name der vom User zur anmeldung angelegt wurde
-                    type: string
-                password:
-                    description: passwort um sich mit dem username anmelden zu können
-                    type: string
-                _id:
-                    description: the Id of an user in mongo db
-                    type: string
-                _links:
-                            $ref: '#/components/schemas/HATEOAS_Link'
-            example: |-
-                {
-                    "_id": "wHFBHLWlhfwbffbssu56ug"
-                    "username": "MaxMustermann",
-                    "password": "geheimesPasswort"
-                }
-        HATEOAS_Resource:
-            title: HATEOAS-Links einer Resource
-            type: object
-            properties:
-                read:
-                    $ref: '#/components/schemas/HATEOAS_Link'
-                update:
-                    $ref: '#/components/schemas/HATEOAS_Link'
-                patch:
-                    $ref: '#/components/schemas/HATEOAS_Link'

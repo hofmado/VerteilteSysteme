@@ -20,13 +20,11 @@ export default class LoginController {
         this._service = new LoginService();
         this._prefix = prefix;
 
-        // Collection: Adressen
-        server.get(prefix, wrapHandler(this, this.read));
-        server.post(prefix, wrapHandler(this, this.create));
+        // Collection: Users
+        server.post(prefix, wrapHandler(this, this.createUser));
 
-        // Entity: Adresse
-        server.get(prefix + "/:id", wrapHandler(this, this.read));
-        server.post(prefix + "/:id", wrapHandler(this, this.create));
+        // Entity: User
+        server.get(prefix + "/:username" + "/:password", wrapHandler(this, this.getUser));
         
     }
 
@@ -39,11 +37,10 @@ export default class LoginController {
      * @param {Object} entity Zu verändernder Datensatz
      */
     _insertHateoasLinks(entity) {
-        let url = `${this._prefix}/${entity._id}`;
+        let url = `${this._prefix}/${entity.username}/${entity.password}`;
 
         entity._links = {
-            read:   {url: url, method: "GET"},
-            create: {url: url, method: "POST"},
+            getUser:   {url: url, method: "GET"},
         }
     }
 
