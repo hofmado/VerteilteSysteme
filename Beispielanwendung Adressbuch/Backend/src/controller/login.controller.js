@@ -68,13 +68,12 @@ export default class LoginController {
      * USER auslesen
      */
     async getusers(req1, res, next) {
-        let result1 = await this._service.read(req1.params.username, req1.params.password);
+        let userId = await this._service.read(req1.params.username, req1.params.password);
         
-        if (result1) {
-            this._insertHateoasLinks(result1);
-            res.sendResult(result1);
+        if (userId) {
+            res.sendResult({_id: userId});
         } else {
-            throw new RestifyError.NotFoundError("Username nicht gefunden");
+            throw new RestifyError.NotFoundError("An error occured");
         }
 
         return next();
