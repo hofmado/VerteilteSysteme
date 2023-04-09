@@ -173,6 +173,36 @@ components:
                     "username": "MaxMustermann",
                     "password": "geheimesPasswort"
                 }
+
+        '/user/{username}/{password}':
+            description: |-
+                Ein User hat einen Username und ein passwort mit dem er sich anmelden kann
+                    Jeder user besitzt eine zusammenfassende Statistik die alle Steuerjahre und 
+                    alle Verdienste zusammenfassen kann.
+                    Ein User besitzt beliebig viele Steuerjahre in denen für das entsprechende Jahr
+                    die Werbungskosten eingetragen werden können.
+                    Ein User besitzt beliebig viele Verdienste die er zusammenfassend für jedes Jahr
+                    eintragen kann.
+            required: []
+            type: object
+            properties:
+                username:
+                    description: name der vom User zur anmeldung angelegt wurde
+                    type: string
+                password:
+                    description: passwort um sich mit dem username anmelden zu können
+                    type: string
+                _id:
+                    description: the Id of an user in mongo db
+                    type: string
+                _links:
+                            $ref: '#/components/schemas/HATEOAS_Link'
+            example: |-
+                {
+                    "_id": "wHFBHLWlhfwbffbssu56ug"
+                    "username": "MaxMustermann",
+                    "password": "geheimesPasswort"
+                }
         HATEOAS_Resource:
             title: HATEOAS-Links einer Resource
             type: object
