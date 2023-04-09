@@ -35,8 +35,6 @@ class DatabaseFactory {
 
         let steuerjahr = this.database.collection("steuerjahr");
 
-
-        let user = this.database.collection("steuerjahr");
         if (await steuerjahr.estimatedDocumentCount() === 0) {
             steuerjahr.insertMany([
                 {

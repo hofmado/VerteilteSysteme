@@ -62,7 +62,9 @@ export default class SteuerjahrPage extends Page {
             setTimeout(() => {
                 //whait for mongodb server
                 this._getAnfrage(user_id,feldJahr,feldWerbungskosten)
-            }, 1000)
+            }, 
+            //hier wartet die funktion auf den Eintrag in die MongoDB (dies dauert etwa 0,1 bis 0,8 sek)
+            1000)
         )
         
     }
