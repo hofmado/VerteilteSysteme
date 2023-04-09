@@ -1,7 +1,7 @@
 "use strict"
 
 import DatabaseFactory from "../database.js";
-import {ObjectId} from "mongodb";
+import {CursorFlag, username, ObjectId} from "mongodb";
 
 
 export default class LoginService {
@@ -33,8 +33,8 @@ export default class LoginService {
     /**
      * Speichern eines Users.
      *
-     * @param {Object} user Zu speichernde Adressdaten
-     * @return {Promise} Gespeicherte Adressdaten
+     * @param {Object} user Zu speichernde daten
+     * @return {Promise} Gespeicherte daten
      */
     async create(user) {
         user = user || {};

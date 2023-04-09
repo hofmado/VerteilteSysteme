@@ -33,7 +33,7 @@ export default class PageLogin extends Page {
             const username= usernamefeld.value; 
             const password= passwordfeld.value;
             this._app.backend.fetch("GET", `/user/${username}/${password}`)
-            if (response.ok) {
+            if (response) {
                 // Save the user ID in the session storage
                 const data = await response.json();
                 sessionStorage.setItem('userId', data._id);
