@@ -39,7 +39,7 @@ export default class PageList extends Page {
         this._title = "Übersicht";
 
         // Platzhalter anzeigen, wenn noch keine Daten vorhanden sind
-        let data = await this._app.backend.fetch("GET", "/address");
+        let data = await this._app.backend.fetch("GET", "/user");
         this._emptyMessageElement = this._mainElement.querySelector(".empty-placeholder");
 
         if (data.length) {

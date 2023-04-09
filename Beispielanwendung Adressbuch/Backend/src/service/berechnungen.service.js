@@ -4,7 +4,7 @@ import {CURSOR_FLAGS, Int32, ObjectId} from "mongodb";
 export default class berechnungen_service {
 
   constructor() {
-    this._steuerjahr = DatabaseFactory.database.collection("steuerjahr");
+    this._steuerjahr = DatabaseFactory.database.collection("steuerjahr"); //TODO eigene collection erstellen
   }
 /**
    * Speichern eines neuen Steuerjahrs.
@@ -12,7 +12,7 @@ export default class berechnungen_service {
    * @param {Object} jahr Zu gespeichertem Steuerjahr
    * @return {Promise} zu gespeichertes Steuerjahr
    */
-  async readSteuerjahr(user_id, jahr) {
+  async readSteuerjahr(user_id, jahr) { //TODO nennen wie collection element in API
     let result = await this._steuerjahr.findOne({user_id: user_id, jahr: parseInt(jahr)});
     return result;
   }

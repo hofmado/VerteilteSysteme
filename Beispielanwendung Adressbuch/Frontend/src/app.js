@@ -115,9 +115,9 @@ class App {
     async _gotoBerechnungen() {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
-            let {default: PageKalk} = await import("./page-berechnungen/pageBerechnungen.js");
+            let {default: PageBerechnungen} = await import("./page-berechnungen/pageBerechnungen.js");
 
-            let page = new PageKalk(this);
+            let page = new PageBerechnungen(this);
             await page.init();
             this._showPage(page, "berechnungen");
         } catch (ex) {

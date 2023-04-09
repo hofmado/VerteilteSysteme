@@ -41,7 +41,6 @@ export default class PageBerechnungen extends Page {
         const startjahr = parseInt(document.querySelector("#anzJ").value);
         const nebenJ = document.querySelector("#nebenJ").checked;
         //const gesamtE = parseDouble(document.querySelector("#gesamtE").value);
-        let gesamtE = 0;
 
         const button = this.mainElement.querySelector("#button");
         const buttonS = this.mainElement.querySelector("#buttonS");
@@ -56,10 +55,12 @@ export default class PageBerechnungen extends Page {
     }
 
         //Methode um alle Steuerjahre eines Users abzurufen und sie dann in einem Array zu speichern
-        _getGesamtkosten(user_id, startjahr) {
+        async _getGesamtkosten(user_id, startjahr) {
+
+            const gesamtE = 0;
             //for-Schleife um alle angeforderten Jahre durchzugehen
             for(let i = startjahr; i <= 2023; i++){
-            this._app.backend.fetch("GET", `/steuerjahr/${user_id}/${i}`)
+            this._app.backend.fetch("GET", `/steuerjahr/${user_id}/${i}`) //TODO nennen wie collection element in API
                 .then(response => {
                     gesamtE += response.werbungskosten;}
                 );
@@ -73,7 +74,7 @@ export default class PageBerechnungen extends Page {
                 werbungskosten: gesamtE
             }
     
-            this._app.backend.fetch("POST", '/steuerjahr', {body: dataset}).then(
+            this._app.backend.fetch("POST", '/steuerjahr', {body: dataset}).then(//TODO nennen wie collection element in API
                 setTimeout(() => {
                     //whait for mongodb server
                     //this._getAnfrage(user_id,feldJahr,feldWerbungskosten)

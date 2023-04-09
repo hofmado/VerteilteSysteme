@@ -1,6 +1,8 @@
 import DatabaseFactory from "../database.js";
 import {CURSOR_FLAGS, Int32, ObjectId} from "mongodb";
 
+//Datenverarbeitung, read-Methode, post-methode
+
 export default class steuerjahr_service {
 
   constructor() {
@@ -23,6 +25,8 @@ export default class steuerjahr_service {
     let kosten = parseInt(dataset.kosten);
     let fahrtweg = parseInt(dataset.fahrtweg);
     
+
+    //Berechnen
     // Calculate tax savings
     const fahrtkosten = fahrtweg * 0.3*225;
     const newWerbungskosten = fahrtkosten + kosten ;

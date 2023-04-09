@@ -1,5 +1,7 @@
 "use strict"
 
+//Steuert API, Funktionen in API werden hier nochmal angegeben, sagt wo was gemacht wird
+
 //import steuerjahr_service from "../service/Steuerjahr.service.js";
 import berechnungen_service from "../service/berechnungen.service.js"; //Service anlegen!!!
 import {wrapHandler} from "../utils.js";
@@ -26,7 +28,7 @@ export default class BerechnungenControllerClass {
         //server.post(prefix, wrapHandler(this, this.createSteuerjahr));
 
         //Entity Steuerjahr
-        server.get(prefix + "/:user_id" + "/:jahr", wrapHandler(this, this.readSteuerjahr));
+        server.get(prefix + "/:user_id" + "/:jahr", wrapHandler(this, this.readSteuerjahr));//TODO nennen wie collection element in API
     }
 
     /**
@@ -37,7 +39,7 @@ export default class BerechnungenControllerClass {
      *
      * @param {Object} entity Zu verändernder Datensatz.
      */
-    _insertHateoasLinks(entity) {
+    _insertHateoasLinks(entity) {//TODO variablen nennen wie collection element in API
         let url = `${this._prefix}/${entity.user_id}/${entity.jahr}`;
 
         entity._links = {
@@ -49,7 +51,7 @@ export default class BerechnungenControllerClass {
      * GET /steuerjahr/{jahr}
      */
     async readSteuerjahr(req, res, next) {
-        let result = await this._service.readSteuerjahr(req.params.user_id, req.params.jahr);
+        let result = await this._service.readSteuerjahr(req.params.user_id, req.params.jahr);//TODO nennen wie collection element in API
         if (result) {
           this._insertHateoasLinks(result);
           res.sendResult(result);
@@ -63,7 +65,7 @@ export default class BerechnungenControllerClass {
      * POST /user/steuerjahr
      */ 
     async createSteuerjahr(req, res, next) { 
-        let result = await this._service.createSteuerjahr(req.body);
+        let result = await this._service.createSteuerjahr(req.body);//TODO nennen wie collection element in API
         this._insertHateoasLinks(result);
 
         res.status(201);
