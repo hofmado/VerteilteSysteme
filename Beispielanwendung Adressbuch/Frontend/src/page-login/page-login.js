@@ -32,17 +32,15 @@ export default class PageLogin extends Page {
             // Set username and password properties and safe them in data file
             const username= usernamefeld.value; 
             const password= passwordfeld.value;
+            const data = json;
             this._app.backend.fetch("GET", `/user/${username}/${password}`)
-            if (response) {
+            .then(response => {
                 // Save the user ID in the session storage
-                const data = await response.json();
+                data = response.json();
                 sessionStorage.setItem('userId', data._id);
                 alert("Login successful!");
                 location.hash = `/#/steuerjahr/${data._id}`;
-            } else {
-                // Handle errors
-                throw new Error(`Failed to login: ${response.statusText}`);
-            }
+            });
         } catch (ex) {
             console.error(ex);
             this._app.showException(ex);

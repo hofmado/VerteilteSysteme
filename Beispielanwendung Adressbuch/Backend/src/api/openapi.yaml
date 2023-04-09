@@ -118,6 +118,7 @@ paths:
                     description: Deliveres a _id back to the frontend
                 '400':
                     description: Failed to retieve userdata
+        operationId: getUser
         summary: Übergibt den Usernamen und Passwort und liefert eine Id zurück
 components:
     schemas:

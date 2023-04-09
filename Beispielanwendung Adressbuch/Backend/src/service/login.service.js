@@ -1,7 +1,7 @@
 "use strict"
 
 import DatabaseFactory from "../database.js";
-import {CursorFlag, username, ObjectId} from "mongodb";
+import {ObjectId} from "mongodb";
 
 
 export default class LoginService {
@@ -16,14 +16,12 @@ export default class LoginService {
      * @param {Object} query Optionale Suchparameter
      * @return {Promise} Liste der gefundenen Adressen
      */
-    async read(username, password) {
+    async read(username, _password) {
       try {
-        let user = await this._collection.findOne({ username: username, _password: password });
-          if (user && user.password === password) {
-            return user._id;
-          } else {
-            return null;
-          }
+        let user = await this._users.findOne({ username: username, password: password });
+          
+          return user._id;
+         
         } catch (error) {
           return null;
         }
@@ -40,8 +38,8 @@ export default class LoginService {
         user = user || {};
 
         let newUser = {
-            username: user.username || "",
-            password:  user.password  || "",
+            username: user.username,
+            password:  user.password,
         };
 
         let result = await this._users.insertOne(newUser);

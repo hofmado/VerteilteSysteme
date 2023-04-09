@@ -67,7 +67,7 @@ export default class LoginController {
      * GET /user/ username/password
      * USER auslesen
      */
-    async getusers(req1, res, next) {
+    async getUser(req1, res, next) {
         let userId = await this._service.read(req1.params.username, req1.params.password);
         
         if (userId) {
