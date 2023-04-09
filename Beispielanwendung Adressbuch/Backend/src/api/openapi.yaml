@@ -119,7 +119,8 @@ paths:
                 '400':
                     description: Failed to retieve userdata
         operationId: getUser
-        summary: Übergibt den Usernamen und Passwort und liefert eine Id zurück
+        summary: sucht nach einem User
+        description: Übergabe von Usernaem und Password um ID zurück zuliefern
 components:
     schemas:
         HATEOAS_Collection:
