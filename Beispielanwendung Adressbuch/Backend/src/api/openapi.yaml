@@ -69,6 +69,10 @@ paths:
                     in: query
             responses:
                 '201':
+                    headers: 
+                        Location:
+                            schema:
+                                type: string
                     content:
                         application/json:
                             schema:
@@ -165,9 +169,8 @@ components:
                     type: string
                 _links:
                     $ref: '#/components/schemas/HATEOAS_Resource'
-            example: |-
-                {
-                    "_id": "wHFBHLWlhfwbffbssu56ug"
-                    "username": "MaxMustermann",
-                    "password": "geheimesPasswort"
-                }
+            example: 
+                _id: wHFBHLWlhfwbffbssu56ug
+                username: MaxMustermann
+                password: geheimesPasswort
+                
