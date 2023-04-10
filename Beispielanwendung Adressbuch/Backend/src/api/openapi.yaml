@@ -34,7 +34,7 @@ paths:
             operationId: index
             summary: Wurzeladresse des Webservices
             description: Liefert eine HATEOAS-Übersicht aller collections
-    /user:
+    '/user':
         summary: Path used to manage the list of users.
         description: >-
             The REST endpoint/path used to list and create zero or more `User` entities.  This path contains a
@@ -46,27 +46,8 @@ paths:
                     application/json:
                         schema:
                             $ref: '#/components/schemas/User'
-                        examples:
-                            User:
-                                value:
-                                    username: MusterMAx
-                                    password: '1'
-                required: true
             tags:
                 - User
-            parameters:
-                -
-                    name: password
-                    description: ''
-                    schema:
-                        type: string
-                    in: query
-                -
-                    name: username
-                    description: ''
-                    schema:
-                        type: string
-                    in: query
             responses:
                 '201':
                     headers: 
@@ -78,8 +59,6 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/User'
                     description: Successful response.
-                '400':
-                    description: No Username or password received
             operationId: createUser
             summary: Create a User
             description: Creates a new instance of a `User`.

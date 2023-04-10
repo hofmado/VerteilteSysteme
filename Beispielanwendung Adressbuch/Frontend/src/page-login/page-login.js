@@ -45,39 +45,33 @@ export default class PageLogin extends Page {
 
     async _register(username, password) {
         // Eingegebene Werte prüfen
-       
-        let data = {
-            username: username.value,
-            password: password.value,
+        username = username.value;
+        password = password.value;
+        let User = {
+            username,
+            password
         };
     
-        if (!data.username) {
+        if (!username) {
             alert("Geben Sie erst einen Usernamen ein.");
             return;
         }
     
-        if (!data.password) {
+        if (!password) {
             alert("Geben Sie erst einen Passwort ein.");
             return;
         }
-    
+        console.log(User);
         // Datensatz speichern
         try {
-            const response = await fetch('/user/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
+            this._app.backend.fetch("POST", '/user', {body: User})
+            .then(response => {
+                // Save the user ID in the session storage
+                let data = response.User._id;
+                sessionStorage.setItem('userId', data);
+                alert("Login successful!");
+                //location.hash = `/#/steuerjahr/${responseData.username}`;
             });
-    
-            if (!response.ok) {
-                throw new Error('Failed to save user data');
-            }
-    
-            const responseData = await response.json();
-            this.sessionStorage.setItem('userId', responseData._id);
-            location.hash = `/#/steuerjahr/${responseData.username}`;
         } catch (ex) {
             this._app.showException(ex);
             return;

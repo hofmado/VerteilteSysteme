@@ -35,7 +35,7 @@ export default class LoginService {
      * @param {Object} user Zu speichernde daten
      * @return {Promise} Gespeicherte daten
      */
-    async create(user) {
+    async createUser(user) {
         user = user || {};
 
         let newUser = {

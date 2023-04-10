@@ -49,7 +49,7 @@ export default class LoginController {
      * Neue Adresse anlegen
      */
     async createUser(req, res, next) {
-        let result = await this._service.create(req.body);
+        let result = await this._service.createUser(req.body);
         this._insertHateoasLinks(result);
 
         res.status(201);
