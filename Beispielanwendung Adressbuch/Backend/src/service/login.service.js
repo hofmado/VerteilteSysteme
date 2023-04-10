@@ -9,7 +9,7 @@ export default class LoginService {
      * Konstruktor.
      */
     constructor() {
-        this._users = DatabaseFactory.database.collection("users");
+        this._users = DatabaseFactory.database.collection("user");
     }
 
     /**
@@ -17,10 +17,11 @@ export default class LoginService {
      * @return {Promise} Liste der gefundenen Adressen
      */
     async readUser(username, password) {
+      console.log(username);
       try {
         let user = await this._users.findOne({ username: username, password: password });
           
-          return user._id;
+        return user._id;
          
         } catch (error) {
           return null;

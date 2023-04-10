@@ -65,10 +65,11 @@ export default class LoginController {
      * USER auslesen
      */
     async getUser(req1, res, next) {
+        console.log(req1.params.password);
         let userId = await this._service.readUser(req1.params.username, req1.params.password);
-        console.log("Kommst du hierhin2?");
         if (userId) {
-            res.sendResult({_id: userId});
+            console.log(userId);
+            res.sendResult({userId});
         } else {
             throw new RestifyError.NotFoundError("An error occured");
         }
