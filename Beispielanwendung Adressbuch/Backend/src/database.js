@@ -20,7 +20,7 @@ class DatabaseFactory {
         // Datenbankverbindung herstellen
         this.client = new MongoClient(connectionUrl);
         await this.client.connect();
-        this.database = this.client.db("Steuer");
+        this.database = this.client.db("Ersparnisse");
         
 
         await this._createDemoData();
@@ -33,19 +33,33 @@ class DatabaseFactory {
      */
     async _createDemoData() {
 
-        let steuerjahr = this.database.collection("steuerjahr");
+        let einsparungsjahr = this.database.collection("einsparungsjahr");
 
-
-        let user = this.database.collection("steuerjahr");
-        if (await steuerjahr.estimatedDocumentCount() === 0) {
-            steuerjahr.insertMany([
+        //let user = this.database.collection("einsparungsjahr");
+        if (await einsparungsjahr.estimatedDocumentCount() === 0) {
+            einsparungsjahr.insertMany([
                 {
                     "user_id": "6420557cd5033a24fc6777aa",
                     "jahr": 2023,
-                    "werbungskosten": 2500
+                    "einsparungen": 2500
+                },
+                {
+                    "user_id": "6420557cd5033a24fc6777aa",
+                    "jahr": 2022,
+                    "einsparungen": 2500
+                },
+                {
+                    "user_id": "6420557cd5033a24fc6777aa",
+                    "jahr": 2021,
+                    "einsparungen": 2500
+                },
+                {
+                    "user_id": "6420557cd5033a24fc6777aa",
+                    "jahr": 2020,
+                    "einsparungen": 2500
                 },
             ]);
-            steuerjahr.insertMany([
+            /*steuerjahr.insertMany([
                 {
                     "user_id": "6420557cd5033a24fc6777aa",
                     "jahr": 2022,
@@ -62,7 +76,7 @@ class DatabaseFactory {
                     "jahr": 0,
                     "werbungskosten": 0
                 },
-            ]);
+            ]);*/
         } 
     }
 }

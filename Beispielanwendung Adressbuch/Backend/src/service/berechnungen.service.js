@@ -4,7 +4,7 @@ import {CURSOR_FLAGS, Int32, ObjectId} from "mongodb";
 export default class berechnungen_service {
 
   constructor() {
-    this._steuerjahr = DatabaseFactory.database.collection("steuerjahr"); //TODO eigene collection erstellen
+    this._einsparungen = DatabaseFactory.database.collection("steuerjahr"); //TODO eigene collection erstellen
   }
 /**
    * Speichern eines neuen Steuerjahrs.
