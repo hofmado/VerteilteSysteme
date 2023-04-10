@@ -29,7 +29,7 @@ export default class PageBerechnungen extends Page {
      * zu beeinflussen.
      */
           
-    async init() {
+    async init() { 
         // HTML-Inhalt nachladen
         await super.init();
         this._title = "berechnungen";
