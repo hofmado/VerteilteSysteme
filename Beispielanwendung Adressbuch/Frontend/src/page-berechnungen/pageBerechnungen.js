@@ -57,7 +57,7 @@ export default class PageBerechnungen extends Page {
         //Methode um alle Steuerjahre eines Users abzurufen und sie dann in einem Array zu speichern
         async _getGesamtkosten(user_id, startjahr, endjahr) {
 
-            const gesamtE = 0;
+            let gesamtE = 0;
             //for-Schleife um alle angeforderten Jahre durchzugehen
             for(let i = startjahr; i <= endjahr; i++){
             this._app.backend.fetch("GET", `/einsparungsjahr/${user_id}/${i}`) 
