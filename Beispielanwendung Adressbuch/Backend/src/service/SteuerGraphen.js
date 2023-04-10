@@ -8,7 +8,10 @@ export default class SteuerGraphen {
             this._steuerjahr = DatabaseFactory.database.collection("steuerjahr"); 
     }
 
-    async alleUserSteuerjahre(){
+    async graphenzeug(){
+            let result = await this._steuerjahr.distinct("jahr");
+        console.log(result);
+        return result;
         
     }
 }

@@ -32,44 +32,27 @@ class DatabaseFactory {
      * wenigstens gleich ein paar Daten.
      */
     async _createDemoData() {
-      
-        if (await user.estimatedDocumentCount() === 0) {
-            user.insertMany([
+
+        let Graphen = this.database.collection("Graphen");
+
+        if (await Graphen.estimatedDocumentCount() === 0) {
+            Graphen.insertMany([
                 {
-                    "Gesamt-Werbungskosten": 5000,
-                    "Gesamt-Einkommen": 25000,
-                    "username": "MaxMustermann",
-                    "passwort": "geheimesPasswort",
-                    "Steuerjahr": {
-                      "Jahr": 2000,
-                      "Werbungskosten": 5000
-                    },
-                    "Steuerjahr": {
-                        "Jahr": 2002,
-                        "Werbungskosten": 5000
-                      },
-                      "Steuerjahr": {
-                        "Jahr": 2001,
-                        "Werbungskosten": 5000
-                      },
-                    "Verdienst": {
-                      "Einkommen": 5000,
-                      "Jahr": 2000
-                    }
-                }
+                    "user_id": "6420557cd5033a24fc6777aa",
+                    "jahr": 2023,
+                    "werbungskosten": 2500
+                },
             ]);
-        }
-        if (await steuerjahr.estimatedDocumentCount() === 0) {
-            steuerjahr.insertMany([
+            Graphen.insertMany([
                 {
-                    username: "Max",
-                    jahr: "2022",
-                    steuerablassung: "2500",
+                    "user_id": "6420557cd5033a24fc6777aa",
+                    "jahr": 2022,
+                    "werbungskosten": 2500
                 },
                 {
-                    username: "Max",
-                    jahr: "2021",
-                    steuerablassung: "3500",
+                    "user_id": "6420557cd5033a24fc6777aa",
+                    "jahr": 2021,
+                    "werbungskosten": 5500
                 },
             ]);
         } 

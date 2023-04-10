@@ -7,7 +7,7 @@ info:
         ermöglicht die üblichen CRUD-Operationen zur Suche, Anzeige, und erstellung von Steuerjahren, wobei
         jedes Steuerjahr aus einem jahr, werbungskosten besteht.
     contact:
-        name: Dominik Hoffmann
+        name: c
     license:
         name: CC-BY-4.0
         url: 'https://creativecommons.org/licenses/by/4.0/deed.de'
@@ -38,9 +38,9 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/Steuerdaten'
+                            $ref: '#/components/schemas/Graphendaten'
             tags:
-                - Graphen
+                - Steuerjahr
             responses:
                 '201':
                     headers:
@@ -50,36 +50,36 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/Steuerjahr'
+                                $ref: '#/components/schemas/Graphendaten'
                     description: Created
-            operationId: createSteuerjahr
+            operationId: createGraphendaten
             summary: Steuerjahr anlegen
             description: >-
                 Neues STeuerjahr anlegen. Speichert das übergebene Steuerjahr in der Datenbank. Der Wert des
                 Feldes "user_id" nimmt die des Feldes _id des Users.
-    '/graphen/':
+    '/graphen/{user_id}':
         get:
             tags:
                 - Graphen
-            #parameters:
-                #-
-                #    style: simple
-                #    explode: false
-                #    name: user_id
-                #    schema:
-                #        type: string
-                #    in: path
-                #    required: true*/
+            parameters:
+                -
+                    style: simple
+                    explode: false
+                    name: user_id
+                    schema:
+                        type: string
+                    in: path
+                    required: true
             responses:
                 '200':
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/Steuerjahr'
+                                $ref: '#/components/schemas/Graphendaten'
                     description: OK
                 '404':
                     description: Not Found
-            operationId: getGraphen
+            operationId: getGraphendaten
             summary: Adresse lesen
             description: Liest eine einzelne Adresse vom Server.
 components:
@@ -118,8 +118,8 @@ components:
                     type: array
                     items:
                         type: string
-        Graphen:
-            title: Graphen
+        Graphendaten:
+            title: Graphendaten
             required: []
             type: object
             properties:
@@ -135,26 +135,6 @@ components:
                 user_id: 6420557cd5033a24fc6777aa
                 jahr: 2000
                 werbungskosten: 15000
-        Steuerdaten:
-            title: Steuerdaten
-            required: []
-            type: object
-            properties:
-                _links:
-                    $ref: '#/components/schemas/HATEOAS_Resource'
-                user_id:
-                    type: string
-                jahr:
-                    type: number
-                kosten:
-                    type: number
-                fahrtweg:
-                    type: number    
-            example:
-                user_id: 6420557cd5033a24fc6777aa
-                jahr: 2000
-                kosten: 15000  
-                fahrtweg: 20      
 tags:
     -
         name: Index

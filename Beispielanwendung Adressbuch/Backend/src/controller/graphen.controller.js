@@ -45,8 +45,8 @@ export default class GraphenController {
     /**
      * GET /graphen
      */
-    async read(req, res, next) {
-        let result = await this._service.read(req.params.parseInt(document.getElementById("jahr").value));
+    async graphen(req, res, next) {
+        let result = await this._service.Graphenzeug(req.body);
       
         if (result) {
           this._insertHateoasLinks(result);
@@ -55,22 +55,6 @@ export default class GraphenController {
           throw new RestifyError.NotFoundError("Kein Graphen gefunden");
         }
       
-        return next();
-    }
-    /**
-     * POST /user/steuerjahr/:id
-     */ 
-    async create(req, res, next) { 
-        let result = await this._service.create(req.params.user);
-        this._insertHateoasLinks(result);
-
-        res.status(201);
-        res.header("Location", `${this._prefix}/${result._id}`);
-        if (result){
-            res.sendResult(result);
-        } else {
-            throw new RestifyError.NotFoundError("Kein Steuerjahr gefunden");
-        }
         return next();
     }
 }
