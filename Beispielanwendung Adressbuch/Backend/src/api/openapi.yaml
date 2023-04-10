@@ -1,13 +1,13 @@
 openapi: 3.1.0
 info:
-    title: Steuerwebpage
+    title: Ersparnisse
     version: '1.0'
     description: >-
         Die Steuer-App nutzt einen simplen REST-Webservices zur Kommunikation mit dem Backend. Dieser
-        ermöglicht die üblichen CRUD-Operationen zur Suche, Anzeige, und erstellung von Steuerjahren, wobei
-        jedes Steuerjahr aus einem jahr, werbungskosten besteht.
+        ermöglicht die üblichen CRUD-Operationen zur Suche, Anzeige, und Erstellung von Einsparungsjahren, sowie zum Abspeichern der Gesamteinsparungen wobei
+        jedes Einsparungsjahrjahr aus einem Jahr und den Einsparungen besteht.
     contact:
-        name: Dominik Hoffmann
+        name: Felix Rebmann
     license:
         name: CC-BY-4.0
         url: 'https://creativecommons.org/licenses/by/4.0/deed.de'
@@ -32,35 +32,10 @@ paths:
             operationId: index
             summary: Wurzeladresse des Webservices
             description: Liefert eine HATEOAS-Übersicht aller collections
-    /steuerjahr:
-        post:
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/Steuerdaten'
-            tags:
-                - Steuerjahr
-            responses:
-                '201':
-                    headers:
-                        Location:
-                            schema:
-                                type: string
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Steuerjahr'
-                    description: Created
-            operationId: createSteuerjahr
-            summary: Steuerjahr anlegen
-            description: >-
-                Neues STeuerjahr anlegen. Speichert das übergebene Steuerjahr in der Datenbank. Der Wert des
-                Feldes "user_id" nimmt die des Feldes _id des Users.
-    '/steuerjahr/{user_id}/{jahr}':
+    '/einsparungsjahr/{user_id}/{jahr}':
         get:
             tags:
-                - Steuerjahr
+                - Einsparungsjahr
             parameters:
                 -
                     style: simple
@@ -78,18 +53,53 @@ paths:
                         type: number
                     in: path
                     required: true
+                -
+                    style: simple
+                    explode: false
+                    name: einsparungen
+                    schema:
+                        type: number
+                    in: path
+                    required: true
             responses:
                 '200':
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/Steuerjahr'
+                                $ref: '#/components/schemas/Einsparungsjahr'
                     description: OK
                 '404':
                     description: Not Found
-            operationId: getSteuerjahr
-            summary: Adresse lesen
-            description: Liest eine einzelne Adresse vom Server.
+            operationId: getEinsparungsjahr
+            summary: Einsparungsjahr lesen
+            description: Liest ein einzelnes Einsparungsjahr vom Server.
+            
+    '/gesamteinsparungen':
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Gesamteinsparungen'
+            tags:
+                - Gesamteinsparungen
+            responses:
+                '201':
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Gesamteinsparungen'
+                    description: Created
+            operationId: createGesamteinsparungen
+            summary: Gesamteinsparungen anlegen
+            description: >-
+                Gesamteinsparungen anlegen. Speichert die übergebenen Gesamteinsparungen in der Datenbank. Der Wert des
+                Feldes "user_id" nimmt die des Feldes _id des Users.
+
 components:
     schemas:
         HATEOAS_Collection:
@@ -126,8 +136,8 @@ components:
                     type: array
                     items:
                         type: string
-        Steuerjahr:
-            title: Steuerjahr
+        Einsparungsjahr:
+            title: Einsparungsjahr
             required: []
             type: object
             properties:
@@ -137,14 +147,15 @@ components:
                     type: string
                 jahr:
                     type: number
-                werbungskosten:
+                einsparungen:
                     type: number
             example:
                 user_id: 6420557cd5033a24fc6777aa
                 jahr: 2000
-                werbungskosten: 15000
-        Steuerdaten:
-            title: Steuerdaten
+                einsparungen: 15000
+                
+        Gesamteinsparungen:
+            title: Gesamteinsparungen
             required: []
             type: object
             properties:
@@ -152,19 +163,23 @@ components:
                     $ref: '#/components/schemas/HATEOAS_Resource'
                 user_id:
                     type: string
-                jahr:
+                jahrbeginn:
                     type: number
-                kosten:
+                jahrende:
                     type: number
-                fahrtweg:
-                    type: number    
+                gesamteinsparungen:
+                    type: number
+                
             example:
                 user_id: 6420557cd5033a24fc6777aa
-                jahr: 2000
-                kosten: 15000  
-                fahrtweg: 20      
+                jahrbeginn: 2000
+                jahrende: 2002
+                gesamteinsparungen: 25000
+                
 tags:
     -
         name: Index
     -
-        name: Steuerjahr
+        name: Einsparungsjahr
+    -
+        name: Gesamteinsparungen

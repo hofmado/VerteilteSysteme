@@ -23,12 +23,11 @@ export default class BerechnungenControllerClass {
         this._service = new berechnungen_service();
         this._prefix = prefix;
 
-        //To-Do: Methoden festelgen!!!!!!!!!!!-------------------------------------------------------------------------------------------
-        // Collection: Steuerjahre; Post Methode nachher abändern um Gesamtersparnis bzw. Nebenjob zu speichern
-        //server.post(prefix, wrapHandler(this, this.createSteuerjahr));
+        //Collection: Gesamteinsparungen
+        server.post(prefix + "/gesamteinsparungen", wrapHandler(this, this.createGesamteinsparungen));
 
-        //Entity Steuerjahr
-        server.get(prefix + "/:user_id" + "/:jahr", wrapHandler(this, this.readSteuerjahr));//TODO nennen wie collection element in API
+        //Collection: Einsparungsjahr
+        server.get(prefix + "/:user_id" + "/:jahr", wrapHandler(this, this.getEinsparungsjahr));
     }
 
     /**
@@ -39,31 +38,42 @@ export default class BerechnungenControllerClass {
      *
      * @param {Object} entity Zu verändernder Datensatz.
      */
-    _insertHateoasLinks(entity) {//TODO variablen nennen wie collection element in API
-        let url = `${this._prefix}/${entity.user_id}/${entity.jahr}`;
-
+    _insertHateoasLinks(entity) {
+        let url = `${this._prefix}/einsparungsjahr/${entity._id}`;
+    
         entity._links = {
-            readSteuerjahr:   {url: url, method: "GET"},
-        }
+          getEinsparungsjahr: { url: url, method: "GET" },
     }
+}
 
-    /**
-     * GET /steuerjahr/{jahr}
-     */
-    async readSteuerjahr(req, res, next) {
-        let result = await this._service.readSteuerjahr(req.params.user_id, req.params.jahr);//TODO nennen wie collection element in API
+    //GetEinsparungsjahr
+    async getEinsparungsjahr(req, res, next) {
+        let result = await this._service.getEinsparungsjahr(req.params.user_id, req.params.jahr);
         if (result) {
           this._insertHateoasLinks(result);
           res.sendResult(result);
         } else {
-          throw new RestifyError.NotFoundError("Kein Steuerjahr gefunden");
+          throw new RestifyError.NotFoundError("Kein Einsparungsjahr gefunden");
         }
       
         return next();
     }
+
+    //createGesamteinsparungen
+    async createGesamteinsparungen(req, res, next){
+        let result = await this._service.createGesamteinsparungen(req.body);
+        this._insertHateoasLinks(result);
+
+        res.status(201);
+        res.header("Location", `${this._prefix}/gesamteinsparungen/${result._id}`);
+        res.sendResult(result);
+
+        return next();
+    }
+}
     /**
      * POST /user/steuerjahr
-     */ 
+     
     async createSteuerjahr(req, res, next) { 
         let result = await this._service.createSteuerjahr(req.body);//TODO nennen wie collection element in API
         this._insertHateoasLinks(result);
@@ -74,4 +84,4 @@ export default class BerechnungenControllerClass {
 
         return next();
     }
-}
+}*/
