@@ -38,12 +38,14 @@ export default class PageBerechnungen extends Page {
         const user_id ="6420557cd5033a24fc6777aa";
 
         //Felder im Frontend
-        const startjahr = parseInt(document.querySelector("#anzJ").value);
-        const nebenJ = document.querySelector("#nebenJ").checked;
+        const startjahr = 2020 /*= parseInt(document.querySelector("#anzJ").value);*/
+        const endjahr = 2021
+        const nebenJ = true /*document.querySelector("#nebenJ").checked;*/
         //const gesamtE = parseDouble(document.querySelector("#gesamtE").value);
 
         const button = this.mainElement.querySelector("#button");
         const buttonS = this.mainElement.querySelector("#buttonS");
+        
 
 
         //EventListener für Buttons
@@ -58,13 +60,21 @@ export default class PageBerechnungen extends Page {
         async _getGesamtkosten(user_id, startjahr, endjahr) {
 
             let gesamtE = 0;
+            this._app.backend.fetch("GET", `/einsparungsjahr/${user_id}/${2021}`) 
+                .then(response => {
+                    gesamtE = response.einsparungen;}
+                );
+            
+            var gesamtEFeld = this.mainElement.querySelector("#gesamtE");
+            gesamtEFeld.value = gesamtE;
+
             //for-Schleife um alle angeforderten Jahre durchzugehen
-            for(let i = startjahr; i <= endjahr; i++){
+            /*for(let i = startjahr; i <= endjahr; i++){
             this._app.backend.fetch("GET", `/einsparungsjahr/${user_id}/${i}`) 
                 .then(response => {
                     gesamtE += response.einsparungen;}
                 );
-            }
+            }*/
         }
 
         //Methode um Gesamtersparnis abzuspeichern TODO: anpassen, User_id übergeben, openapi noch anpassen

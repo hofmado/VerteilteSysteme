@@ -78,7 +78,7 @@ export default class Backend {
         fetchOptions.headers["Accept"] = "application/json";
 
         // REST-Webservice aufrufen
-        let response = await fetch(`${this._url}${url}`,/*{mode: 'no-cors'},*/fetchOptions);
+        let response = await fetch(`${this._url}${url}`,{mode: 'no-cors'},fetchOptions); //TODO: mode: no-cors drinlassen?
 
         if (response.ok) {
             return await response.json();

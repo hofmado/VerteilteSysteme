@@ -29,10 +29,10 @@ class App {
             },{
                 url: "^/steuerjahr/$",
                 show: () => this._gotoSteuerjahr()
-            },{
+            },/*{
                 url: ".*",
                 show: () => this._gotoList()
-            },
+            },*/
             //Methodenaufruf für Gesamtsteuerseite
             {
                 url: "^/berechnungen/$",
