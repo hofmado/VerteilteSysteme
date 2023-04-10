@@ -13,7 +13,7 @@ export default class berechnungen_service {
    * @param {number} jahr Zu gespeichertem Einsparungsjahr
    * @return {Promise} Das Einsparungsjahr Objekt
    */
-  async readEinsparungsjahr(user_id, jahr) { //TODO nennen wie collection element in API
+  async readEinsparungsjahr(user_id, jahr) { 
     let result = await this._einsparungen.findOne({user_id: user_id, jahr: parseInt(jahr)});
     return result._einsparungen;
   }
