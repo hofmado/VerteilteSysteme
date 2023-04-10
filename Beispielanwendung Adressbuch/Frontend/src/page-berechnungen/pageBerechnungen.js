@@ -7,7 +7,7 @@ import HtmlTemplate from "./pageBerechnungen.html"; /* hier page-berechnungen st
  * Klasse PageList: Stellt die Listenübersicht zur Verfügung
  */
 export default class PageBerechnungen extends Page {
-    /**
+    /** 
      * Konstruktor.
      *
      * @param {App} app Instanz der App-Klasse
