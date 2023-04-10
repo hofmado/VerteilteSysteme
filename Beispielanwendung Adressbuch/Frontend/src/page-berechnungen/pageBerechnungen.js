@@ -28,7 +28,7 @@ export default class PageBerechnungen extends Page {
      * `this._mainElement` nachbearbeitet werden, um die angezeigten Inhalte
      * zu beeinflussen.
      */
-          
+           
     async init() { 
         // HTML-Inhalt nachladen
         await super.init();
