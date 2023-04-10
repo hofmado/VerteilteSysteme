@@ -1,5 +1,3 @@
-"use strict"
-
 import DatabaseFactory from "../database.js";
 import {ObjectId} from "mongodb";
 
@@ -20,7 +18,6 @@ export default class LoginService {
       console.log(username);
       try {
         let user = await this._users.findOne({ username: username, password: password });
-          console.log(user)
         return user;
          
         } catch (error) {
@@ -36,12 +33,12 @@ export default class LoginService {
      * @return {Promise} Gespeicherte daten
      */
     async createUser(user) {
-        user = user || {};
-
-        let newUser = {
-            username: user.username,
-            password:  user.password,
-        };
+      let username = user.username;
+      let password = user.password;
+      let newUser = {
+        username: username,
+        password:  password,
+      };
 
         let result = await this._users.insertOne(newUser);
         return await this._users.findOne({_id: result.insertedId});
