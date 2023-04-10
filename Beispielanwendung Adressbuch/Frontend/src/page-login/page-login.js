@@ -32,10 +32,10 @@ export default class PageLogin extends Page {
             this._app.backend.fetch("GET", `/user/${username.value}/${password.value}`)
             .then(response => {
                 // Save the user ID in the session storage
-                let data = response.json();
-                sessionStorage.setItem('userId', data._id);
+                let data = response.User._id;
+                sessionStorage.setItem('userId', data);
                 alert("Login successful!");
-                location.hash = `/#/steuerjahr/${data._id}`;
+                //location.hash = `/#/steuerjahr/${data}`;
             });
         } catch (ex) {
             console.error(ex);

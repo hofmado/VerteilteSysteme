@@ -20,8 +20,8 @@ export default class LoginService {
       console.log(username);
       try {
         let user = await this._users.findOne({ username: username, password: password });
-          
-        return user._id;
+          console.log(user)
+        return user;
          
         } catch (error) {
           return null;
