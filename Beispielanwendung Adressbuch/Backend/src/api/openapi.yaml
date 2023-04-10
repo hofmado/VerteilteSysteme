@@ -53,14 +53,6 @@ paths:
                         type: number
                     in: path
                     required: true
-                -
-                    style: simple
-                    explode: false
-                    name: einsparungen
-                    schema:
-                        type: number
-                    in: path
-                    required: true
             responses:
                 '200':
                     content:
