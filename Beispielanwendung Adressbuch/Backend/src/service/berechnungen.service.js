@@ -4,19 +4,20 @@ import {CURSOR_FLAGS, Int32, ObjectId} from "mongodb";
 export default class berechnungen_service {
 
   constructor() {
-    this._einsparungen = DatabaseFactory.database.collection("steuerjahr"); //TODO eigene collection erstellen
+    this._einsparungen = DatabaseFactory.database.collection("einsparungsjahr"); //TODO Service mit funktionalität aus frontend 
   }
 /**
-   * Speichern eines neuen Steuerjahrs.
+   * Auslesen eines Einsparungsjahrs
    *
-   * @param {Object} jahr Zu gespeichertem Steuerjahr
-   * @return {Promise} zu gespeichertes Steuerjahr
+   * @param {string} user_id User ID
+   * @param {number} jahr Zu gespeichertem Einsparungsjahr
+   * @return {Promise} Das Einsparungsjahr Objekt
    */
-  async readSteuerjahr(user_id, jahr) { //TODO nennen wie collection element in API
-    let result = await this._steuerjahr.findOne({user_id: user_id, jahr: parseInt(jahr)});
-    return result;
+  async readEinsparungsjahr(user_id, jahr) { //TODO nennen wie collection element in API
+    let result = await this._einsparungen.findOne({user_id: user_id, jahr: parseInt(jahr)});
+    return result._einsparungen;
   }
-
+}
   /*async createSteuerjahr(dataset) {
     let user_id = dataset.user_id;
     let jahr = parseInt(dataset.jahr); 
@@ -36,4 +37,3 @@ export default class berechnungen_service {
     let result = await this._steuerjahr.insertOne(steuerjahr);
     return await this._steuerjahr.findOne({_id: result.insertedId});
   }*/
-}

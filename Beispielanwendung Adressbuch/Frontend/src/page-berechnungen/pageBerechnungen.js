@@ -48,27 +48,27 @@ export default class PageBerechnungen extends Page {
 
         //EventListener für Buttons
         //Get
-        button.addEventListener("click", () => this._getGesamtkosten(user_id));
+        button.addEventListener("click", () => this._getGesamtkosten(user_id, startjahr, 2023)); //evtl endjahr noch abfragen
 
         //Post
         buttonS.addEventListener("click", () => this.setGesamtkosten(user_id));
     }
 
         //Methode um alle Steuerjahre eines Users abzurufen und sie dann in einem Array zu speichern
-        async _getGesamtkosten(user_id, startjahr) {
+        async _getGesamtkosten(user_id, startjahr, endjahr) {
 
             const gesamtE = 0;
             //for-Schleife um alle angeforderten Jahre durchzugehen
-            for(let i = startjahr; i <= 2023; i++){
-            this._app.backend.fetch("GET", `/steuerjahr/${user_id}/${i}`) //TODO nennen wie collection element in API
+            for(let i = startjahr; i <= endjahr; i++){
+            this._app.backend.fetch("GET", `/einsparungsjahr/${user_id}/${i}`) 
                 .then(response => {
-                    gesamtE += response.werbungskosten;}
+                    gesamtE += response.einsparungen;}
                 );
             }
         }
 
-        //Methode um Gesamtersparnis abzuspeichern
-        _setGesamtkosten(user_id){
+        //Methode um Gesamtersparnis abzuspeichern TODO: anpassen, User_id übergeben, openapi noch anpassen
+        _setGesamtkosten(user_id){/*
             let dataset = {
                 user_id: user_id, 
                 werbungskosten: gesamtE
@@ -79,7 +79,7 @@ export default class PageBerechnungen extends Page {
                     //whait for mongodb server
                     //this._getAnfrage(user_id,feldJahr,feldWerbungskosten)
                 }, 1000)
-            )
+            )*/;
         }
     }
 
