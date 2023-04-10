@@ -17,26 +17,22 @@ export default class PageLogin extends Page {
         this._title = "user";
         // Logindaten laden 
         //this._dataset = await this._app.backend.fetch("GET", this._url);
-
+        const usernamefeld = this._mainElement.querySelector('#username');
+        const passwordfeld = this._mainElement.querySelector('#password');
         //Buttons
         const loginbutton = this._mainElement.querySelector('#login')
         const submitbutton = this._mainElement.querySelector('#submit');
             // Event Handler registrieren
-        loginbutton.addEventListener("click", () => this._askLogin());
-        submitbutton.addEventListener("click", () => this._register());
+        loginbutton.addEventListener("click", () => this._askLogin(usernamefeld, passwordfeld));
+        submitbutton.addEventListener("click", () => this._register(usernamefeld, passwordfeld));
     }
-    async _askLogin() {
+    async _askLogin(username, password ) {
         try {
-            const usernamefeld = document.getElementById("username");
-            const passwordfeld = document.getElementById("password");
-            // Set username and password properties and safe them in data file
-            const username= usernamefeld.value; 
-            const password= passwordfeld.value;
-            const data = json;
-            this._app.backend.fetch("GET", `/user/${username}/${password}`)
+            console.log("Kommst du hierhin?")
+            this._app.backend.fetch("GET", `/user/${username.value}/${password.value}`)
             .then(response => {
                 // Save the user ID in the session storage
-                data = response.json();
+                let data = response.json();
                 sessionStorage.setItem('userId', data._id);
                 alert("Login successful!");
                 location.hash = `/#/steuerjahr/${data._id}`;
@@ -47,14 +43,12 @@ export default class PageLogin extends Page {
         }
     }
 
-    async _register() {
+    async _register(username, password) {
         // Eingegebene Werte prüfen
-        const usernamefeld = document.getElementById("username");
-        const passwordfeld = document.getElementById("password");
-    
-        const data = {
-            username: usernamefeld.value,
-            password: passwordfeld.value,
+       
+        let data = {
+            username: username.value,
+            password: password.value,
         };
     
         if (!data.username) {

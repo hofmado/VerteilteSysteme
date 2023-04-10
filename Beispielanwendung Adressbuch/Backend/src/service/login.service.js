@@ -16,7 +16,7 @@ export default class LoginService {
      * @param {Object} query Optionale Suchparameter
      * @return {Promise} Liste der gefundenen Adressen
      */
-    async read(username, _password) {
+    async readUser(username, password) {
       try {
         let user = await this._users.findOne({ username: username, password: password });
           

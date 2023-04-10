@@ -65,8 +65,8 @@ export default class LoginController {
      * USER auslesen
      */
     async getUser(req1, res, next) {
-        let userId = await this._service.read(req1.params.username, req1.params.password);
-        
+        let userId = await this._service.readUser(req1.params.username, req1.params.password);
+        console.log("Kommst du hierhin2?");
         if (userId) {
             res.sendResult({_id: userId});
         } else {
