@@ -29,15 +29,15 @@ class App {
             },{
                 url: "^/steuerjahr/$",
                 show: () => this._gotoSteuerjahr()
-            },{
-                url: ".*",
-                show: () => this._gotoList()
-            },
-            //Methodenaufruf für Gesamtsteuerseite
-            {
+            },            {
                 url: "^/berechnungen/$",
                 show: () => this._gotoBerechnungen()
+            },
+            {
+                url: ".*",
+                show: () => this._gotoList()
             }
+            //Methodenaufruf für Gesamtsteuerseite
         ]);
 
         // Fenstertitel merken, um später den Name der aktuellen Seite anzuhängen
@@ -122,7 +122,7 @@ class App {
         }
     }
 
-    async _gotoBerechnungen(id) {
+/*     async _gotoBerechnungen(id) {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
             let {default: PageBerechnungen} = await import("./page-berechnungen/pageBerechnungen.js");
@@ -133,7 +133,7 @@ class App {
         } catch (ex) {
             this.showException(ex);
         }
-    }
+    } */
 
     /**
      * Interne Methode zum Umschalten der sichtbaren Seite.

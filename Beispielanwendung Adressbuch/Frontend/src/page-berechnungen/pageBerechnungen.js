@@ -35,7 +35,7 @@ export default class PageBerechnungen extends Page {
         this._title = "berechnungen";
 
          // Platzhalter anzeigen, wenn noch keine Daten vorhanden sind
-         let data = await this._app.backend.fetch("GET", "/ersparnisse");
+         let data = await this._app.backend.fetch("GET", "/");
          this._emptyMessageElement = this._mainElement.querySelector(".empty-placeholder");
 
         //User ID vorerst fix vergeben, nachher aus DB holen
@@ -57,7 +57,7 @@ export default class PageBerechnungen extends Page {
         button.addEventListener("click", () => this._getGesamtersparnisse(user_id, startjahr, 2023)); //evtl endjahr noch abfragen
 
         //Post
-        buttonS.addEventListener("click", () => this.setGesamtersparnisse(user_id));
+        buttonS.addEventListener("click", () => this._setGesamtersparnisse(user_id));
         let gesamtE = 0;
     }
 
@@ -67,6 +67,7 @@ export default class PageBerechnungen extends Page {
             //TODO: Wie übergebe ich die Variablen Startjahr und Endjahr ans Backend?
             this._app.backend.fetch("GET", `/einsparungsjahr/${user_id}/${jahr}`)
                 .then(response => {
+                    console.log(response)
                     gesamtE = response.einsparungen;}
                 );
             
@@ -83,7 +84,7 @@ export default class PageBerechnungen extends Page {
         }
 
         //Methode um Gesamtersparnis abzuspeichern TODO: anpassen, User_id übergeben, openapi noch anpassen
-        _setGesamtersparnisse(user_id, startjahr,gesamtE){
+        _setGesamtersparnisse(user_id, startjahr,gesamtE){ //TODO: Die Funktion kriegt die falschen inputs siehe Zeile 60 von Maik 
             let dataset = {
                 user_id: user_id,
                 jahrbeginn: jahr_beginn,
