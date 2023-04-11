@@ -23,16 +23,16 @@ class App {
 
         // Single Page Router zur Steuerung der sichtbaren Inhalte
         this.router = new Router([
-            {
+           {
                 url: "^/$",
                 show: () => this._gotoList()
-            },{
+            },/*{
                 url: "^/steuerjahr/$",
                 show: () => this._gotoSteuerjahr()
-            },/*{
+            },*/{
                 url: ".*",
                 show: () => this._gotoList()
-            },*/
+            },
             //Methodenaufruf für Gesamtsteuerseite
             {
                 url: "^/berechnungen/$",
@@ -83,7 +83,7 @@ class App {
     /**
      * Kalkulationsseite anzeigen. Wird vom Single Page Router aufgerufen.
      */
-    async _gotoSteuerjahr(id) {
+    /*async _gotoSteuerjahr(id) {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
             let {default: PageKalk} = await import("./page-steuerjahr/SteuerjahrPage.js");
@@ -94,11 +94,11 @@ class App {
         } catch (ex) {
             this.showException(ex);
         }
-    }
+    }*/
     /**
      * Kalkulationsseite anzeigen. Wird vom Single Page Router aufgerufen. Mit sepz. key
      */
-    async _gotoSteuerjahr() {
+    /*async _gotoSteuerjahr() {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
             let {default: PageKalk} = await import("./page-steuerjahr/SteuerjahrPage.js");
@@ -109,7 +109,7 @@ class App {
         } catch (ex) {
             this.showException(ex);
         }
-    }
+    }*/
 
     //Methode für Gesamtsteuerseite
     async _gotoBerechnungen() {
@@ -118,6 +118,19 @@ class App {
             let {default: PageBerechnungen} = await import("./page-berechnungen/pageBerechnungen.js");
 
             let page = new PageBerechnungen(this);
+            await page.init();
+            this._showPage(page, "berechnungen");
+        } catch (ex) {
+            this.showException(ex);
+        }
+    }
+
+    async _gotoBerechnungen() {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageBerechnungen} = await import("./page-berechnungen/pageBerechnungen.js");
+
+            let page = new PageBerechnungen(this, id);
             await page.init();
             this._showPage(page, "berechnungen");
         } catch (ex) {

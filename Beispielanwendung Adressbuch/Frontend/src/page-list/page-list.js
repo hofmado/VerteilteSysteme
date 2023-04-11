@@ -36,16 +36,18 @@ export default class PageList extends Page {
     async init() {
         // HTML-Inhalt nachladen
         await super.init();
-        this._title = "Übersicht";
+        this._title = "Gesamtersparnisse";
 
         // Platzhalter anzeigen, wenn noch keine Daten vorhanden sind
-        let data = await this._app.backend.fetch("GET", "/user");
+        //let data = await this._app.backend.fetch("GET", "/user");
         this._emptyMessageElement = this._mainElement.querySelector(".empty-placeholder");
 
         if (data.length) {
             this._emptyMessageElement.classList.add("hidden");
         }
-
+    }
+}
+/*
         // Je Datensatz einen Listeneintrag generieren
         let olElement = this._mainElement.querySelector("ol");
 
@@ -76,14 +78,14 @@ export default class PageList extends Page {
             liElement.querySelector(".action.delete").addEventListener("click", () => this._askDelete(dataset._id));
         }
     }
-
+*/
     /**
      * Löschen der übergebenen Adresse. Zeigt einen Popup, ob der Anwender
      * die Adresse löschen will und löscht diese dann.
      *
-     * @param {Integer} id ID des zu löschenden Datensatzes
-     */
-    async _askDelete(id) {
+     * /*@*///param// {Integer} id ID des zu löschenden Datensatzes
+     
+    /*async _askDelete(id) {
         // Sicherheitsfrage zeigen
         let answer = confirm("Soll die ausgewählte Adresse wirklich gelöscht werden?");
         if (!answer) return;
@@ -105,4 +107,4 @@ export default class PageList extends Page {
             this._emptyMessageElement.classList.remove("hidden");
         }
     }
-};
+};*/

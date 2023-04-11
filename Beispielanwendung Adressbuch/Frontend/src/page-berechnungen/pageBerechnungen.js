@@ -50,16 +50,16 @@ export default class PageBerechnungen extends Page {
 
         //EventListener für Buttons
         //Get
-        button.addEventListener("click", () => this._getGesamtkosten(user_id, startjahr, 2023)); //evtl endjahr noch abfragen
+        button.addEventListener("click", () => this._getGesamtersparnisse(user_id, startjahr, 2023)); //evtl endjahr noch abfragen
 
         //Post
-        buttonS.addEventListener("click", () => this.setGesamtkosten(user_id));
+        buttonS.addEventListener("click", () => this.setGesamtersparnisse(user_id));
+        let gesamtE = 0;
     }
 
         //Methode um alle Steuerjahre eines Users abzurufen und sie dann in einem Array zu speichern
-        async _getGesamtkosten(user_id, startjahr, endjahr) {
-
-            let gesamtE = 0;
+        async _getGesamtersparnisse(user_id, startjahr, endjahr) {
+            //TODO: Wie übergebe ich die Variablen Startjahr und Endjahr ans Backend?
             this._app.backend.fetch("GET", `/einsparungsjahr/${user_id}/${2021}`) 
                 .then(response => {
                     gesamtE = response.einsparungen;}
@@ -78,18 +78,20 @@ export default class PageBerechnungen extends Page {
         }
 
         //Methode um Gesamtersparnis abzuspeichern TODO: anpassen, User_id übergeben, openapi noch anpassen
-        _setGesamtkosten(user_id){/*
+        _setGesamtersparnisse(user_id, startjahr,gesamtE){
             let dataset = {
-                user_id: user_id, 
-                werbungskosten: gesamtE
+                user_id: user_id,
+                jahrbeginn: jahr_beginn,
+                jahrende: jahr_ende,
+                gesamteinsparungen: gesamtE
             }
     
-            this._app.backend.fetch("POST", '/steuerjahr', {body: dataset}).then(//TODO nennen wie collection element in API
+            this._app.backend.fetch("POST", '/gesamteinsparungen', {body: dataset}).then(
                 setTimeout(() => {
                     //whait for mongodb server
-                    //this._getAnfrage(user_id,feldJahr,feldWerbungskosten)
+                    this._getGesamtersparnisse(user_id,startjahr,endjahr)
                 }, 1000)
-            )*/;
+            );
         }
     }
 
