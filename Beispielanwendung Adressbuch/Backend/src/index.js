@@ -6,7 +6,6 @@ import OpenApiEnforcerMiddleware from "@dschulmeis/restify-openapi-enforcer-midd
 
 import DatabaseFactory from "./database.js";
 import RootController from "./controller/root.controller.js";
-import AdressController from "./controller/steuerjahr.controller.js";
 import GraphenController from "./controller/graphen.controller.js"
 
 //TO-DO: eigene Controller Datei hinzufügen!!
@@ -14,6 +13,7 @@ import GraphenController from "./controller/graphen.controller.js"
 // Verzeichnisnamen der Quellcodedatei ermitteln
 import path from "path";
 import { fileURLToPath } from "url";
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /* =============================================================================

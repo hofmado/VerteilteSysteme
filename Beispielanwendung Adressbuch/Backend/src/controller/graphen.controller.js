@@ -20,9 +20,13 @@ export default class GraphenController {
         this._service = new graphen_service();
         this._prefix = prefix;
 
-        // Collection: Steuerjahr
-        server.get(prefix, wrapHandler(this, this.read));
-        server.post(prefix, wrapHandler(this, this.create));
+        // Collection: Graphen
+
+        // Post
+       // server.post(prefix, wrapHandler(this, this.create)); 
+
+       //Get
+       server.get(prefix + "/:user_id", wrapHandler(this, this.graphenzeug));
     }
 
     /**
@@ -37,16 +41,15 @@ export default class GraphenController {
         let url = `${this._prefix}/${entity._id}`;
 
         entity._links = {
-            read:   {url: url, method: "GET"},
-            create: {url: url, method: "POST"},
+            graphenzeug:   {url: url, method: "GET"},
         }
     }
 
     /**
      * GET /graphen
      */
-    async graphen(req, res, next) {
-        let result = await this._service.Graphenzeug(req.body);
+    async graphenzeug(req, res, next) {
+        let result = await this._service.Graphenzeug();
       
         if (result) {
           this._insertHateoasLinks(result);

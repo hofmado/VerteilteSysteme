@@ -26,11 +26,11 @@ class App {
                 url: "^/$",
                 show: () => this._gotoList()
             },{
-                url: ".*",
-                show: () => this._gotoList()
-            },{
                 url: "^/graphen/$",
                 show: () => this._gotoGraphen()
+            },{
+                url: ".*",
+                show: () => this._gotoList()
             },
         ]);
 
@@ -77,6 +77,21 @@ class App {
     /**
      * Kalkulationsseite anzeigen. Wird vom Single Page Router aufgerufen.
      */
+    async _gotoGraphen(id) {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageKalk} = await import("./page-graphen/GraphenPage.js");
+
+            let page = new PageKalk(this, id);
+            await page.init();
+            this._showPage(page, "graphen");
+        } catch (ex) {
+            this.showException(ex);
+        }
+    }
+    /**
+     * Kalkulationsseite anzeigen. Wird vom Single Page Router aufgerufen.
+     */
     async _gotoGraphen() {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
@@ -84,7 +99,7 @@ class App {
 
             let page = new PageKalk(this);
             await page.init();
-            this._showPage(page, "GraphenPage");
+            this._showPage(page, "graphen");
         } catch (ex) {
             this.showException(ex);
         }

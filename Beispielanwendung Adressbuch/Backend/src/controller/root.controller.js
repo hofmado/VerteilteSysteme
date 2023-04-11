@@ -27,6 +27,18 @@ export default class RootController {
      * GET /openapi.yaml:
      * Abruf der OpenAPI-Spezifikation
      */
+    
+    async index(req, res, next) {
+        res.sendResult([
+            {
+                _name: "graphen",
+                create: {url: "/graphen", method: "POST"},
+            }
+        ]);
+
+        next();
+    }
+
     async openApi(req, res, next) {
         if (req.query.openapi !== undefined) {
             let filecontent = await readFile(this._openApiFile);
