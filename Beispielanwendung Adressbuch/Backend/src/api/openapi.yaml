@@ -32,7 +32,7 @@ paths:
             operationId: index
             summary: Wurzeladresse des Webservices
             description: Liefert eine HATEOAS-Übersicht aller collections
-    '/einsparungsjahr/{user_id}/{jahr}':
+    'einsparungsjahr/{user_id}/{jahr}':
         get:
             tags:
                 - Einsparungsjahr
@@ -53,13 +53,6 @@ paths:
                         type: number
                     in: path
                     required: true
-                -
-                    style: simple
-                    explode: false
-                    name: einsparungen
-                    schema:
-                        type: number
-                    in: path
             responses:
                 '200':
                     content:
