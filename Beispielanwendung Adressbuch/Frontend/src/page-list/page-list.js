@@ -41,8 +41,8 @@ export default class PageList extends Page {
         // Platzhalter anzeigen, wenn noch keine Daten vorhanden sind
         this._emptyMessageElement = this._mainElement.querySelector(".empty-placeholder");
 
-        if (data.length) {
+        /*if (data.length) {
             this._emptyMessageElement.classList.add("hidden");
-        }
+        }*/
     }
 };
