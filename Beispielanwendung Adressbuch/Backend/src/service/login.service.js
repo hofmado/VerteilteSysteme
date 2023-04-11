@@ -15,12 +15,12 @@ export default class LoginService {
      * @return {Promise} Liste der gefundenen Adressen
      */
     async readUser(username, password) {
-      console.log(username);
       try {
         let user = await this._users.findOne({ username: username, password: password });
+        console.log("login Service readUser: " + user)
         return user;
          
-        } catch (error) {
+      }catch (error) {
           return null;
         }
       }

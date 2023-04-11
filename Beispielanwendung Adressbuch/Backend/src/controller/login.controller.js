@@ -49,7 +49,7 @@ export default class LoginController {
      * Neue Adresse anlegen
      */
     async createUser(req, res, next) {
-        let result = await this._service.create(req.body);
+        let result = await this._service.createUser(req.body);
         this._insertHateoasLinks(result);
 
         res.status(201);
@@ -65,9 +65,8 @@ export default class LoginController {
      * USER auslesen
      */
     async getUser(req1, res, next) {
-        console.log(req1.params.password);
         let User = await this._service.readUser(req1.params.username, req1.params.password);
-        if (User) {
+        if (User != "null") {
             res.sendResult({User});
         } else {
             throw new RestifyError.NotFoundError("An error occured");

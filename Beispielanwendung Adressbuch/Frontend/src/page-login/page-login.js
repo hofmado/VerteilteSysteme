@@ -28,10 +28,13 @@ export default class PageLogin extends Page {
     }
     async _askLogin(username, password ) {
         try {
-            console.log("Kommst du hierhin?")
             this._app.backend.fetch("GET", `/user/${username.value}/${password.value}`)
             .then(response => {
                 // Save the user ID in the session storage
+                console.log(response.User)
+                if(!response.User){
+                    alert("User not found")
+                }
                 let data = response.User._id;
                 sessionStorage.setItem('userId', data);
                 alert("Login successful!");
