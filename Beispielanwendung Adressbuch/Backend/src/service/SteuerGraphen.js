@@ -13,5 +13,6 @@ export default class SteuerGraphen {
         console.log(result);
         return result;
         
+        
     }
 }

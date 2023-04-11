@@ -40,7 +40,7 @@ paths:
                         schema:
                             $ref: '#/components/schemas/Graphendaten'
             tags:
-                - Steuerjahr
+                - Graphen
             responses:
                 '201':
                     headers:

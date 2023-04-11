@@ -7,6 +7,7 @@ import OpenApiEnforcerMiddleware from "@dschulmeis/restify-openapi-enforcer-midd
 import DatabaseFactory from "./database.js";
 import RootController from "./controller/root.controller.js";
 import AdressController from "./controller/steuerjahr.controller.js";
+import GraphenController from "./controller/graphen.controller.js"
 
 //TO-DO: eigene Controller Datei hinzufügen!!
 
@@ -93,7 +94,8 @@ server.use(OpenApiEnforcerMiddleware(openApiEnforcer));
 
 // HTTP-Controller registrieren
 new RootController(server, "/", openApiFile);
-new AdressController(server, "/address");
+new GraphenController(server, "/graphen", openApiFile);
+//new AdressController(server, "/address");
 
 // Server tatsächlich starten
 server.listen(config.port, config.host, function() {
