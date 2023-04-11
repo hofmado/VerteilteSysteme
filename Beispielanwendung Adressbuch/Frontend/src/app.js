@@ -26,10 +26,10 @@ class App {
            {
                 url: "^/$",
                 show: () => this._gotoList()
-            },/*{
+            },{
                 url: "^/steuerjahr/$",
                 show: () => this._gotoSteuerjahr()
-            },*/{
+            },{
                 url: ".*",
                 show: () => this._gotoList()
             },
@@ -83,7 +83,7 @@ class App {
     /**
      * Kalkulationsseite anzeigen. Wird vom Single Page Router aufgerufen.
      */
-    /*async _gotoSteuerjahr(id) {
+    async _gotoSteuerjahr(id) {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
             let {default: PageKalk} = await import("./page-steuerjahr/SteuerjahrPage.js");
@@ -94,11 +94,8 @@ class App {
         } catch (ex) {
             this.showException(ex);
         }
-    }*/
-    /**
-     * Kalkulationsseite anzeigen. Wird vom Single Page Router aufgerufen. Mit sepz. key
-     */
-    /*async _gotoSteuerjahr() {
+    }
+    async _gotoSteuerjahr() {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
             let {default: PageKalk} = await import("./page-steuerjahr/SteuerjahrPage.js");
@@ -109,7 +106,7 @@ class App {
         } catch (ex) {
             this.showException(ex);
         }
-    }*/
+    }
 
     //Methode für Gesamtsteuerseite
     async _gotoBerechnungen() {
@@ -125,7 +122,7 @@ class App {
         }
     }
 
-    async _gotoBerechnungen() {
+    async _gotoBerechnungen(id) {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
             let {default: PageBerechnungen} = await import("./page-berechnungen/pageBerechnungen.js");

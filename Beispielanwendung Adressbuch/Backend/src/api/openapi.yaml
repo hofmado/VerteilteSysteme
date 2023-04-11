@@ -53,6 +53,13 @@ paths:
                         type: number
                     in: path
                     required: true
+                -
+                    style: simple
+                    explode: false
+                    name: einsparungen
+                    schema:
+                        type: number
+                    in: path
             responses:
                 '200':
                     content:
@@ -66,7 +73,7 @@ paths:
             summary: Einsparungsjahr lesen
             description: Liest ein einzelnes Einsparungsjahr vom Server.
             
-    '/gesamteinsparungen':
+    /gesamteinsparungen:
         post:
             requestBody:
                 content:

@@ -60,7 +60,7 @@ export default class PageBerechnungen extends Page {
         //Methode um alle Steuerjahre eines Users abzurufen und sie dann in einem Array zu speichern
         async _getGesamtersparnisse(user_id, startjahr, endjahr) {
             //TODO: Wie übergebe ich die Variablen Startjahr und Endjahr ans Backend?
-            this._app.backend.fetch("GET", `/einsparungsjahr/${user_id}/${2021}`) 
+            this._app.backend.fetch("GET", `/einsparungsjahr/${user_id}/${jahr}`)
                 .then(response => {
                     gesamtE = response.einsparungen;}
                 );
