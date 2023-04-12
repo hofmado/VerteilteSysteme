@@ -19,6 +19,7 @@ class App {
     constructor() {
         // Datenbank-Klasse zur Verwaltung der Datensätze
         this.backend = new Backend();
+//TODO: nach anmeldung sollen die webpages steuerjahr etc erreichbar werden, davor nicht!
 
         // Single Page Router zur Steuerung der sichtbaren Inhalte
         this.router = new Router([
@@ -26,11 +27,8 @@ class App {
                 url: "^/$",
                 show: () => this._gotoList()
             },{
-                url: "^/new/$",
-                show: () => this._gotoNew()
-            },{
-                url: "^/edit/(.*)$",
-                show: matches => this._gotoEdit(matches[1]),
+                url: "^/steuerjahr/$",
+                show: () => this._gotoSteuerjahr()
             },{
                 url: "^/user/$",
                 show: () => this._gotoLogin()
@@ -81,17 +79,16 @@ class App {
     }
 
     /**
-     * Seite zum Anlegen einer neuen Adresse anzeigen.  Wird vom Single Page
-     * Router aufgerufen.
+     * Kalkulationsseite anzeigen. Wird vom Single Page Router aufgerufen.
      */
-    async _gotoNew() {
+    async _gotoSteuerjahr(id) {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
-            let {default: PageEdit} = await import("./page-edit/page-edit.js");
+            let {default: PageKalk} = await import("./page-steuerjahr/SteuerjahrPage.js");
 
-            let page = new PageEdit(this);
+            let page = new PageKalk(this, id);
             await page.init();
-            this._showPage(page, "new");
+            this._showPage(page, "steuerjahr");
         } catch (ex) {
             this.showException(ex);
         }
@@ -108,21 +105,17 @@ class App {
             this.showException(ex);
         }
     }
-
     /**
-     * Seite zum Bearbeiten einer Adresse anzeigen.  Wird vom Single Page
-     * Router aufgerufen.
-     *
-     * @param {Number} id ID der zu bearbeitenden Adresse
+     * Kalkulationsseite anzeigen. Wird vom Single Page Router aufgerufen. Mit sepz. key
      */
-    async _gotoEdit(id) {
+    async _gotoSteuerjahr() {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
-            let {default: PageEdit} = await import("./page-edit/page-edit.js");
+            let {default: PageKalk} = await import("./page-steuerjahr/SteuerjahrPage.js");
 
-            let page = new PageEdit(this, id);
+            let page = new PageKalk(this);
             await page.init();
-            this._showPage(page, "edit");
+            this._showPage(page, "steuerjahr");
         } catch (ex) {
             this.showException(ex);
         }
@@ -149,7 +142,6 @@ class App {
         this._bodyElement.querySelector("main")?.remove();
         this._bodyElement.appendChild(page.mainElement);
     }
-
     /**
      * Hilfsmethode zur Anzeige eines Ausnahmefehlers. Der Fehler wird in der
      * Konsole protokolliert und als Popupmeldung angezeigt.
@@ -166,7 +158,6 @@ class App {
         }
     }
 }
-
 /**
  * Anwendung starten
  */

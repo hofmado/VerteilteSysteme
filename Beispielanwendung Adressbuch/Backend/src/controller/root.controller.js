@@ -23,12 +23,11 @@ export default class RootController {
         server.get(prefix, wrapHandler(this, this.index));
         server.get(prefix + "/openapi.yaml", wrapHandler(this, this.openApi));
     }
-
     /**
-     * GET /:
-     * Übersicht über die vorhandenen Collections liefern (HATEOAS-Prinzip,
-     * so dass Clients die URL-Struktur des Webservices entdecken können).
+     * GET /openapi.yaml:
+     * Abruf der OpenAPI-Spezifikation
      */
+
     async index(req, res, next) {
         res.sendResult([
             
@@ -36,16 +35,16 @@ export default class RootController {
                 _name: "user",
                 query: {url: "/user", method: "GET", query_params: ["search", "username", "password"]},
                 create: {url: "/user", method: "POST"},
+            },
+            {    
+                _name: "steuerjahr",
+                create: {url: "/steuerjahr", method: "POST"},
             }
         ]);
 
         next();
     }
 
-    /**
-     * GET /openapi.yaml:
-     * Abruf der OpenAPI-Spezifikation
-     */
     async openApi(req, res, next) {
         if (req.query.openapi !== undefined) {
             let filecontent = await readFile(this._openApiFile);

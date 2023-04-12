@@ -1,15 +1,13 @@
 openapi: 3.1.0
 info:
-    title: Steuerberechnung
+    title: Steuerwebpage
     version: '1.0'
     description: >-
-        Die Adressbuch-App nutzt einen simplen REST-Webservices zur Kommunikation mit dem Backend. Dieser
-        ermöglicht die üblichen CRUD-Operationen zur Suche, Anzeige, Bearbeitung und Löschung von Adressen,
-        wobei jede Adresse aus einem Vornamen, Nachnamen, Telefonnummer und eine E-Mailadresse besteht.
+        Die Steuer-App nutzt einen simplen REST-Webservices zur Kommunikation mit dem Backend. Dieser
+        ermöglicht die üblichen CRUD-Operationen zur Suche, Anzeige, und erstellung von Steuerjahren, wobei
+        jedes Steuerjahr aus einem jahr, werbungskosten besteht.
     contact:
-        name: Gruppe Steuerabsetzen
-        url: 'https://www.karlsruhe.dhbw.de/startseite.html'
-        email: dominik.r.hoffmann@gmail.com
+        name: 'Dominik Hoffmann, Max Müller'
     license:
         name: CC-BY-4.0
         url: 'https://creativecommons.org/licenses/by/4.0/deed.de'
@@ -49,7 +47,7 @@ paths:
                 - User
             responses:
                 '201':
-                    headers: 
+                    headers:
                         Location:
                             schema:
                                 type: string
@@ -90,6 +88,64 @@ paths:
             operationId: getUser
             summary: sucht nach einem User
             description: Übergabe von Usernaem und Password um ID zurück zuliefern
+    /steuerjahr:
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Steuerdaten'
+            tags:
+                - Steuerjahr
+            responses:
+                '201':
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Steuerjahr'
+                    description: Created
+            operationId: createSteuerjahr
+            summary: Steuerjahr anlegen
+            description: >-
+                Neues STeuerjahr anlegen. Speichert das übergebene Steuerjahr in der Datenbank. Der Wert des
+                Feldes "user_id" nimmt die des Feldes _id des Users.
+    '/steuerjahr/{user_id}/{jahr}':
+        get:
+            tags:
+                - Steuerjahr
+            parameters:
+                -
+                    style: simple
+                    explode: false
+                    name: user_id
+                    schema:
+                        type: string
+                    in: path
+                    required: true
+                -
+                    style: simple
+                    explode: false
+                    name: jahr
+                    schema:
+                        type: number
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Steuerjahr'
+                    description: OK
+                '404':
+                    description: Not Found
+            operationId: getSteuerjahr
+            summary: Adresse lesen
+            description: Liest eine einzelne Adresse vom Server.
 components:
     schemas:
         HATEOAS_Collection:
@@ -101,6 +157,18 @@ components:
                 query:
                     $ref: '#/components/schemas/HATEOAS_Link'
                 create:
+                    $ref: '#/components/schemas/HATEOAS_Link'
+        HATEOAS_Resource:
+            title: HATEOAS-Links einer Resource
+            type: object
+            properties:
+                read:
+                    $ref: '#/components/schemas/HATEOAS_Link'
+                update:
+                    $ref: '#/components/schemas/HATEOAS_Link'
+                patch:
+                    $ref: '#/components/schemas/HATEOAS_Link'
+                delete:
                     $ref: '#/components/schemas/HATEOAS_Link'
         HATEOAS_Link:
             title: HATEOAS-Link
@@ -114,16 +182,43 @@ components:
                     type: array
                     items:
                         type: string
-        HATEOAS_Resource:
-            title: HATEOAS-Links einer Resource
+        Steuerjahr:
+            title: Steuerjahr
+            required: []
             type: object
             properties:
-                read:
-                    $ref: '#/components/schemas/HATEOAS_Link'
-                update:
-                    $ref: '#/components/schemas/HATEOAS_Link'
-                patch:
-                    $ref: '#/components/schemas/HATEOAS_Link'
+                _links:
+                    $ref: '#/components/schemas/HATEOAS_Resource'
+                user_id:
+                    type: string
+                jahr:
+                    type: number
+                werbungskosten:
+                    type: number
+            example:
+                user_id: 6420557cd5033a24fc6777aa
+                jahr: 2000
+                werbungskosten: 15000
+        Steuerdaten:
+            title: Steuerdaten
+            required: []
+            type: object
+            properties:
+                _links:
+                    $ref: '#/components/schemas/HATEOAS_Resource'
+                user_id:
+                    type: string
+                jahr:
+                    type: number
+                kosten:
+                    type: number
+                fahrtweg:
+                    type: number
+            example:
+                user_id: 6420557cd5033a24fc6777aa
+                jahr: 2000
+                kosten: 15000
+                fahrtweg: 20
         User:
             description: |-
                 Ein User hat einen Username und ein passwort mit dem er sich anmelden kann
@@ -147,8 +242,14 @@ components:
                     type: string
                 _links:
                     $ref: '#/components/schemas/HATEOAS_Resource'
-            example: 
+            example:
                 _id: wHFBHLWlhfwbffbssu56ug
                 username: MaxMustermann
                 password: geheimesPasswort
-                
+tags:
+    -
+        name: Index
+    -
+        name: Steuerjahr
+    -
+        name: User

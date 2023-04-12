@@ -6,12 +6,14 @@ import OpenApiEnforcerMiddleware from "@dschulmeis/restify-openapi-enforcer-midd
 
 import DatabaseFactory from "./database.js";
 import RootController from "./controller/root.controller.js";
-
 import LoginController from "./controller/login.controller.js";
+import SteuerjahrController from "./controller/steuerjahr.controller.js";
+
 
 // Verzeichnisnamen der Quellcodedatei ermitteln
 import path from "path";
 import { fileURLToPath } from "url";
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /* =============================================================================
@@ -93,11 +95,13 @@ server.use(OpenApiEnforcerMiddleware(openApiEnforcer));
 // HTTP-Controller registrieren
 new RootController(server, "/", openApiFile);
 new LoginController(server,"/user");
+new SteuerjahrController(server, "/steuerjahr", openApiFile);
+
 // Server tatsächlich starten
 server.listen(config.port, config.host, function() {
     console.log();
     console.log("=================");
-    console.log("Adressbuch-Server");
+    console.log("Steur-Server");
     console.log("=================");
     console.log();
     console.log("Ausführung mit folgender Konfiguration:");
