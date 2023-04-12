@@ -1,19 +1,63 @@
 <!-- Stylesheet der Seite -->
-
 <style>
     main {
-        color: blue;
+        background-color: white;
+        padding: 1em;
+    }
+
+    main .form > * {
+        display: block;
+        width: 100%;
+
+        border: 0px solid lightgrey;
+        border-bottom-width: 1px;
+
+        padding: 0.5em 0 0.5em 0;
+        margin-bottom: 1em;
+    }
+
+    /* AKTIONSBUTTONS */
+    main .actions {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    main .actions > div {
+        padding: 0.5em;
+        margin: 0.5em;
+
+        background-color: #e0e0e0;
+        transition: background-color 0.5s;
+
+        flex: 1;
+        text-align: center;
+    }
+
+    main .actions > div:first-child {
+        margin-left: 0;
+    }
+
+    main .actions > div:last-child {
+        margin-right: 0;
+    }
+
+    main .actions > div:hover {
+        background-color: #f0f0f0;
+        cursor: pointer;
     }
 </style>
 
 <!-- Inhalt der Seite -->
 <main>
     <form>
-        <label for="anzJ">Startjahr:</label><br>
-        <input type="range" id="anzJ" name="anzJ"><br><br>
+        <label for="anzJ">Zeitraum von:</label><br>
+        <input type="number" id="sJ" name="sJ" min="2000"><br><br>
+
+        <label for="anzJ">bis:</label><br>
+        <input type="number" id="eJ" name="eJ" min="2000"><br><br>
 
         <label for="nebenJ">Nebenjob:</label><br>
-        <input type="radio" id="nebenJ" name="nebenJ">
+        <input type="radio" id="nebenJ" name="nebenJ"><br><br>
 
         <button type="button" id="button">Gesamtersparnis berechnen</button><br><br>
         
