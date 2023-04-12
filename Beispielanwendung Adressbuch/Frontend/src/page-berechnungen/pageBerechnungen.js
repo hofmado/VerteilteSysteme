@@ -38,41 +38,52 @@ export default class PageBerechnungen extends Page {
          let data = await this._app.backend.fetch("GET", "/");
          this._emptyMessageElement = this._mainElement.querySelector(".empty-placeholder");
 
-        //User ID vorerst fix vergeben, nachher aus DB holen
-        const user_id ="6420557cd5033a24fc6777aa";
-
         //Felder im Frontend
-        const startjahr = 2020 /*= parseInt(document.querySelector("#anzJ").value);*/
-        const endjahr = 2021
-        const nebenJ = true /*document.querySelector("#nebenJ").checked;*/
+        
+        //const endjahr = 2021
+        //const nebenJ = true /*document.querySelector("#nebenJ").checked;*/
         //const gesamtE = parseDouble(document.querySelector("#gesamtE").value);
 
         const button = this.mainElement.querySelector("#button");
         const buttonS = this.mainElement.querySelector("#buttonS");
         
-
+        //User ID vorerst fix vergeben, nachher aus DB holen
+        const user_id ="6420557cd5033a24fc6777aa";
 
         //EventListener für Buttons
         //Get
-        button.addEventListener("click", () => this._getGesamtersparnisse(user_id, startjahr, 2023)); //evtl endjahr noch abfragen
+        button.addEventListener("click", () => this._getGesamtersparnisse(user_id/*, startjahr, 2023*/)); //evtl endjahr noch abfragen
 
         //Post
         buttonS.addEventListener("click", () => this._setGesamtersparnisse(user_id));
-        let gesamtE = 0;
+
+
     }
 
         //Methode um alle Steuerjahre eines Users abzurufen und sie dann in einem Array zu speichern
-        async _getGesamtersparnisse(user_id, startjahr, endjahr) {
-            const jahr = 2023 
-            //TODO: Wie übergebe ich die Variablen Startjahr und Endjahr ans Backend?
-            this._app.backend.fetch("GET", `/einsparungsjahr/${user_id}/${jahr}`)
+        async _getGesamtersparnisse(user_id) {
+        
+            var gesamtE = 0;
+            var jahr = 0;
+            var startjahr = document.getElementById("sJ").value;
+            var endjahr = document.getElementById("eJ").value;
+
+        //const jahr = 2023 
+        //TODO: Wie übergebe ich die Variablen Startjahr und Endjahr ans Backend?
+        for(let i = startjahr; i <= endjahr; i++){
+            jahr = i;
+        this._app.backend.fetch("GET", `/einsparungsjahr/${user_id}/${jahr}`)
                 .then(response => {
                     console.log(response)
-                    gesamtE = response.einsparungen;}
+                    gesamtE += response.einsparungen;}
                 );
-            
+        }
+        
+        document.getElementById("gesamtE").innerHTML = gesamtE;
+
+        /*  TODO: Wert in Feld darstellen
             var gesamtEFeld = this.mainElement.querySelector("#gesamtE");
-            gesamtEFeld.value = gesamtE;
+            gesamtEFeld.value = gesamtE;*/
 
             //for-Schleife um alle angeforderten Jahre durchzugehen
             /*for(let i = startjahr; i <= endjahr; i++){
@@ -87,15 +98,15 @@ export default class PageBerechnungen extends Page {
         _setGesamtersparnisse(user_id, startjahr,gesamtE){ //TODO: Die Funktion kriegt die falschen inputs siehe Zeile 60 von Maik 
             let dataset = {
                 user_id: user_id,
-                jahrbeginn: jahr_beginn,
-                jahrende: jahr_ende,
+                jahrbeginn: startjahr,
+                jahrende: endjahr,
                 gesamteinsparungen: gesamtE
             }
     
             this._app.backend.fetch("POST", '/gesamteinsparungen', {body: dataset}).then(
                 setTimeout(() => {
                     //whait for mongodb server
-                    this._getGesamtersparnisse(user_id,startjahr,endjahr)
+                    this._getGesamtersparnisse(user_id)
                 }, 1000)
             );
         }
