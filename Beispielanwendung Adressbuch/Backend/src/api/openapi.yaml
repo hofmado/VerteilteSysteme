@@ -7,7 +7,7 @@ info:
         ermöglicht die üblichen CRUD-Operationen zur Suche, Anzeige, und erstellung von Steuerjahren, wobei
         jedes Steuerjahr aus einem jahr, werbungskosten besteht.
     contact:
-        name: Dominik Hoffmann
+        name: 'Dominik Hoffmann, Max Müller'
     license:
         name: CC-BY-4.0
         url: 'https://creativecommons.org/licenses/by/4.0/deed.de'
@@ -32,6 +32,62 @@ paths:
             operationId: index
             summary: Wurzeladresse des Webservices
             description: Liefert eine HATEOAS-Übersicht aller collections
+    /user:
+        summary: Path used to manage the list of users.
+        description: >-
+            The REST endpoint/path used to list and create zero or more `User` entities.  This path contains a
+            `GET` and `POST` operation to perform the list and create tasks, respectively.
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/User'
+            tags:
+                - User
+            responses:
+                '201':
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+                    description: Created
+            operationId: createUser
+            summary: Create a User
+            description: Creates a new instance of a `User`.
+    '/user/{username}/{password}':
+        get:
+            tags:
+                - User
+            parameters:
+                -
+                    name: username
+                    schema:
+                        type: string
+                    in: path
+                    required: true
+                -
+                    name: password
+                    schema:
+                        type: string
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+                    description: Deliveres a _id back to the frontend
+                '400':
+                    description: Failed to retieve userdata
+            operationId: getUser
+            summary: sucht nach einem User
+            description: Übergabe von Usernaem und Password um ID zurück zuliefern
     /steuerjahr:
         post:
             requestBody:
@@ -157,14 +213,43 @@ components:
                 kosten:
                     type: number
                 fahrtweg:
-                    type: number    
+                    type: number
             example:
                 user_id: 6420557cd5033a24fc6777aa
                 jahr: 2000
-                kosten: 15000  
-                fahrtweg: 20      
+                kosten: 15000
+                fahrtweg: 20
+        User:
+            description: |-
+                Ein User hat einen Username und ein passwort mit dem er sich anmelden kann
+                    Jeder user besitzt eine zusammenfassende Statistik die alle Steuerjahre und 
+                    alle Verdienste zusammenfassen kann.
+                    Ein User besitzt beliebig viele Steuerjahre in denen für das entsprechende Jahr
+                    die Werbungskosten eingetragen werden können.
+                    Ein User besitzt beliebig viele Verdienste die er zusammenfassend für jedes Jahr
+                    eintragen kann.
+            required: []
+            type: object
+            properties:
+                username:
+                    description: name der vom User zur anmeldung angelegt wurde
+                    type: string
+                password:
+                    description: passwort um sich mit dem username anmelden zu können
+                    type: string
+                _id:
+                    description: the Id of an user in mongo db
+                    type: string
+                _links:
+                    $ref: '#/components/schemas/HATEOAS_Resource'
+            example:
+                _id: wHFBHLWlhfwbffbssu56ug
+                username: MaxMustermann
+                password: geheimesPasswort
 tags:
     -
         name: Index
     -
         name: Steuerjahr
+    -
+        name: User

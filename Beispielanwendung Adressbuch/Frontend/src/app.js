@@ -30,6 +30,9 @@ class App {
                 url: "^/steuerjahr/$",
                 show: () => this._gotoSteuerjahr()
             },{
+                url: "^/user/$",
+                show: () => this._gotoLogin()
+            },{
                 url: ".*",
                 show: () => this._gotoList()
             },
@@ -90,6 +93,18 @@ class App {
             this.showException(ex);
         }
     }
+    async _gotoLogin() {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageLogin} = await import("./page-login/page-login.js");
+
+            let page = new PageLogin(this);
+            await page.init();
+            this._showPage(page, "user");
+        } catch (ex) {
+            this.showException(ex);
+        }
+    }
     /**
      * Kalkulationsseite anzeigen. Wird vom Single Page Router aufgerufen. Mit sepz. key
      */
@@ -127,7 +142,6 @@ class App {
         this._bodyElement.querySelector("main")?.remove();
         this._bodyElement.appendChild(page.mainElement);
     }
-
     /**
      * Hilfsmethode zur Anzeige eines Ausnahmefehlers. Der Fehler wird in der
      * Konsole protokolliert und als Popupmeldung angezeigt.
@@ -144,7 +158,6 @@ class App {
         }
     }
 }
-
 /**
  * Anwendung starten
  */

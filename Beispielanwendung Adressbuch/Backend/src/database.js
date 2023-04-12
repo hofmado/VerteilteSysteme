@@ -21,8 +21,6 @@ class DatabaseFactory {
         this.client = new MongoClient(connectionUrl);
         await this.client.connect();
         this.database = this.client.db("Steuer");
-        
-
         await this._createDemoData();
     }
 
@@ -32,7 +30,21 @@ class DatabaseFactory {
      * wenigstens gleich ein paar Daten.
      */
     async _createDemoData() {
-
+        let users     = this.database.collection("user");
+        
+        if (await users.estimatedDocumentCount() === 0) {
+            users.insertMany([
+                {
+                    "username": "MaxMustermann",
+                    "password": "geheimesPasswort",
+                    
+                },
+                {
+                    "username": "MusterMAx",
+                    "password": "1",
+                }
+            ])
+        }
         let steuerjahr = this.database.collection("steuerjahr");
 
         if (await steuerjahr.estimatedDocumentCount() === 0) {
