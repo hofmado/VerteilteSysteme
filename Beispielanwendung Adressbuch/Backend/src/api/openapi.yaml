@@ -36,7 +36,7 @@ paths:
         summary: Path used to manage the list of users.
         description: >-
             The REST endpoint/path used to list and create zero or more `User` entities.  This path contains a
-            `GET` and `POST` operation to perform the list and create tasks, respectively.
+            `POST` operation to perform the list and create tasks, respectively.
         post:
             requestBody:
                 content:
@@ -55,39 +55,39 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/User'
-                    description: Created
+                    description: Created User
             operationId: createUser
             summary: Create a User
             description: Creates a new instance of a `User`.
-    '/user/{username}/{password}':
-        get:
+    /user/login:
+        summary: Path used to login the user
+        description: >-
+            The REST endpoint/path used to login the user
+        post:
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/LoginUser'
             tags:
                 - User
-            parameters:
-                -
-                    name: username
-                    schema:
-                        type: string
-                    in: path
-                    required: true
-                -
-                    name: password
-                    schema:
-                        type: string
-                    in: path
-                    required: true
             responses:
                 '200':
+                    headers:
+                        Location:
+                            schema:
+                                type: string
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/User'
-                    description: Deliveres a _id back to the frontend
+                    description: Login User
                 '400':
                     description: Failed to retieve userdata
-            operationId: getUser
-            summary: sucht nach einem User
-            description: Übergabe von Usernaem und Password um ID zurück zuliefern
+            operationId: loginUser
+            summary: loggt einen User ein 
+            description: Übergabe von Username und Password um ID zurück zu liefern
     /steuerjahr:
         post:
             requestBody:
@@ -244,6 +244,22 @@ components:
                     $ref: '#/components/schemas/HATEOAS_Resource'
             example:
                 _id: wHFBHLWlhfwbffbssu56ug
+                username: MaxMustermann
+                password: geheimesPasswort
+        LoginUser:
+            description: |-
+                Ein User hat einen Username und ein passwort mit dem er sich anmelden kann
+            type: object
+            properties:
+                username:
+                    description: name der vom User zur anmeldung angelegt wurde
+                    type: string
+                password:
+                    description: passwort um sich mit dem username anmelden zu können
+                    type: string
+                _links:
+                    $ref: '#/components/schemas/HATEOAS_Resource'
+            example:
                 username: MaxMustermann
                 password: geheimesPasswort
 tags:

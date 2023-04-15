@@ -26,9 +26,10 @@ export default class PageLogin extends Page {
         loginbutton.addEventListener("click", () => this._askLogin(usernamefeld, passwordfeld));
         submitbutton.addEventListener("click", () => this._register(usernamefeld, passwordfeld));
     }
-    async _askLogin(username, password ) {
+    async _askLogin(username, password) {
         try {
-            this._app.backend.fetch("GET", `/user/${username.value}/${password.value}`)
+            let User = {username: username.value, password: password.value}
+            this._app.backend.fetch("POST", `/user/login`, {body: User})
             .then(response => {
                 // Save the user ID in the session storage
                 console.log(response.User)
@@ -64,7 +65,6 @@ export default class PageLogin extends Page {
             alert("Geben Sie erst einen Passwort ein.");
             return;
         }
-        console.log(User);
         // Datensatz speichern
         try {
             this._app.backend.fetch("POST", '/user', {body: User})

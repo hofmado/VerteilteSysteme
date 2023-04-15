@@ -95,13 +95,13 @@ server.use(OpenApiEnforcerMiddleware(openApiEnforcer));
 // HTTP-Controller registrieren
 new RootController(server, "/", openApiFile);
 new LoginController(server,"/user");
-new SteuerjahrController(server, "/steuerjahr", openApiFile);
+new SteuerjahrController(server, "/steuerjahr");
 
 // Server tatsächlich starten
 server.listen(config.port, config.host, function() {
     console.log();
     console.log("=================");
-    console.log("Steur-Server");
+    console.log("Steuer-Server");
     console.log("=================");
     console.log();
     console.log("Ausführung mit folgender Konfiguration:");

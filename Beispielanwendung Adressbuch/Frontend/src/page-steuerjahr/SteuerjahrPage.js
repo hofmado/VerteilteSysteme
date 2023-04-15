@@ -15,7 +15,7 @@ export default class SteuerjahrPage extends Page {
     async init() {
         await super.init();
         this._title = "SteuerjahrPage";
-        const user_id = "";
+        let user_id = "";
         // Fetch the manifest file
         function getUser_id() {
             return fetch(window.navigator.userAgent.includes("Edge") ? "/manifest.json" : "/manifest.webmanifest")

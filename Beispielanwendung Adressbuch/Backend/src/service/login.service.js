@@ -17,7 +17,6 @@ export default class LoginService {
     async readUser(username, password) {
       try {
         let user = await this._users.findOne({ username: username, password: password });
-        console.log("login Service readUser: " + user)
         return user;
          
       }catch (error) {
