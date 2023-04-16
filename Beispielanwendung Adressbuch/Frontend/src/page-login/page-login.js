@@ -39,7 +39,7 @@ export default class PageLogin extends Page {
                 let data = response.User._id;
                 sessionStorage.setItem('userId', data);
                 alert("Login successful!");
-                //location.hash = `/#/steuerjahr/${data}`;
+                location.hash = '#/steuerjahr/';
             });
         } catch (ex) {
             console.error(ex);
