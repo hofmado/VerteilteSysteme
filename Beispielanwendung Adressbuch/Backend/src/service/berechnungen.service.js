@@ -3,6 +3,7 @@ import {CURSOR_FLAGS, Int32, ObjectId} from "mongodb";
 
 export default class berechnungen_service {
 
+  //TODO: Unterstrich bei Einsparungsjahr korrekt?
   constructor() {
     this._einsparungen = DatabaseFactory.database.collection("einsparungsjahr"); //TODO Service mit funktionalität aus frontend 
   }

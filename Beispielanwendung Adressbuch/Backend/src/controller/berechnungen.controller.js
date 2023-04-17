@@ -39,7 +39,8 @@ export default class BerechnungenControllerClass {
      * @param {Object} entity Zu verändernder Datensatz.
      */
     _insertHateoasLinks(entity) {
-        let url = `${this._prefix}/einsparungsjahr/${entity._id}`;
+        //let url = `${this._prefix}/einsparungsjahr/${entity._id}`; TODO: hier Änderung vorgenommen
+        let url = `${this._prefix}/${entity.user_id}/${entity.jahr}`;
     
         entity._links = {
           getEinsparungsjahr: { url: url, method: "GET" },
@@ -65,7 +66,8 @@ export default class BerechnungenControllerClass {
         this._insertHateoasLinks(result);
 
         res.status(201);
-        res.header("Location", `${this._prefix}/gesamteinsparungen/${result._id}`);
+        //res.header("Location", `${this._prefix}/gesamteinsparungen/${result._id}`); TODO: hier Änderung vorgenommen
+        res.header("Location", `${this._prefix}/${result._id}`);
         res.sendResult(result);
 
         return next();
