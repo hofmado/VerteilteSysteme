@@ -14,7 +14,7 @@ export default class GraphenPage extends Page {
     async init() {
         await super.init();
         this._title = "GraphenPage";
-        let user_id = "6420557cd5033a24fc6777aa";     //von const zu let geändert und hardcode wert anstelle von null eingefügt 
+        const user_id = "6420557cd5033a24fc6777aa";     //von const zu let geändert und hardcode wert anstelle von null eingefügt 
         // Fetch the manifest file
         function getUser_id() {
             return fetch(window.navigator.userAgent.includes("Edge") ? "/manifest.json" : "/manifest.webmanifest")
@@ -25,21 +25,26 @@ export default class GraphenPage extends Page {
                 return userId;
             });
         }
-        getUser_id().then(userId => {
+        /*getUser_id().then(userId => {
             user_id = userId;
-        });
+        });*/
         //Obejkte hier mit QuerrySelevtor ausstatten 
         const feldGraphen = this._mainElement.querySelector('#Graphengraph'); //QuerryÜberprüfen 
         const jahrJahr = 1998; 
         const werbWerb = 2000
         //Methode für die Get-Anfrage hinzufügen 
-        window.addEventListener('load', async () => this._getAnfrage());
+        window.addEventListener("load",  () => 
+           this._getAnfrage(user_id, feldGraphen)
+            //await app._getAnfrage(user_id, feldGraphen)
+        );
         //Mehtode für die Post-Anfrage hinzufügen 
+        this._getAnfrage(user_id, feldGraphen);
     }
+
     _getAnfrage(user_id, feldGraphen) { //TODO fehler api zu frontend
         this._app.backend.fetch("GET", `/graphen/${user_id}`)
             .then(response => {
-                feldGraphen.innerHTML = "" + response.werbungskosten; //Feld aus Objekte 
+                feldGraphen.innerHTML = "" + response; //Feld aus Objekte 
             });
     }
     _postAnfrage(user_id, jahrJahr, werbWerb) {

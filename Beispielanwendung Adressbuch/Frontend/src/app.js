@@ -77,12 +77,12 @@ class App {
     /**
      * Kalkulationsseite anzeigen. Wird vom Single Page Router aufgerufen.
      */
-    async _gotoGraphen(id) {
+    async _gotoGraphen(id) { //id zu user_id geändert
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
             let {default: PageKalk} = await import("./page-graphen/GraphenPage.js");
 
-            let page = new PageKalk(this, id);
+            let page = new PageKalk(this, id); //id zu user_id geändert
             await page.init();
             this._showPage(page, "graphen");
         } catch (ex) {

@@ -49,7 +49,7 @@ export default class GraphenController {
      * GET /graphen
      */
     async graphenzeug(req, res, next) {
-        let result = await this._service.Graphenzeug();
+        let result = await this._service.graphenzeug(req.params.user_id);
       
         if (result) {
           this._insertHateoasLinks(result);
