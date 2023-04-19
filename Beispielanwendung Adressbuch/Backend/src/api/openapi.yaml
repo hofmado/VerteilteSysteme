@@ -75,7 +75,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/Graphendaten'
+                                $ref: '#/components/schemas/GraphenArray'
                     description: OK
                 '404':
                     description: Not Found
@@ -135,6 +135,10 @@ components:
                 user_id: 6420557cd5033a24fc6777aa
                 jahr: 2000
                 werbungskosten: 15000
+        GraphenArray: 
+            type: array
+            items: 
+                type: number
 tags:
     -
         name: Index

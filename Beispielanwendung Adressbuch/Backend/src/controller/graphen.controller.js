@@ -53,6 +53,7 @@ export default class GraphenController {
       
         if (result) {
           this._insertHateoasLinks(result);
+        
           res.sendResult(result);
         } else {
           throw new RestifyError.NotFoundError("Kein Graphen gefunden");

@@ -41,7 +41,7 @@ export default class SteuerGraphen {
             t++; 
         }
         console.log(graphenArray2); 
-        return {graphenArray2}; 
+        return graphenArray2; 
 
 
         /*const usere = await this._graphen.distinct("user_id"); 
