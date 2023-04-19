@@ -15,20 +15,8 @@ export default class SteuerjahrPage extends Page {
     async init() {
         await super.init();
         this._title = "SteuerjahrPage";
-        let user_id = "";
+        let user_id = sessionStorage.getItem('userId');
         // Fetch the manifest file
-        function getUser_id() {
-            return fetch(window.navigator.userAgent.includes("Edge") ? "/manifest.json" : "/manifest.webmanifest")
-            .then(response => response.json())
-            .then(data => {
-                const userId = data.user_id;
-                // Do something with the data
-                return userId;
-            });
-        }
-        getUser_id().then(userId => {
-            user_id = userId;
-        });
         const getDataButton = this._mainElement.querySelector('#get-data');
         const saveDataButton = this._mainElement.querySelector('#save-data');
         const feldJahr = this._mainElement.querySelector('#jahr');
