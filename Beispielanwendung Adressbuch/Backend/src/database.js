@@ -45,7 +45,7 @@ class DatabaseFactory {
                 {
                     "user_id": "6420557cd5033a24fc6777aa",
                     "jahr": 2022,
-                    "werbungskosten": 2500
+                    "werbungskosten": 2505
                 },
                 {
                     "user_id": "6420557cd5033a24fc6777aa",
@@ -68,7 +68,6 @@ class DatabaseFactory {
                     "werbungskosten": 4500
                 },
             ]);
-            
         } 
     }
 }
