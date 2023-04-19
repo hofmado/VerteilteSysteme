@@ -33,7 +33,7 @@ export default class RootController {
             
             {
                 _name: "user",
-                query: {url: "/user", method: "GET", query_params: ["search", "username", "password"]},
+                login: {url: "/user/login", method: "POST"},
                 create: {url: "/user", method: "POST"},
             },
             {    

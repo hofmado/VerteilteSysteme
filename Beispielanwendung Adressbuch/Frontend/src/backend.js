@@ -48,18 +48,6 @@ export default class Backend {
      */
     async fetch(method, url, options) {
         options = options || {};
-
-        // Query-Parameter an die URL anhängen
-        if (options.query) {
-            let parameters = new URLSearchParams();
-
-            for (name in options.query) {
-                parameters.append(name, options.query[name]);
-            }
-
-            url = `${url}?${parameters}`;
-        }
-
         // HTTP Verb, Header Fields und Body übernehmen
         let fetchOptions = {
             method: method,

@@ -22,9 +22,8 @@ export default class LoginController {
 
         // Collection: Users
         server.post(prefix, wrapHandler(this, this.createUser));
-
+        server.post(prefix +"/login", wrapHandler(this, this.getUser))
         // Entity: User
-        server.get(prefix + "/:username" + "/:password", wrapHandler(this, this.getUser));
         
     }
 
@@ -37,10 +36,10 @@ export default class LoginController {
      * @param {Object} entity Zu verändernder Datensatz
      */
     _insertHateoasLinks(entity) {
-        let url = `${this._prefix}/${entity.username}/${entity.password}`;
+        let url = `${this._prefix}/user`;
 
         entity._links = {
-            getUser:   {url: url, method: "GET"},
+            getUser:   {url: url, method: "POST"},
         }
     }
 
@@ -61,11 +60,11 @@ export default class LoginController {
 
     /**
      * 
-     * GET /user/ username/password
+     * GET /user/login
      * USER auslesen
      */
     async getUser(req1, res, next) {
-        let User = await this._service.readUser(req1.params.username, req1.params.password);
+        let User = await this._service.readUser(req1.body.username, req1.body.password);
         if (User != "null") {
             res.sendResult({User});
         } else {

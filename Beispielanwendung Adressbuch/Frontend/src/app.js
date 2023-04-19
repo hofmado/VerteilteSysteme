@@ -129,7 +129,7 @@ class App {
      */
     _showPage(page, name) {
         // Fenstertitel aktualisieren
-        document.title = `${this._documentTitle} – ${page.title}`;
+        document.title = `${this._documentTitle}`;
 
         // Stylesheet der Seite einfügen
         this._pageCssElement.innerHTML = page.css;
