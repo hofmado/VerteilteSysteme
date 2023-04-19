@@ -41,7 +41,10 @@ export default class SteuerGraphen {
             t++; 
         }
         console.log(graphenArray2); 
-        return graphenArray2; 
+        console.log(jahre); 
+        const comboArray = graphenArray2.concat(jahre);
+        console.log(comboArray);
+        return comboArray; 
 
 
         /*const usere = await this._graphen.distinct("user_id"); 

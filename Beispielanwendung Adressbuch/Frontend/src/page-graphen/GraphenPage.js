@@ -30,21 +30,25 @@ export default class GraphenPage extends Page {
         });*/
         //Obejkte hier mit QuerrySelevtor ausstatten 
         const feldGraphen = this._mainElement.querySelector('#Graphengraph'); //QuerryÜberprüfen 
+        const feldGraphen2 = this._mainElement.querySelector('#Graphengraph2');
         const jahrJahr = 1998; 
         const werbWerb = 2000
         //Methode für die Get-Anfrage hinzufügen 
         window.addEventListener("load",  () => 
-           this._getAnfrage(user_id, feldGraphen)
+           this._getAnfrage(user_id, feldGraphen, feldGraphen2)
             //await app._getAnfrage(user_id, feldGraphen)
         );
         //Mehtode für die Post-Anfrage hinzufügen 
-        this._getAnfrage(user_id, feldGraphen);
+        this._getAnfrage(user_id, feldGraphen, feldGraphen2);
     }
 
-    _getAnfrage(user_id, feldGraphen) { //TODO fehler api zu frontend
+    _getAnfrage(user_id, feldGraphen, feldGraphen2) { //TODO fehler api zu frontend
         this._app.backend.fetch("GET", `/graphen/${user_id}`)
             .then(response => {
-                feldGraphen.innerHTML = "" + response; //Feld aus Objekte 
+                const platzhalter = response; 
+                const middleIndex = Math.floor(platzhalter.length /2);
+                feldGraphen.innerHTML = "" + platzhalter.slice(0, middleIndex); //Feld aus Objekte 
+                feldGraphen2.innerHTML = "" + platzhalter.slice(middleIndex); 
             });
     }
     _postAnfrage(user_id, jahrJahr, werbWerb) {
