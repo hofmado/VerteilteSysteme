@@ -96,7 +96,7 @@ server.use(OpenApiEnforcerMiddleware(openApiEnforcer));
 // HTTP-Controller registrieren; Steuerjahr Controller vorerst auskommentiert da sonst Fehler in berechnungen.controller.js
 new RootController(server, "/", openApiFile);
 //new SteuerjahrController(server, "/steuerjahr", openApiFile);
-new BerechnungenControllerClass(server, "/einsparungen", openApiFile);
+new BerechnungenControllerClass(server, "/einsparungsjahr", openApiFile);
 
 // Server tatsächlich starten
 server.listen(config.port, config.host, function() {

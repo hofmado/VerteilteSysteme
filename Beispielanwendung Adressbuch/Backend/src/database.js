@@ -20,7 +20,7 @@ class DatabaseFactory {
         // Datenbankverbindung herstellen
         this.client = new MongoClient(connectionUrl);
         await this.client.connect();
-        this.database = this.client.db("Ersparnisse");
+        this.database = this.client.db("einsparungsjahr");
         
 
         await this._createDemoData();
@@ -39,22 +39,22 @@ class DatabaseFactory {
         if (await einsparungsjahr.estimatedDocumentCount() === 0) {
             einsparungsjahr.insertMany([
                 {
-                    "user_id": "6420557cd5033a24fc6777aa",
+                    "user_id": "6420557",
                     "jahr": 2023,
                     "einsparungen": 2500
                 },
                 {
-                    "user_id": "6420557cd5033a24fc6777aa",
+                    "user_id": "6420557",
                     "jahr": 2022,
                     "einsparungen": 2500
                 },
                 {
-                    "user_id": "6420557cd5033a24fc6777aa",
+                    "user_id": "6420557",
                     "jahr": 2021,
                     "einsparungen": 2500
                 },
                 {
-                    "user_id": "6420557cd5033a24fc6777aa",
+                    "user_id": "6420557",
                     "jahr": 2020,
                     "einsparungen": 2500
                 },

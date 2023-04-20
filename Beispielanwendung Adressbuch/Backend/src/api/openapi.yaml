@@ -50,7 +50,7 @@ paths:
                     explode: false
                     name: jahr
                     schema:
-                        type: number
+                        type: integer
                     in: path
                     required: true
             responses:
@@ -138,9 +138,9 @@ components:
                 user_id:
                     type: string
                 jahr:
-                    type: number
+                    type: integer
                 einsparungen:
-                    type: number
+                    type: integer
             example:
                 user_id: 6420557cd5033a24fc6777aa
                 jahr: 2000
@@ -156,11 +156,11 @@ components:
                 user_id:
                     type: string
                 jahrbeginn:
-                    type: number
+                    type: integer
                 jahrende:
-                    type: number
+                    type: integer
                 gesamteinsparungen:
-                    type: number
+                    type: integer
                 
             example:
                 user_id: 6420557cd5033a24fc6777aa

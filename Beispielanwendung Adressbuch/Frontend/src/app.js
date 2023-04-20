@@ -30,7 +30,7 @@ class App {
                 url: "^/steuerjahr/$",
                 show: () => this._gotoSteuerjahr()
             },            {
-                url: "^/berechnungen/$",
+                url: "^/einsparungsjahr/$",
                 show: () => this._gotoBerechnungen()
             },
             {
@@ -116,7 +116,7 @@ class App {
 
             let page = new PageBerechnungen(this);
             await page.init();
-            this._showPage(page, "berechnungen");
+            this._showPage(page, "einsparungsjahr");
         } catch (ex) {
             this.showException(ex);
         }

@@ -11,12 +11,12 @@ export default class berechnungen_service {
    * Auslesen eines Einsparungsjahrs
    *
    * @param {string} user_id User ID
-   * @param {number} jahr Zu gespeichertem Einsparungsjahr
+   * @param {integer} jahr Zu gespeichertem Einsparungsjahr
    * @return {Promise} Das Einsparungsjahr Objekt
    */
-  async readEinsparungsjahr(user_id, jahr) { 
+  async getEinsparungsjahr(user_id, jahr) { 
     let result = await this._einsparungen.findOne({user_id: user_id, jahr: parseInt(jahr)});
-    return result._einsparungen;
+    return result;
   }
 }
   /*async createSteuerjahr(dataset) {

@@ -49,7 +49,7 @@ export default class BerechnungenControllerClass {
 
     //GetEinsparungsjahr
     async getEinsparungsjahr(req, res, next) {
-        let result = await this._service.getEinsparungsjahr(req.params.user_id, req.params.jahr);
+        let result = await this._service.getEinsparungsjahr(req.params.user_id, parseInt(req.params.jahr));
         if (result) {
           this._insertHateoasLinks(result);
           res.sendResult(result);

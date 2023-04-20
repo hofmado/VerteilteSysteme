@@ -32,7 +32,7 @@ export default class PageBerechnungen extends Page {
     async init() { 
         // HTML-Inhalt nachladen
         await super.init();
-        this._title = "berechnungen";
+        this._title = "einsparungsjahr";
 
          // Platzhalter anzeigen, wenn noch keine Daten vorhanden sind
          let data = await this._app.backend.fetch("GET", "/");
@@ -48,11 +48,12 @@ export default class PageBerechnungen extends Page {
         const buttonS = this.mainElement.querySelector("#buttonS");
         
         //User ID vorerst fix vergeben, nachher aus DB holen
-        const user_id ="6420557cd5033a24fc6777aa";
+        //const user_id ="6420557cd5033a24fc6777aa";
+        const user_id ="6420557";
 
         //EventListener für Buttons
         //Get
-        button.addEventListener("click", () => this._getGesamtersparnisse(user_id/*, startjahr, 2023*/)); //evtl endjahr noch abfragen
+        button.addEventListener("click", () => this._getGesamtersparnisse(user_id));//, startjahr, 2023*/)); //evtl endjahr noch abfragen
 
         //Post
         buttonS.addEventListener("click", () => this._setGesamtersparnisse(user_id));
@@ -72,7 +73,7 @@ export default class PageBerechnungen extends Page {
         //TODO: Wie übergebe ich die Variablen Startjahr und Endjahr ans Backend?
         for(let i = startjahr; i <= endjahr; i++){
             jahr = i;
-        this._app.backend.fetch("GET", `/einsparungsjahr/${user_id}/${jahr}`)
+        this._app.backend.fetch("GET", `/einsparungsjahr/${user_id}/${parseInt(jahr)}`)
                 .then(response => {
                     console.log(response)
                     gesamtE += response.einsparungen;}
@@ -98,9 +99,9 @@ export default class PageBerechnungen extends Page {
         _setGesamtersparnisse(user_id, startjahr,gesamtE){ //TODO: Die Funktion kriegt die falschen inputs siehe Zeile 60 von Maik 
             let dataset = {
                 user_id: user_id,
-                jahrbeginn: startjahr,
-                jahrende: endjahr,
-                gesamteinsparungen: gesamtE
+                jahrbeginn: parseInt(startjahr),
+                jahrende: parseInt(endjahr),
+                gesamteinsparungen: parseInt(gesamtE)
             }
     
             this._app.backend.fetch("POST", '/gesamteinsparungen', {body: dataset}).then(
