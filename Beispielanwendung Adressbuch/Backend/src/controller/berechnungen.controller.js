@@ -39,17 +39,21 @@ export default class BerechnungenControllerClass {
      * @param {Object} entity Zu verändernder Datensatz.
      */
     _insertHateoasLinks(entity) {
+        console.log("HATEOAS Hier?");
         //let url = `${this._prefix}/einsparungsjahr/${entity._id}`; TODO: hier Änderung vorgenommen
         let url = `${this._prefix}/${entity.user_id}/${entity.jahr}`;
     
         entity._links = {
-          getEinsparungsjahr: { url: url, method: "GET" },
+          getEinsparungsjahr: { url: url, method: "GET" }
     }
 }
 
     //GetEinsparungsjahr
     async getEinsparungsjahr(req, res, next) {
+        console.log("Hier??");
         let result = await this._service.getEinsparungsjahr(req.params.user_id, parseInt(req.params.jahr));
+        
+        console.log(result);
         if (result) {
           this._insertHateoasLinks(result);
           res.sendResult(result);

@@ -27,6 +27,7 @@ export default class Backend {
         // Angehnängte Slashes entfernen
         while (this._url.endsWith("/")) {
             this._url = this._url.slice(0, this._url.length - 1);
+            
         }
     }
 
@@ -78,6 +79,8 @@ export default class Backend {
         fetchOptions.headers["Accept"] = "application/json";
 
         // REST-Webservice aufrufen
+        console.log("URL: " + this._url);
+        console.log(url);
         let response = await fetch(`${this._url}${url}`,fetchOptions);
 
         if (response.ok) {

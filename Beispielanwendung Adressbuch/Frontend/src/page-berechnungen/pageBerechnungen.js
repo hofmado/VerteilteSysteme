@@ -68,20 +68,22 @@ export default class PageBerechnungen extends Page {
             var jahr = 0;
             var startjahr = document.getElementById("sJ").value;
             var endjahr = document.getElementById("eJ").value;
+            console.log(startjahr + endjahr);
 
         //const jahr = 2023 
         //TODO: Wie übergebe ich die Variablen Startjahr und Endjahr ans Backend?
         for(let i = startjahr; i <= endjahr; i++){
-            jahr = i;
-        this._app.backend.fetch("GET", `/einsparungsjahr/${user_id}/${parseInt(jahr)}`)
+            jahr = parseInt(i);
+            console.log("user_id: " + user_id + "jahr:" + jahr);
+        this._app.backend.fetch("GET", `/einsparungsjahr/${user_id}/${jahr}`, jahr)
                 .then(response => {
                     console.log(response)
-                    gesamtE += response.einsparungen;}
+                    gesamtE += response.einsparungen;
+                }
                 );
         }
         
         document.getElementById("gesamtE").innerHTML = gesamtE;
-
         /*  TODO: Wert in Feld darstellen
             var gesamtEFeld = this.mainElement.querySelector("#gesamtE");
             gesamtEFeld.value = gesamtE;*/
