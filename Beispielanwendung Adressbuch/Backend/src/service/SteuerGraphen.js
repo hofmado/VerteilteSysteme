@@ -13,37 +13,43 @@ export default class SteuerGraphen {
         
     }
 
+    async nutzerZeug(dataset){
+        const resPlatz = dataset.user_id; 
+        console.log(resPlatz);
+        return {_resid: resPlatz};
+    }
+
     async wertBere(){
         const usere = await this._graphen.distinct("user_id"); 
-        console.log(usere); 
+        //console.log(usere); 
 
         const jahre = await this._graphen.distinct("jahr"); 
-        console.log(jahre);
+        //console.log(jahre);
 
         let durchschnittsArray =[]; 
         let jahreArray = []; 
         let graphenArray = []; 
 
         for( let laufJahr of jahre){
-            console.log(jahre); 
+            //console.log(jahre); 
             for(let laufUser of usere){
             const graphen = await this._graphen.find({ jahr: laufJahr, user_id: laufUser }).toArray();
-            console.log(graphen);
+            //console.log(graphen);
             const werbungskostenArray = graphen.map(graph => graph.werbungskosten);
             graphenArray.push(...werbungskostenArray);
             }
         }
-        console.log(graphenArray);
+        //console.log(graphenArray);
         let graphenArray2 = []; 
         let t = 0; 
         for(let i = 0; i<graphenArray.length -1; i+=2){
             graphenArray2[t] = (graphenArray[i]+ graphenArray[i+1])/2; 
             t++; 
         }
-        console.log(graphenArray2); 
-        console.log(jahre); 
+       // console.log(graphenArray2); 
+        //console.log(jahre); 
         const comboArray = graphenArray2.concat(jahre);
-        console.log(comboArray);
+        //console.log(comboArray);
         return comboArray; 
 
 

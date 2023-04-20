@@ -23,7 +23,7 @@ export default class GraphenController {
         // Collection: Graphen
 
         // Post
-       // server.post(prefix, wrapHandler(this, this.create)); 
+       server.post(prefix, wrapHandler(this, this.nutzerZeug)); 
 
        //Get
        server.get(prefix + "/:user_id", wrapHandler(this, this.graphenzeug));
@@ -59,6 +59,16 @@ export default class GraphenController {
           throw new RestifyError.NotFoundError("Kein Graphen gefunden");
         }
       
+        return next();
+    }
+    async nutzerZeug(req, res, next) { 
+        let result = await this._service.nutzerZeug(req.body);
+        this._insertHateoasLinks(result);
+
+        res.status(201);
+        res.header("Location", `${this._prefix}/${result._resid}`);
+        res.sendResult(result);
+
         return next();
     }
 }

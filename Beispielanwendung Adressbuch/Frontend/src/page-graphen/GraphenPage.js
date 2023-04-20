@@ -35,11 +35,14 @@ export default class GraphenPage extends Page {
         const werbWerb = 2000
         //Methode für die Get-Anfrage hinzufügen 
         window.addEventListener("load",  () => 
-           this._getAnfrage(user_id, feldGraphen, feldGraphen2)
+           this._getAnfrage(user_id, feldGraphen, feldGraphen2),
+           this._postAnfrage()
             //await app._getAnfrage(user_id, feldGraphen)
         );
+        
         //Mehtode für die Post-Anfrage hinzufügen 
         this._getAnfrage(user_id, feldGraphen, feldGraphen2);
+        this._postAnfrage(user_id); 
     }
 
     _getAnfrage(user_id, feldGraphen, feldGraphen2) { //TODO fehler api zu frontend
@@ -51,19 +54,12 @@ export default class GraphenPage extends Page {
                 feldGraphen2.innerHTML = "" + platzhalter.slice(middleIndex); 
             });
     }
-    _postAnfrage(user_id, jahrJahr, werbWerb) {
-            let dataset ={
-                user_id: user_id, 
-                jahr: jahrJahr, 
-                werbungskosten: werbWerb
-            }
-
+    _postAnfrage(user_id) {
+        let dataset ={
+            user_id: user_id
+        }
             this._app.backend.fetch("POST", '/graphen', {body: dataset}).then(
-                setTimeout(()=> {
 
-                    this._getAnfrage(user_id, feldGraphen)
-                }, 
-                1000)
             )
 
     }
