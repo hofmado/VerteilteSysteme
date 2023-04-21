@@ -18,14 +18,14 @@ export default class BerechnungenControllerClass {
      * @param {String} prefix Gemeinsamer Prefix aller URLs
      */
     constructor(server, prefix) {
-        this._service = new berechnungen_service();
+        this._service = new berechnungen_service();                                                         
         this._prefix = prefix;
 
         //Collection: Gesamteinsparungen
-        server.post(prefix + "/gesamteinsparungen", wrapHandler(this, this.createGesamteinsparungen));
+        server.post(prefix + "/gesamteinsparungen", wrapHandler(this, this.createGesamteinsparungen));      //!
 
         //Collection: Einsparungsjahr
-        server.get(prefix + "/:user_id" + "/:jahr", wrapHandler(this, this.getEinsparungsjahr));
+        server.get(prefix + "/:user_id" + "/:jahr", wrapHandler(this, this.getEinsparungsjahr));            //!
     }
 
     /**
@@ -37,7 +37,6 @@ export default class BerechnungenControllerClass {
      * @param {Object} entity Zu verändernder Datensatz.
      */
     _insertHateoasLinks(entity) {
-        console.log("HATEOAS Hier?");
         let url = `${this._prefix}/${entity.user_id}/${entity.jahr}`;
     
         entity._links = {
@@ -47,8 +46,7 @@ export default class BerechnungenControllerClass {
 
     //GetEinsparungsjahr
     async getEinsparungsjahr(req, res, next) {
-        console.log("Hier??");
-        let result = await this._service.getEinsparungsjahr(req.params.user_id, parseInt(req.params.jahr));
+        let result = await this._service.getEinsparungsjahr(req.params.user_id, parseInt(req.params.jahr));         //!
         
         console.log(result);
         if (result) {
@@ -62,12 +60,11 @@ export default class BerechnungenControllerClass {
     }
 
     //createGesamteinsparungen
-    async createGesamteinsparungen(req, res, next){
+    async createGesamteinsparungen(req, res, next){                                                                 //!
         let result = await this._service.createGesamteinsparungen(req.body);
         this._insertHateoasLinks(result);
 
         res.status(201);
-        //res.header("Location", `${this._prefix}/gesamteinsparungen/${result._id}`); TODO: hier Änderung vorgenommen
         res.header("Location", `${this._prefix}/${result._id}`);
         res.sendResult(result);
 

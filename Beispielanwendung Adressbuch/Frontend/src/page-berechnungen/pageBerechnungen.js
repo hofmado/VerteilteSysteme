@@ -41,36 +41,34 @@ export default class PageBerechnungen extends Page {
         const button = this.mainElement.querySelector("#button");
         const buttonS = this.mainElement.querySelector("#buttonS");
         
-        //User ID vorerst fix vergeben, nachher aus DB holen
-        //const user_id ="6420557cd5033a24fc6777aa";
-        const user_id ="6420557";
+        //User ID vorerst fix vergeben, nachher aus Session Key holen                                       //!
+        const user_id ="6420557";                                       
 
         //EventListener für Buttons
         //Get
-        button.addEventListener("click", () => this._getGesamtersparnisse(user_id));
+        button.addEventListener("click", () => this._getGesamtersparnisse(user_id));                        //!
 
         //Post
-        buttonS.addEventListener("click", () => this._setGesamtersparnisse(user_id));
+        buttonS.addEventListener("click", () => this._setGesamtersparnisse(user_id));                       //!
     }
 
         //Methode um alle Steuerjahre eines Users abzurufen und sie dann in einem Array zu speichern
-        async _getGesamtersparnisse(user_id) {
-
-            //Variablen befüllen
+        async _getGesamtersparnisse(user_id) {                                                              //!
+            
+            //Variablen befüllen                                                                            //!
             var gesamtE = 0;
             var startjahr = document.getElementById("sJ").value;
             var endjahr = document.getElementById("eJ").value;
             console.log(startjahr + endjahr);
 
-            //Sicherstellen dass startjahr kleiner oder gleich endjahr ist
+            //Sicherstellen dass startjahr kleiner oder gleich endjahr ist                                  //!
             if(startjahr > endjahr){
-
                 var x = startjahr;
                 startjahr = endjahr;
                 endjahr = x;
             }
 
-        var jahr = 0;
+        var jahr = 0;                                                                                       //!
         for(let i = startjahr; i <= endjahr; i++){
             jahr = parseInt(i);
             console.log("user_id: " + user_id + "jahr:" + jahr);
@@ -81,10 +79,10 @@ export default class PageBerechnungen extends Page {
                 }
                 );
         }
-        document.getElementById("gesamtE").innerHTML = gesamtE;
+        document.getElementById("gesamtE").innerHTML = gesamtE;                                             //!
     }
         
-        //Methode um Gesamtersparnis abzuspeichern
+        //Methode um Gesamtersparnis abzuspeichern                                                          //!
         _setGesamtersparnisse(user_id){
             let dataset = {
                 user_id: user_id,
@@ -93,7 +91,7 @@ export default class PageBerechnungen extends Page {
                 gesamteinsparungen: parseInt(gesamtE)
             }
     
-            this._app.backend.fetch("POST", '/gesamteinsparungen', {body: dataset}).then(
+            this._app.backend.fetch("POST", '/gesamteinsparungen', {body: dataset}).then(                   //!
                 setTimeout(() => {
                     //wait for mongodb server
                     this._getGesamtersparnisse(user_id)
