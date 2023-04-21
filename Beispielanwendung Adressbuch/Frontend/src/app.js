@@ -122,19 +122,6 @@ class App {
         }
     }
 
-/*     async _gotoBerechnungen(id) {
-        try {
-            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
-            let {default: PageBerechnungen} = await import("./page-berechnungen/pageBerechnungen.js");
-
-            let page = new PageBerechnungen(this, id);
-            await page.init();
-            this._showPage(page, "berechnungen");
-        } catch (ex) {
-            this.showException(ex);
-        }
-    } */
-
     /**
      * Interne Methode zum Umschalten der sichtbaren Seite.
      *

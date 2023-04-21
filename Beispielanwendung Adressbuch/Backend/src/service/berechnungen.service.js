@@ -5,7 +5,8 @@ export default class berechnungen_service {
 
   //TODO: Unterstrich bei Einsparungsjahr korrekt?
   constructor() {
-    this._einsparungen = DatabaseFactory.database.collection("einsparungsjahr"); //TODO Service mit funktionalität aus frontend 
+    this._einsparungen = DatabaseFactory.database.collection("einsparungsjahr");
+
   }
 /**
    * Auslesen eines Einsparungsjahrs
@@ -18,23 +19,22 @@ export default class berechnungen_service {
     let result = await this._einsparungen.findOne({user_id: user_id, jahr: parseInt(jahr)});
     return result;
   }
-}
-  /*async createSteuerjahr(dataset) {
-    let user_id = dataset.user_id;
-    let jahr = parseInt(dataset.jahr); 
-    let kosten = parseInt(dataset.kosten);
-    let fahrtweg = parseInt(dataset.fahrtweg);
+
+  async createEinsparungen(dataset) {
+    let user_id_ = dataset.user_id;
+    let jahrbeginn_ = parseInt(dataset.jahrbeginn); 
+    let jahrende_ = parseInt(dataset.jahrende);
+    let gesamteinsparungen_ = parseInt(dataset.gesamteinsparungen);
     
-    // Calculate tax savings
-    const fahrtkosten = fahrtweg * 0.3*225;
-    const newWerbungskosten = fahrtkosten + kosten ;
-    let steuerjahr = {
-      user_id:            user_id,
-      jahr:               jahr,
-      werbungskosten:     parseFloat(newWerbungskosten.toFixed(2)),
+    
+    let gesamteinsparungen = {
+      user_id:          user_id_,
+      jahrbeginn:       jahrbeginn_,
+      jahrende:         jahrende_,
+      gesamteinsparungen:     gesamteinsparungen_
     };
 
-    // Display tax savings
-    let result = await this._steuerjahr.insertOne(steuerjahr);
-    return await this._steuerjahr.findOne({_id: result.insertedId});
-  }*/
+    let result = await this._gesamteinsparungen.insertOne(gesamteinsparungen);
+    return await this._gesamteinsparungen.findOne({_id: result.insertedId});
+  }
+}

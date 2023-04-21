@@ -6,10 +6,8 @@ import OpenApiEnforcerMiddleware from "@dschulmeis/restify-openapi-enforcer-midd
 
 import DatabaseFactory from "./database.js";
 import RootController from "./controller/root.controller.js";
-import SteuerjahrController from "./controller/steuerjahr.controller.js";
 import BerechnungenControllerClass from "./controller/berechnungen.controller.js";
 
-//TO-DO: eigene Controller Datei hinzufügen!!
 
 // Verzeichnisnamen der Quellcodedatei ermitteln
 import path from "path";
@@ -93,9 +91,8 @@ const openApiEnforcer = await OpenApiEnforcer(openApiFile, {
 
 server.use(OpenApiEnforcerMiddleware(openApiEnforcer));
 
-// HTTP-Controller registrieren; Steuerjahr Controller vorerst auskommentiert da sonst Fehler in berechnungen.controller.js
+// HTTP-Controller registrieren
 new RootController(server, "/", openApiFile);
-//new SteuerjahrController(server, "/steuerjahr", openApiFile);
 new BerechnungenControllerClass(server, "/einsparungsjahr", openApiFile);
 
 // Server tatsächlich starten

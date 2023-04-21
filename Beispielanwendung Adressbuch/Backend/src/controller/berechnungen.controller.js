@@ -1,8 +1,6 @@
 "use strict"
 
-//Steuert API, Funktionen in API werden hier nochmal angegeben, sagt wo was gemacht wird
-
-//import steuerjahr_service from "../service/Steuerjahr.service.js";
+//Steuert API
 import berechnungen_service from "../service/berechnungen.service.js"; //Service anlegen!!!
 import {wrapHandler} from "../utils.js";
 import RestifyError from "restify-errors";
@@ -40,7 +38,6 @@ export default class BerechnungenControllerClass {
      */
     _insertHateoasLinks(entity) {
         console.log("HATEOAS Hier?");
-        //let url = `${this._prefix}/einsparungsjahr/${entity._id}`; TODO: hier Änderung vorgenommen
         let url = `${this._prefix}/${entity.user_id}/${entity.jahr}`;
     
         entity._links = {
@@ -77,17 +74,3 @@ export default class BerechnungenControllerClass {
         return next();
     }
 }
-    /**
-     * POST /user/steuerjahr
-     
-    async createSteuerjahr(req, res, next) { 
-        let result = await this._service.createSteuerjahr(req.body);//TODO nennen wie collection element in API
-        this._insertHateoasLinks(result);
-
-        res.status(201);
-        res.header("Location", `${this._prefix}/${result._id}`);
-        res.sendResult(result);
-
-        return next();
-    }
-}*/
