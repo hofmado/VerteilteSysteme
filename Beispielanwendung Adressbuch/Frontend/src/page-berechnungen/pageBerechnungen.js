@@ -79,6 +79,8 @@ export default class PageBerechnungen extends Page {
                 }
                 );
         }
+
+        //Darstellen der Gesamtersparnisse im Frontend
         document.getElementById("gesamtE").innerHTML = gesamtE;                                             //!
     }
         
