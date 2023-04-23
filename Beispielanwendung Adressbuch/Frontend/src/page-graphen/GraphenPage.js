@@ -33,19 +33,14 @@ export default class GraphenPage extends Page {
         const feldGraphen2 = this._mainElement.querySelector('#Graphengraph2');
         const jahrJahr = 1998; 
         const werbWerb = 2000
-        //Methode für die Get-Anfrage hinzufügen 
-        window.addEventListener("load",  () => 
-           this._getAnfrage(user_id, feldGraphen, feldGraphen2),
-           this._postAnfrage()
-            //await app._getAnfrage(user_id, feldGraphen)
-        );
-        
-        //Mehtode für die Post-Anfrage hinzufügen 
+         
+        //Methode für die Get-Anfrage hinzufügen
         this._getAnfrage(user_id, feldGraphen, feldGraphen2);
+        //Mehtode für die Post-Anfrage hinzufügen 
         this._postAnfrage(user_id); 
     }
 
-    _getAnfrage(user_id, feldGraphen, feldGraphen2) { //TODO fehler api zu frontend
+    _getAnfrage(user_id, feldGraphen, feldGraphen2) { 
         this._app.backend.fetch("GET", `/graphen/${user_id}`)
             .then(response => {
                 const platzhalter = response; 
