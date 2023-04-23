@@ -36,13 +36,13 @@ export default class PageList extends Page {
     async init() {
         // HTML-Inhalt nachladen
         await super.init();
-        this._title = "GraphenPage"; //Title aus GraphenPage.js
+        this._title = "Steuerjahr";
 
         // Platzhalter anzeigen, wenn noch keine Daten vorhanden sind
         this._emptyMessageElement = this._mainElement.querySelector(".empty-placeholder");
 
-        /*if (data.length) {
+        if (data.length) {
             this._emptyMessageElement.classList.add("hidden");
-        }*/
+        }
     }
 };

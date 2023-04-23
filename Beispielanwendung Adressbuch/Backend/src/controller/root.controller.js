@@ -28,8 +28,20 @@ export default class RootController {
      * Abruf der OpenAPI-Spezifikation
      */
     
+    
+
     async index(req, res, next) {
         res.sendResult([
+            
+            {
+                _name: "user",
+                login: {url: "/user/login", method: "POST"},
+                create: {url: "/user", method: "POST"},
+            },
+            {    
+                _name: "steuerjahr",
+                create: {url: "/steuerjahr", method: "POST"},
+            },
             {
                 _name: "graphen",
                 create: {url: "/graphen", method: "POST"},

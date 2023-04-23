@@ -20,9 +20,11 @@ export default class SteuerjahrController {
         this._service = new steuerjahr_service();
         this._prefix = prefix;
 
-        // Collection: Steuerjahr
-        server.get(prefix, wrapHandler(this, this.read));
-        server.post(prefix, wrapHandler(this, this.create));
+        // Collection: Steuerjahre
+        server.post(prefix, wrapHandler(this, this.createSteuerjahr));
+
+        //Entity Steuerjahr
+        server.get(prefix + "/:user_id" + "/:jahr", wrapHandler(this, this.readSteuerjahr));
     }
 
     /**
@@ -34,20 +36,18 @@ export default class SteuerjahrController {
      * @param {Object} entity Zu verändernder Datensatz.
      */
     _insertHateoasLinks(entity) {
-        let url = `${this._prefix}/${entity._id}`;
+        let url = `${this._prefix}/${entity.user_id}/${entity.jahr}`;
 
         entity._links = {
-            read:   {url: url, method: "GET"},
-            create: {url: url, method: "POST"},
+            readSteuerjahr:   {url: url, method: "GET"},
         }
     }
 
     /**
-     * GET /steuerjahr
+     * GET /steuerjahr/{jahr}
      */
-    async read(req, res, next) {
-        let result = await this._service.read(req.params.parseInt(document.getElementById("jahr").value));
-      
+    async readSteuerjahr(req, res, next) {
+        let result = await this._service.readSteuerjahr(req.params.user_id, req.params.jahr);
         if (result) {
           this._insertHateoasLinks(result);
           res.sendResult(result);
@@ -58,19 +58,16 @@ export default class SteuerjahrController {
         return next();
     }
     /**
-     * POST /user/steuerjahr/:id
+     * POST /user/steuerjahr
      */ 
-    async create(req, res, next) { 
-        let result = await this._service.create(req.params.user);
+    async createSteuerjahr(req, res, next) { 
+        let result = await this._service.createSteuerjahr(req.body);
         this._insertHateoasLinks(result);
 
         res.status(201);
         res.header("Location", `${this._prefix}/${result._id}`);
-        if (result){
-            res.sendResult(result);
-        } else {
-            throw new RestifyError.NotFoundError("Kein Steuerjahr gefunden");
-        }
+        res.sendResult(result);
+
         return next();
     }
 }

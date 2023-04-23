@@ -19,6 +19,7 @@ class App {
     constructor() {
         // Datenbank-Klasse zur Verwaltung der Datensätze
         this.backend = new Backend();
+//TODO: nach anmeldung sollen die webpages steuerjahr etc erreichbar werden, davor nicht!
 
         // Single Page Router zur Steuerung der sichtbaren Inhalte
         this.router = new Router([
@@ -28,6 +29,9 @@ class App {
             },{
                 url: "^/graphen/$",
                 show: () => this._gotoGraphen()
+            },{
+                url: "^/user/$",
+                show: () => this._gotoLogin()
             },{
                 url: ".*",
                 show: () => this._gotoList()
@@ -77,21 +81,30 @@ class App {
     /**
      * Kalkulationsseite anzeigen. Wird vom Single Page Router aufgerufen.
      */
-    async _gotoGraphen(id) { //id zu user_id geändert
+    async _gotoSteuerjahr(id) {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
-            let {default: PageKalk} = await import("./page-graphen/GraphenPage.js");
+            let {default: PageKalk} = await import("./page-steuerjahr/SteuerjahrPage.js");
 
-            let page = new PageKalk(this, id); //id zu user_id geändert
+            let page = new PageKalk(this, id);
             await page.init();
-            this._showPage(page, "graphen");
+            this._showPage(page, "steuerjahr");
         } catch (ex) {
             this.showException(ex);
         }
     }
-    /**
-     * Kalkulationsseite anzeigen. Wird vom Single Page Router aufgerufen.
-     */
+    async _gotoLogin() {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageLogin} = await import("./page-login/page-login.js");
+
+            let page = new PageLogin(this);
+            await page.init();
+            this._showPage(page, "user");
+        } catch (ex) {
+            this.showException(ex);
+        }
+    }
     async _gotoGraphen() {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
@@ -113,7 +126,7 @@ class App {
      */
     _showPage(page, name) {
         // Fenstertitel aktualisieren
-        document.title = `${this._documentTitle} – ${page.title}`;
+        document.title = `${this._documentTitle}`;
 
         // Stylesheet der Seite einfügen
         this._pageCssElement.innerHTML = page.css;
@@ -126,7 +139,6 @@ class App {
         this._bodyElement.querySelector("main")?.remove();
         this._bodyElement.appendChild(page.mainElement);
     }
-
     /**
      * Hilfsmethode zur Anzeige eines Ausnahmefehlers. Der Fehler wird in der
      * Konsole protokolliert und als Popupmeldung angezeigt.
@@ -143,7 +155,6 @@ class App {
         }
     }
 }
-
 /**
  * Anwendung starten
  */

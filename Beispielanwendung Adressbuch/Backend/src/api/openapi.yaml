@@ -7,7 +7,7 @@ info:
         ermöglicht die üblichen CRUD-Operationen zur Suche, Anzeige, und erstellung von Steuerjahren, wobei
         jedes Steuerjahr aus einem jahr, werbungskosten besteht.
     contact:
-        name: c
+        name: 'Dominik Hoffmann, Max Müller, Christoph Halberstadt'
     license:
         name: CC-BY-4.0
         url: 'https://creativecommons.org/licenses/by/4.0/deed.de'
@@ -32,6 +32,120 @@ paths:
             operationId: index
             summary: Wurzeladresse des Webservices
             description: Liefert eine HATEOAS-Übersicht aller collections
+    /user:
+        summary: Path used to manage the list of users.
+        description: >-
+            The REST endpoint/path used to list and create zero or more `User` entities.  This path contains a
+            `POST` operation to perform the list and create tasks, respectively.
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/User'
+            tags:
+                - User
+            responses:
+                '201':
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+                    description: Created User
+            operationId: createUser
+            summary: Create a User
+            description: Creates a new instance of a `User`.
+    /user/login:
+        summary: Path used to login the user
+        description: >-
+            The REST endpoint/path used to login the user
+        post:
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/LoginUser'
+            tags:
+                - User
+            responses:
+                '200':
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+                    description: Login User
+                '400':
+                    description: Failed to retieve userdata
+            operationId: loginUser
+            summary: loggt einen User ein 
+            description: Übergabe von Username und Password um ID zurück zu liefern
+    /steuerjahr:
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Steuerdaten'
+            tags:
+                - Steuerjahr
+            responses:
+                '201':
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Steuerjahr'
+                    description: Created
+            operationId: createSteuerjahr
+            summary: Steuerjahr anlegen
+            description: >-
+                Neues STeuerjahr anlegen. Speichert das übergebene Steuerjahr in der Datenbank. Der Wert des
+                Feldes "user_id" nimmt die des Feldes _id des Users.
+    '/steuerjahr/{user_id}/{jahr}':
+        get:
+            tags:
+                - Steuerjahr
+            parameters:
+                -
+                    style: simple
+                    explode: false
+                    name: user_id
+                    schema:
+                        type: string
+                    in: path
+                    required: true
+                -
+                    style: simple
+                    explode: false
+                    name: jahr
+                    schema:
+                        type: number
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Steuerjahr'
+                    description: OK
+                '404':
+                    description: Not Found
+            operationId: getSteuerjahr
+            summary: Adresse lesen
+            description: Liest eine einzelne Adresse vom Server.
     /graphen:
         post:
             requestBody:
@@ -118,6 +232,86 @@ components:
                     type: array
                     items:
                         type: string
+        Steuerjahr:
+            title: Steuerjahr
+            required: []
+            type: object
+            properties:
+                _links:
+                    $ref: '#/components/schemas/HATEOAS_Resource'
+                user_id:
+                    type: string
+                jahr:
+                    type: number
+                werbungskosten:
+                    type: number
+            example:
+                user_id: 6420557cd5033a24fc6777aa
+                jahr: 2000
+                werbungskosten: 15000
+        Steuerdaten:
+            title: Steuerdaten
+            required: []
+            type: object
+            properties:
+                _links:
+                    $ref: '#/components/schemas/HATEOAS_Resource'
+                user_id:
+                    type: string
+                jahr:
+                    type: number
+                kosten:
+                    type: number
+                fahrtweg:
+                    type: number
+            example:
+                user_id: 6420557cd5033a24fc6777aa
+                jahr: 2000
+                kosten: 15000
+                fahrtweg: 20
+        User:
+            description: |-
+                Ein User hat einen Username und ein passwort mit dem er sich anmelden kann
+                    Jeder user besitzt eine zusammenfassende Statistik die alle Steuerjahre und 
+                    alle Verdienste zusammenfassen kann.
+                    Ein User besitzt beliebig viele Steuerjahre in denen für das entsprechende Jahr
+                    die Werbungskosten eingetragen werden können.
+                    Ein User besitzt beliebig viele Verdienste die er zusammenfassend für jedes Jahr
+                    eintragen kann.
+            required: []
+            type: object
+            properties:
+                username:
+                    description: name der vom User zur anmeldung angelegt wurde
+                    type: string
+                password:
+                    description: passwort um sich mit dem username anmelden zu können
+                    type: string
+                _id:
+                    description: the Id of an user in mongo db
+                    type: string
+                _links:
+                    $ref: '#/components/schemas/HATEOAS_Resource'
+            example:
+                _id: wHFBHLWlhfwbffbssu56ug
+                username: MaxMustermann
+                password: geheimesPasswort
+        LoginUser:
+            description: |-
+                Ein User hat einen Username und ein passwort mit dem er sich anmelden kann
+            type: object
+            properties:
+                username:
+                    description: name der vom User zur anmeldung angelegt wurde
+                    type: string
+                password:
+                    description: passwort um sich mit dem username anmelden zu können
+                    type: string
+                _links:
+                    $ref: '#/components/schemas/HATEOAS_Resource'
+            example:
+                username: MaxMustermann
+                password: geheimesPasswort
         Graphendaten:
             title: Graphendaten
             required: []
@@ -149,5 +343,9 @@ components:
 tags:
     -
         name: Index
+    -
+        name: Steuerjahr
+    -
+        name: User
     -
         name: Graphen

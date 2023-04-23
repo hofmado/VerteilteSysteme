@@ -21,8 +21,6 @@ class DatabaseFactory {
         this.client = new MongoClient(connectionUrl);
         await this.client.connect();
         this.database = this.client.db("Steuer");
-        
-
         await this._createDemoData();
     }
 
@@ -32,10 +30,48 @@ class DatabaseFactory {
      * wenigstens gleich ein paar Daten.
      */
     async _createDemoData() {
+        let users = this.database.collection("user");
 
         let Graphen = this.database.collection("Graphen");
 
         let Stampzeug = this.database.collection("Stampzeug");
+        
+        if (await users.estimatedDocumentCount() === 0) {
+            users.insertMany([
+                {
+                    "username": "MaxMustermann",
+                    "password": "geheimesPasswort",
+                    
+                },
+                {
+                    "username": "MusterMAx",
+                    "password": "1",
+                }
+            ])
+        }
+        let steuerjahr = this.database.collection("steuerjahr");
+
+        if (await steuerjahr.estimatedDocumentCount() === 0) {
+            steuerjahr.insertMany([
+                {
+                    "user_id": "6420557cd5033a24fc6777aa",
+                    "jahr": 2023,
+                    "werbungskosten": 2500
+                },
+            ]);
+            steuerjahr.insertMany([
+                {
+                    "user_id": "6420557cd5033a24fc6777aa",
+                    "jahr": 2022,
+                    "werbungskosten": 2500
+                },
+                {
+                    "user_id": "6420557cd5033a24fc6777aa",
+                    "jahr": 2021,
+                    "werbungskosten": 5500
+                },
+            ]);
+        }
 
         if (await Graphen.estimatedDocumentCount() === 0) {
             Graphen.insertMany([
@@ -70,7 +106,7 @@ class DatabaseFactory {
                     "werbungskosten": 4500
                 },
             ]);
-        } 
+        }
     }
 }
 
