@@ -14,7 +14,7 @@ export default class GraphenPage extends Page {
     async init() {
         await super.init();
         this._title = "GraphenPage";
-        const user_id = "";     //hardcode 6420557cd5033a24fc6777aa zum testen des einzelnen services 
+        let user_id = sessionStorage.getItem('userId');     //hardcode 6420557cd5033a24fc6777aa zum testen des einzelnen services 
         // Fetch the manifest file
         function getUser_id() {
             return fetch(window.navigator.userAgent.includes("Edge") ? "/manifest.json" : "/manifest.webmanifest")
@@ -25,9 +25,6 @@ export default class GraphenPage extends Page {
                 return userId;
             });
         }
-        getUser_id().then(userId => { //getUser_id() auskommentieren, um den einzelnen service zu testen 
-            user_id = userId;
-        });
         
         //Obejkte hier mit QuerrySelevtor ausstatten 
         const feldGraphen = this._mainElement.querySelector('#Graphengraph'); //QuerryÜberprüfen 

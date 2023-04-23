@@ -33,16 +33,16 @@ export default class PageList extends Page {
      * Apps würde man ggf. eine Template Engine wie z.B. Nunjucks integrieren
      * und den JavaScript-Code dadurch deutlich vereinfachen.
      */
-    async init() {
+    /*async init() {
         // HTML-Inhalt nachladen
         await super.init();
         this._title = "Steuerjahr";
 
         // Platzhalter anzeigen, wenn noch keine Daten vorhanden sind
-        this._emptyMessageElement = this._mainElement.querySelector(".empty-placeholder");
+        /*this._emptyMessageElement = this._mainElement.querySelector(".empty-placeholder");
 
         if (data.length) {
             this._emptyMessageElement.classList.add("hidden");
         }
-    }
-};
+    }*/
+}

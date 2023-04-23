@@ -27,6 +27,9 @@ class App {
                 url: "^/$",
                 show: () => this._gotoList()
             },{
+                url: "^/steuerjahr/$",
+                show: () => this._gotoSteuerjahr()
+            },{
                 url: "^/graphen/$",
                 show: () => this._gotoGraphen()
             },{
@@ -113,6 +116,18 @@ class App {
             let page = new PageKalk(this);
             await page.init();
             this._showPage(page, "graphen");
+        } catch (ex) {
+            this.showException(ex);
+        }
+    }
+    async _gotoSteuerjahr() {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageKalk} = await import("./page-steuerjahr/SteuerjahrPage.js");
+
+            let page = new PageKalk(this);
+            await page.init();
+            this._showPage(page, "steuerjahr");
         } catch (ex) {
             this.showException(ex);
         }

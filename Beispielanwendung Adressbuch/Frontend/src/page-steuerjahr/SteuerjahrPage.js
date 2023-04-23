@@ -14,7 +14,7 @@ export default class SteuerjahrPage extends Page {
 
     async init() {
         await super.init();
-        this._title = "SteuerjahrPage";
+        this._title = "Steuerjahr";
         let user_id = sessionStorage.getItem('userId');
         // Fetch the manifest file
         const getDataButton = this._mainElement.querySelector('#get-data');
