@@ -31,8 +31,7 @@ export default class GraphenPage extends Page {
         //Obejkte hier mit QuerrySelevtor ausstatten 
         const feldGraphen = this._mainElement.querySelector('#Graphengraph'); //QuerryÜberprüfen 
         const feldGraphen2 = this._mainElement.querySelector('#Graphengraph2');
-        const jahrJahr = 1998; 
-        const werbWerb = 2000
+
          
         //Methode für die Get-Anfrage hinzufügen
         this._getAnfrage(user_id, feldGraphen, feldGraphen2);
@@ -45,8 +44,11 @@ export default class GraphenPage extends Page {
             .then(response => {
                 const platzhalter = response; 
                 const middleIndex = Math.floor(platzhalter.length /2);
-                feldGraphen.innerHTML = "" + platzhalter.slice(0, middleIndex); //Feld aus Objekte 
-                feldGraphen2.innerHTML = "" + platzhalter.slice(middleIndex); 
+                const ArrayX =  platzhalter.slice(0, middleIndex); //ArrayX für Graphen.js
+                const ArrayY = platzhalter.slice(middleIndex);  //ArrayY für Graphen.js
+                //Hier stände der Charts.js-Code, wenn die Implementation funktioniert hätte
+                feldGraphen.innerHTML = "" + ArrayX; 
+                feldGraphen2.innerHTML = "" + ArrayY;
             });
     }
     _postAnfrage(user_id) {
@@ -54,8 +56,6 @@ export default class GraphenPage extends Page {
             user_id: user_id
         }
             this._app.backend.fetch("POST", '/graphen', {body: dataset}).then(
-
             )
-
     }
 }
