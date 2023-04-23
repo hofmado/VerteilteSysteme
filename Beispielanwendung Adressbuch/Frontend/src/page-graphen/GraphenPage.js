@@ -14,7 +14,7 @@ export default class GraphenPage extends Page {
     async init() {
         await super.init();
         this._title = "GraphenPage";
-        const user_id = "6420557cd5033a24fc6777aa";     //von const zu let geändert und hardcode wert anstelle von null eingefügt 
+        const user_id = "6420557cd5033a24fc6777aa";     
         // Fetch the manifest file
         function getUser_id() {
             return fetch(window.navigator.userAgent.includes("Edge") ? "/manifest.json" : "/manifest.webmanifest")

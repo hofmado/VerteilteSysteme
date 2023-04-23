@@ -6,6 +6,7 @@ export default class SteuerGraphen {
 
     constructor(){
             this._graphen = DatabaseFactory.database.collection("Graphen"); 
+            this._stampdaten = DatabaseFactory.database.collection("Stampdaten"); 
     }
 
     async graphenzeug(user_id){
@@ -15,27 +16,20 @@ export default class SteuerGraphen {
 
     async nutzerZeug(dataset){
         const resPlatz = dataset.user_id; 
-        console.log(resPlatz);
-        return {_resid: resPlatz};
-    }
-    /*
-    async nutzerZeug(uname){
-        const resPlatz = uname; 
         if (resPlatz != undefined){
             console.log(resPlatz);
             const now = new Date(); 
             console.log(now);
             let timestamp = {
-                user_id: user_id, 
+                user_id: resPlatz, 
                 heutedatum: now,
             }; 
             let result = await this._stampdaten.insertOne(timestamp); 
-            concolse.log(result.insertedId); 
+            console.log(result.insertedId); 
         }
-
         return {_resid: resPlatz};
     }
-    */
+   
 
     async wertBere(){
         const usere = await this._graphen.distinct("user_id"); 

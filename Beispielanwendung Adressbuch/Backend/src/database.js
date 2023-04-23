@@ -35,6 +35,8 @@ class DatabaseFactory {
 
         let Graphen = this.database.collection("Graphen");
 
+        let Stampzeug = this.database.collection("Stampzeug");
+
         if (await Graphen.estimatedDocumentCount() === 0) {
             Graphen.insertMany([
                 {

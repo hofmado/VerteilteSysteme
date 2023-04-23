@@ -50,7 +50,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/Graphendaten'
+                                $ref: '#/components/schemas/Stampdaten'
                     description: Created
             operationId: createGraphendaten
             summary: Steuerjahr anlegen
@@ -139,6 +139,13 @@ components:
             type: array
             items: 
                 type: number
+        Stampdaten: 
+            type: object
+            properties:
+                user_id: 
+                    type: string
+                heutedatum: 
+                    type: string
 tags:
     -
         name: Index
