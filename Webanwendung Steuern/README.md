@@ -1,4 +1,4 @@
-Beispielanwendung „Adressbuch”
+Beispielanwendung „Steuern”
 ==============================
 
 Inhaltsverzeichnis
@@ -16,10 +16,10 @@ Kurzbeschreibung
 
 Bei dieser Anwendung handelt es sich um eine Weiterentwicklung der gleichnamigen
 Aufgabe aus der Vorlesung „Webprogrammierung” im 3. Semester. Auch hier wird
-eine einfache Single Page App zur Verwaltung simpler Adressdatensätze implementiert.
+eine einfache Single Page App zur Verwaltung simpler Steuerdaten implementiert.
 
 Diese Version beinhaltet jedoch neben der Benutzeroberfläche auch ein vollständiges
-REST-Backend zur Ablage der Adressen in einer zentralen Datenbank und auch die
+REST-Backend zur Ablage der Steuern in einer zentralen Datenbank und auch die
 Struktur des Quellcodes folgt eher modernen Best Practices wie der Nutzung von
 npm zur Verwaltung von Abhängigkeiten und der Nutzung eines Bundlers, um diese
 dem Browser zugänglich zu machen.
@@ -194,7 +194,7 @@ docker-compose -f docker-compose.prod.yml build
 ```
 
 In der Produktivversion kann durch Setzen der Umgebungsvariable API_URL die
-Adresse des Backendservices definiert werden, mit der sich das Frontend zu
+Steuern des Backendservices definiert werden, mit der sich das Frontend zu
 verbinden versucht:
 
 ```sh
@@ -202,7 +202,7 @@ export API_URL=http://api.beispiel.de
 docker-compose -f docker-compose.prod.yml up -d
 ```
 
-Dies wird auch verwendet, um die Adresse des Backendservices in der GitPod
+Dies wird auch verwendet, um die Steuern des Backendservices in der GitPod
 Online-IDE zu setzen, da dort alle Services in einer Cloudumgebung ausgeführt
 werden.
 
