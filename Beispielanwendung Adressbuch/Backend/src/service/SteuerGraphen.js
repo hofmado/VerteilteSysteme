@@ -32,28 +32,35 @@ export default class SteuerGraphen {
    
 
     async wertBere(){
+        //alle User raussuchen 
         const usere = await this._graphen.distinct("user_id"); 
-
+        //alle Jahre raussuchen 
         const jahre = await this._graphen.distinct("jahr"); 
-
-        let durchschnittsArray =[]; 
-        let jahreArray = []; 
+        //Array, aufgeteilt nach jahren mit allen entsprechenden Usereinträgen 
         let graphenArray = []; 
-
+        let AnzahlArray = [];
         for( let laufJahr of jahre){
+            let z = 0; 
             for(let laufUser of usere){
             const graphen = await this._graphen.find({ jahr: laufJahr, user_id: laufUser }).toArray();
             const werbungskostenArray = graphen.map(graph => graph.werbungskosten);
             graphenArray.push(...werbungskostenArray);
+            z++; 
             }
+            AnzahlArray.push(z); 
         }
-        let graphenArray2 = []; 
-        let t = 0; 
-        for(let i = 0; i<graphenArray.length -1; i+=2){
-            graphenArray2[t] = (graphenArray[i]+ graphenArray[i+1])/2; 
-            t++; 
+        //Array für die Durchschnittswerte
+        let graphenArray3 = []; 
+        let n = 0; 
+        for(let i = 0; i<=graphenArray.length - AnzahlArray[AnzahlArray.length-1]; i+= AnzahlArray[n]){
+            let zwischenwert = 0; 
+            for(let m = 0; m < AnzahlArray[n]; m++){
+                zwischenwert += graphenArray[m+i]
+            }
+            graphenArray3[n] = (zwischenwert / AnzahlArray[n]); 
+            n++;
         }
-        const comboArray = graphenArray2.concat(jahre);
+        const comboArray = graphenArray3.concat(jahre);
         return comboArray; 
     }
 }
