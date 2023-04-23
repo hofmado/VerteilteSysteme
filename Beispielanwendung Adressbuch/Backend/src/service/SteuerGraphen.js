@@ -10,28 +10,6 @@ export default class SteuerGraphen {
     }
 
     async graphenzeug(user_id){
-        return this.wertBere();
-        
-    }
-
-    async nutzerZeug(dataset){
-        const resPlatz = dataset.user_id; 
-        if (resPlatz != undefined){
-            console.log(resPlatz);
-            const now = new Date(); 
-            console.log(now);
-            let timestamp = {
-                user_id: resPlatz, 
-                heutedatum: now,
-            }; 
-            let result = await this._stampdaten.insertOne(timestamp); 
-            console.log(result.insertedId); 
-        }
-        return {_resid: resPlatz};
-    }
-   
-
-    async wertBere(){
         //alle User raussuchen 
         const usere = await this._graphen.distinct("user_id"); 
         //alle Jahre raussuchen 
@@ -62,6 +40,24 @@ export default class SteuerGraphen {
         }
         const comboArray = graphenArray3.concat(jahre);
         return comboArray; 
+    }
+
+    async nutzerZeug(dataset){
+        //user_id nehmen 
+        const resPlatz = dataset.user_id; 
+        //aus irgendeinem Grund wird immer 2x gepostet
+        //unnötiger Post wird abgefangen 
+        if (resPlatz != undefined){
+            //heutiges Datum mit Uhrzeit 
+            const now = new Date(); 
+            let timestamp = {
+                user_id: resPlatz, 
+                heutedatum: now,
+            }; 
+            let result = await this._stampdaten.insertOne(timestamp); 
+            return {_resid: result.user_id};
+        }
+        return {_resid: resPlatz};
     }
 }
 
